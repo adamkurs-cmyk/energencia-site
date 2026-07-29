@@ -54,6 +54,78 @@
     .final { background: var(--klein); color: var(--white); border-radius: var(--radius-lg); padding: clamp(2rem,6vw,4rem); }
     .final h2 { color: var(--white); }
     .final .btn--signal { margin-top: 1.5rem; }
+
+    /* 3. Transformation */
+    .eyebrow { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label);
+               text-transform: uppercase; color: var(--grey); margin-bottom: 0.5rem; }
+    .transform { display: grid; gap: 2rem; align-items: start; margin-top: 1.5rem; }
+    .transform h2 { font-size: var(--fs-h3); max-width: 28ch; }
+    .transform__from h2 { color: var(--grey); }
+    .transform__arrow { display: none; }
+    @media (min-width: 800px) {
+      .transform { grid-template-columns: 1fr auto 1fr; }
+      .transform__arrow { display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--klein); }
+    }
+    .standfirst-sm { margin-top: 2rem; max-width: 60ch; }
+
+    /* 4. Who it's for */
+    .audience-grid { list-style: none; padding: 0; display: grid; gap: 1.25rem; margin: 1.5rem 0 0; grid-template-columns: 1fr; }
+    @media (min-width: 700px) { .audience-grid { grid-template-columns: repeat(3, 1fr); } }
+    .audience-card { border-top: 3px solid var(--yellow); padding-top: 1rem; }
+    .audience-card .n { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--grey); display: block; margin-bottom: 0.5rem; }
+    .not-for { margin-top: 2rem; padding-top: 1.5rem; border-top: var(--border); }
+
+    /* 6. How it works */
+    .facts-grid { display: grid; gap: 1.5rem 2rem; margin-top: 1.5rem; grid-template-columns: 1fr 1fr; }
+    @media (min-width: 700px) { .facts-grid { grid-template-columns: repeat(3, 1fr); } }
+    .fact { display: flex; flex-direction: column; gap: 0.4rem; border-top: var(--border); padding-top: 0.9rem; }
+    .fact__label { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--grey); }
+
+    /* 7. About the guide */
+    .guide { display: grid; gap: 2rem; margin-top: 1.5rem; grid-template-columns: 1fr; }
+    @media (min-width: 800px) { .guide { grid-template-columns: 280px 1fr; align-items: start; } }
+    .placeholder-box { aspect-ratio: 4 / 5; border: 1px dashed var(--line); border-radius: var(--radius-lg);
+                        display: flex; align-items: center; justify-content: center; color: var(--grey);
+                        font-family: var(--font-mono); font-size: var(--fs-label); text-align: center; padding: 1rem; }
+    .stat-line { margin-top: 1.5rem; }
+    .stat-line .stat { font-family: var(--font-display); font-size: 1.75rem; color: var(--pink); font-weight: 500; margin-right: 0.3em; }
+
+    /* 8. What's included */
+    .included-grid { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.9rem; grid-template-columns: 1fr; }
+    @media (min-width: 700px) { .included-grid { grid-template-columns: 1fr 1fr; } }
+    .included-grid li { display: flex; align-items: flex-start; gap: 0.75rem; }
+    .included-grid .check { color: var(--klein); font-family: var(--font-mono); flex-shrink: 0; }
+
+    /* 9. Voices */
+    .voices-grid { display: grid; gap: 1.5rem; margin-top: 1.5rem; grid-template-columns: 1fr; }
+    @media (min-width: 700px) { .voices-grid { grid-template-columns: repeat(3, 1fr); } }
+    .voice { margin: 0; border-top: 3px solid var(--ink); padding-top: 1rem; }
+    .voice p { font-size: var(--fs-small); }
+    .voice cite { display: block; margin-top: 0.75rem; font-family: var(--font-mono); font-size: var(--fs-label);
+                  letter-spacing: var(--track-label); text-transform: uppercase; font-style: normal; color: var(--grey); }
+
+    /* 10. Price */
+    .price-grid { display: grid; gap: 1.25rem; margin-top: 1.5rem; grid-template-columns: 1fr; max-width: 640px; }
+    @media (min-width: 600px) { .price-grid { grid-template-columns: 1fr 1fr; } }
+    .price-card { border: var(--border); border-radius: var(--radius-lg); padding: 1.75rem; }
+    .price-card--highlight { background: var(--klein); border-color: var(--klein); color: var(--white); }
+    .price-card--highlight .label { color: #b9c2ff; }
+    .price-amount { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h2); margin: 0.5rem 0 0.25rem; }
+    .price-deadline { font-family: var(--font-mono); font-size: var(--fs-label); }
+
+    /* 11. FAQ */
+    .faq-list { margin-top: 1.5rem; border-top: var(--border); max-width: 70ch; }
+    .faq-item { border-bottom: var(--border); padding: 1.1rem 0; }
+    .faq-item summary { cursor: pointer; font-weight: 500; list-style: none; display: flex;
+                         justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "+"; font-family: var(--font-mono); color: var(--klein); font-size: 1.25rem; flex-shrink: 0; }
+    .faq-item[open] summary::after { content: "–"; }
+    .faq-item p { margin-top: 0.75rem; }
+
+    /* 13. Footer */
+    .colour-strip { display: flex; height: 8px; margin-top: 2rem; border-radius: 999px; overflow: hidden; }
+    .colour-strip span { flex: 1; }
   </style>
 </head>
 <body>
@@ -92,15 +164,29 @@
   <!-- 3. THE TRANSFORMATION -->
   <section id="transformation" class="section wrap">
     <p class="label">01 — From → To</p>
-    <h2 class="placeholder">[[ Where they are now → confidently facilitating a group sound bath ]]</h2>
-    <p class="placeholder">[[ One or two honest lines on the shift. ]]</p>
+    <div class="transform">
+      <div class="transform__from">
+        <p class="eyebrow">From</p>
+        <h2 class="placeholder">[[ curious about sound / yoga teacher / massage therapist / complete beginner ]]</h2>
+      </div>
+      <div class="transform__arrow" aria-hidden="true">→</div>
+      <div class="transform__to">
+        <p class="eyebrow">To</p>
+        <h2 class="placeholder">[[ confidently facilitating a group sound bath ]]</h2>
+      </div>
+    </div>
+    <p class="standfirst-sm placeholder">[[ One or two honest lines on the shift. ]]</p>
   </section>
 
   <!-- 4. WHO IT'S FOR -->
   <section id="who" class="section wrap">
     <p class="label">02 — Who it's for</p>
-    <h2 class="placeholder">[[ The three audiences, plainly ]]</h2>
-    <p class="placeholder">[[ "This isn't for you if…" — one honest line. ]]</p>
+    <ul class="audience-grid placeholder">
+      <li class="audience-card"><span class="n">A</span>[[ audience 1 ]]</li>
+      <li class="audience-card"><span class="n">B</span>[[ audience 2 ]]</li>
+      <li class="audience-card"><span class="n">C</span>[[ audience 3 ]]</li>
+    </ul>
+    <p class="not-for placeholder">[[ "This isn't for you if…" — one honest line. ]]</p>
   </section>
 
   <!-- 5. WHAT YOU'LL LEARN (curriculum) -->
@@ -122,46 +208,86 @@
   <!-- 6. HOW IT WORKS -->
   <section id="how" class="section wrap">
     <p class="label">04 — How it works</p>
-    <h2 class="placeholder">[[ Format, hours, dates, location, group size (small — say it), language ]]</h2>
+    <h2>The logistics</h2>
+    <div class="facts-grid">
+      <div class="fact"><span class="fact__label">Format</span><span class="placeholder">[[ e.g. one weekend / four evenings ]]</span></div>
+      <div class="fact"><span class="fact__label">Total hours</span><span class="placeholder">[[ hours ]]</span></div>
+      <div class="fact"><span class="fact__label">Dates</span><span class="placeholder">[[ dates ]]</span></div>
+      <div class="fact"><span class="fact__label">Location</span><span class="placeholder">[[ València venue ]]</span></div>
+      <div class="fact"><span class="fact__label">Group size</span><span class="placeholder">[[ small — say the number ]]</span></div>
+      <div class="fact"><span class="fact__label">Language</span><span>English</span></div>
+    </div>
   </section>
 
   <!-- 7. ABOUT THE GUIDE -->
   <section id="guide" class="section wrap">
     <p class="label">05 — Your guide</p>
-    <h2 class="placeholder">[[ About Adam ]]</h2>
-    <p class="placeholder">[[ Story; bodywork + sound; body-led not protocol-led; 350+ 1:1 clients and
-      group sound baths for many more; your own program, not a Peter Hess certification. ]]</p>
+    <div class="guide">
+      <div class="placeholder-box" aria-hidden="true">[[ Photo of Adam ]]</div>
+      <div>
+        <h2 class="placeholder">[[ About Adam ]]</h2>
+        <p class="placeholder">[[ Story; bodywork + sound; body-led not protocol-led; your own program,
+          informed by the Peter Hess method but NOT a Peter Hess certification. ]]</p>
+        <p class="stat-line"><span class="stat">350+</span>individual 1:1 clients, and group sound baths for many more.</p>
+      </div>
+    </div>
   </section>
 
   <!-- 8. WHAT'S INCLUDED -->
   <section id="included" class="section wrap">
     <p class="label">06 — What's included</p>
-    <h2 class="placeholder">[[ The value stack ]]</h2>
-    <p class="placeholder">[[ Contact hours · materials · practice sessions · follow-up · certificate
-      of completion from you · small group after. ]]</p>
+    <h2>What's included</h2>
+    <ul class="included-grid placeholder">
+      <li><span class="check">✓</span>[[ contact hours ]]</li>
+      <li><span class="check">✓</span>[[ materials / handbook ]]</li>
+      <li><span class="check">✓</span>[[ practice sessions ]]</li>
+      <li><span class="check">✓</span>[[ follow-up / small group access after ]]</li>
+      <li><span class="check">✓</span>[[ certificate of completion from Adam ]]</li>
+    </ul>
   </section>
 
   <!-- 9. VOICES -->
   <section id="voices" class="section wrap">
     <p class="label">07 — Voices</p>
-    <h2 class="placeholder">[[ What people say ]]</h2>
-    <p class="placeholder">[[ Real testimonials only. 1:1 client ones work for now. ]]</p>
+    <h2>What people say</h2>
+    <div class="voices-grid placeholder">
+      <blockquote class="voice"><p>“[[ quote ]]”</p><cite>[[ Name ]]</cite></blockquote>
+      <blockquote class="voice"><p>“[[ quote ]]”</p><cite>[[ Name ]]</cite></blockquote>
+      <blockquote class="voice"><p>“[[ quote ]]”</p><cite>[[ Name ]]</cite></blockquote>
+    </div>
   </section>
 
   <!-- 10. PRICE -->
   <section id="price" class="section wrap">
     <p class="label">08 — Price</p>
-    <h2 class="placeholder">[[ Early bird vs standard, side by side ]]</h2>
-    <p class="placeholder">[[ Recap what's included; state the early-bird deadline as a real date. ]]</p>
-    <a class="btn btn--primary" href="#apply">Apply ↗</a>
+    <h2>Join the next cohort</h2>
+    <div class="price-grid">
+      <div class="price-card price-card--highlight">
+        <p class="label">Early bird</p>
+        <p class="price-amount placeholder">[[ €300 ]]</p>
+        <p class="price-deadline placeholder">until [[ deadline date ]]</p>
+      </div>
+      <div class="price-card">
+        <p class="label">Standard</p>
+        <p class="price-amount placeholder">[[ €350 ]]</p>
+      </div>
+    </div>
+    <p class="standfirst-sm placeholder">[[ Recap what's included. ]]</p>
+    <a class="btn btn--primary" href="#apply" style="margin-top:1.5rem;">Apply ↗</a>
   </section>
 
   <!-- 11. FAQ -->
   <section id="faq" class="section wrap">
     <p class="label">09 — Questions</p>
-    <h2 class="placeholder">[[ FAQ ]]</h2>
-    <p class="placeholder">[[ Experience needed? Own bowls? Certified (your own, not Peter Hess)?
-      Missed sessions? Refunds? What to bring? ]]</p>
+    <h2>FAQ</h2>
+    <div class="faq-list">
+      <details class="faq-item"><summary>Do I need experience?</summary><p class="placeholder">[[ answer ]]</p></details>
+      <details class="faq-item"><summary>Do I need my own bowls?</summary><p class="placeholder">[[ answer ]]</p></details>
+      <details class="faq-item"><summary>Is it certified?</summary><p class="placeholder">[[ your own certificate; not a Peter Hess certification ]]</p></details>
+      <details class="faq-item"><summary>What if I miss a session?</summary><p class="placeholder">[[ answer ]]</p></details>
+      <details class="faq-item"><summary>Refunds / deposit?</summary><p class="placeholder">[[ answer ]]</p></details>
+      <details class="faq-item"><summary>What should I bring?</summary><p class="placeholder">[[ answer ]]</p></details>
+    </div>
   </section>
 
   <!-- 12. FINAL CALL -->
@@ -185,6 +311,13 @@
       <span class="wordmark" style="font-size:1.25rem;">Energencia</span>
     </div>
     <p class="label" style="margin-top:1.5rem;">Sound · Reiki · Bodywork · Kobido · Made in València</p>
+    <div class="colour-strip" aria-hidden="true">
+      <span style="background:var(--white); border:var(--border);"></span>
+      <span style="background:var(--ink);"></span>
+      <span style="background:var(--yellow);"></span>
+      <span style="background:var(--klein);"></span>
+      <span style="background:var(--pink);"></span>
+    </div>
   </footer>
 
 </body>
