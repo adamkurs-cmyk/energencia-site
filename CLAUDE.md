@@ -119,6 +119,21 @@ snippet, drop it into the Enrol section instead.
 - Keep it fast: no heavy libraries. Google Fonts + the CSS is enough.
 - Deployment: static, so it can be dropped onto Netlify. Keep all paths relative.
 
+## Legal & privacy (EU / Spain)
+
+Fonts are self-hosted from `assets/fonts/` — never re-link to Google's font CDN directly, it sends
+visitor IPs to Google before consent (a real GDPR issue, ruled on by a German court in 2022).
+
+`legal/legal-notice.html`, `legal/privacy-policy.html`, `legal/cookies.html`, and `legal/terms.html`
+are scaffolded per Spain's LSSI-CE and GDPR/LOPDGDD, linked from the footer. They're placeholder-filled
+like the rest of the site's copy — **Adam must fill in his real legal name, NIF, address, and get a
+Spanish gestor/abogado to sign off before the site takes real applications or payments**, especially
+the consumer right-of-withdrawal wording in `terms.html`.
+
+The site currently sets zero cookies, so no cookie-consent banner is shown (none is legally required
+yet). The moment a booking tool (Cal.com/Calendly/Fresha) or any analytics is embedded, add a
+consent step before that script loads, and log the new cookie in `legal/cookies.html`'s table.
+
 ## How to work with Adam
 
 1. First confirm `tokens.css` is wired into `index.html` and the fonts load. Show the lockup rendering.

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookie Policy · Energencia</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
+  <link rel="stylesheet" href="../tokens.css">
+  <style>
+    .legal-header { padding: 1.25rem var(--pad-x); border-bottom: var(--border); }
+    .legal-header a { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; text-decoration: none; color: var(--ink); }
+    .legal-wrap { max-width: 72ch; margin-inline: auto; padding: var(--s-section) var(--pad-x); }
+    .legal-wrap h1 { font-size: var(--fs-h1); margin-bottom: 0.5rem; }
+    .legal-wrap .updated { margin-bottom: 2.5rem; }
+    .legal-wrap h2 { font-size: var(--fs-h3); margin-top: 2.5rem; margin-bottom: 0.75rem; }
+    .legal-wrap p, .legal-wrap li { font-size: var(--fs-small); }
+    .legal-wrap ul { padding-left: 1.25rem; }
+    .now-box { border: 1px solid var(--klein); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+    .now-box .label { color: var(--klein); }
+    table.cookie-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: var(--fs-small); }
+    table.cookie-table th, table.cookie-table td { text-align: left; border-bottom: var(--border); padding: 0.6rem 0.75rem 0.6rem 0; }
+    table.cookie-table th { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--grey); font-weight: 400; }
+    .placeholder { color: var(--grey); }
+    .legal-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: var(--border); }
+    .legal-nav a { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--klein); text-decoration: none; }
+    .colour-strip { display: flex; height: 6px; margin-top: 2.5rem; border-radius: 999px; overflow: hidden; }
+    .colour-strip span { flex: 1; }
+  </style>
+</head>
+<body>
+  <header class="legal-header">
+    <a href="../index.html">← Energencia</a>
+  </header>
+
+  <main class="legal-wrap">
+    <p class="label">Cookies</p>
+    <h1>Cookie Policy</h1>
+    <p class="updated placeholder">Last updated: [[ date ]]</p>
+
+    <div class="now-box">
+      <p class="label">Right now</p>
+      <p style="margin-bottom:0;">This website does not set any cookies and does not use any
+        analytics, advertising, or tracking technology. It's plain HTML and CSS with no
+        third-party embeds, so no cookie banner is shown — under Spain's ePrivacy rules (LSSI-CE
+        Art. 22) and GDPR, a consent banner is only required once something is added that stores
+        information in your browser beyond what's strictly necessary to display the page.</p>
+    </div>
+
+    <h2>What counts as a cookie here</h2>
+    <p>A cookie (or similar technology — local storage, tracking pixels) is a small piece of data
+      a website can store in your browser, e.g. to remember a preference or measure visits.</p>
+
+    <h2>What will change this</h2>
+    <p>Two things on the roadmap for this site will introduce cookies, and each will need consent
+      collected <em>before</em> it loads, plus a row added to the table below:</p>
+    <ul>
+      <li><strong>The booking / application tool</strong> in the Enrol section
+        (<span class="placeholder">[[ Cal.com / Calendly / Fresha / application form ]]</span>) —
+        most embeddable booking widgets set at least one functional cookie.</li>
+      <li><strong>Any analytics</strong> (e.g. Google Analytics, Plausible, Fathom) if added later
+        to see how the site is doing.</li>
+    </ul>
+
+    <table class="cookie-table placeholder">
+      <thead>
+        <tr><th>Name</th><th>Provider</th><th>Purpose</th><th>Duration</th><th>Type</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>[[ cookie name ]]</td><td>[[ provider ]]</td><td>[[ purpose ]]</td><td>[[ duration ]]</td><td>[[ necessary / analytics / marketing ]]</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Your choices</h2>
+    <p>Once cookies are in use, this page will explain how to accept, decline, or change your
+      choice at any time, and how to clear cookies already stored via your browser's own settings.</p>
+
+    <nav class="legal-nav">
+      <a href="legal-notice.html">Legal Notice</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="../index.html">Home</a>
+    </nav>
+    <div class="colour-strip" aria-hidden="true">
+      <span style="background:var(--white); border:var(--border);"></span>
+      <span style="background:var(--ink);"></span>
+      <span style="background:var(--yellow);"></span>
+      <span style="background:var(--klein);"></span>
+      <span style="background:var(--pink);"></span>
+    </div>
+  </main>
+</body>
+</html>
