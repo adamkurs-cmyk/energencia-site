@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Energencia — Sound Healing Facilitation Training · València</title>
-  <meta name="description" content="A sound healing facilitation training in València. Learn to hold a sound bath, body-led and person-led.">
+  <title>Energencia — Sound Bath Facilitation Training · València</title>
+  <meta name="description" content="A small, hands-on training in València. Learn to facilitate group sound baths, body-led and honest. Early bird €450.">
   <link rel="icon" href="assets/favicon.png">
 
   <!-- Fonts: self-hosted (see assets/fonts/fonts.css). No third-party requests, no IP sent to Google. -->
@@ -38,7 +38,7 @@
     .hero .lockup--offset .wordmark { font-size: 2rem; }
     .hero h1 { font-size: var(--fs-hero); font-weight: 600; letter-spacing: -0.02em;
                margin-top: 2rem; max-width: 16ch; }
-    .hero h1 .spark { color: var(--pink); }
+    .spark { color: var(--pink); }
     .hero .standfirst { font-size: 1.25rem; margin-top: 1.25rem; max-width: 48ch; }
     .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem; }
     .chip { font-family: var(--font-mono); font-size: var(--fs-label);
@@ -47,37 +47,24 @@
     .modules { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0; }
     .modules li { border-top: var(--border); padding: 1.1rem 0; display: flex; gap: 1.25rem; }
     .modules li .n { font-family: var(--font-mono); color: var(--klein); font-size: var(--fs-small); }
-    .modules li b { font-family: var(--font-body); font-weight: 600; }
     .placeholder { color: var(--grey); }
+    .lead { font-size: 1.25rem; max-width: 62ch; margin-top: 1.5rem; }
+    .punch { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h3); margin-top: 1.5rem; }
     .final { background: var(--klein); color: var(--white); border-radius: var(--radius-lg); padding: clamp(2rem,6vw,4rem); }
     .final h2 { color: var(--white); }
     .final .btn--signal { margin-top: 1.5rem; }
 
-    /* 3. Transformation */
-    .eyebrow { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label);
-               text-transform: uppercase; color: var(--grey); margin-bottom: 0.5rem; }
-    .transform { display: grid; gap: 2rem; align-items: start; margin-top: 1.5rem; }
-    .transform h2 { font-size: var(--fs-h3); max-width: 28ch; }
-    .transform__from h2 { color: var(--grey); }
-    .transform__arrow { display: none; }
-    @media (min-width: 800px) {
-      .transform { grid-template-columns: 1fr auto 1fr; }
-      .transform__arrow { display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--klein); }
-    }
-    .standfirst-sm { margin-top: 2rem; max-width: 60ch; }
-
     /* 4. Who it's for */
-    .audience-grid { list-style: none; padding: 0; display: grid; gap: 1.25rem; margin: 1.5rem 0 0; grid-template-columns: 1fr; }
-    @media (min-width: 700px) { .audience-grid { grid-template-columns: repeat(3, 1fr); } }
-    .audience-card { border-top: 3px solid var(--yellow); padding-top: 1rem; }
-    .audience-card .n { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--grey); display: block; margin-bottom: 0.5rem; }
-    .not-for { margin-top: 2rem; padding-top: 1.5rem; border-top: var(--border); }
+    .not-for { margin-top: 2rem; padding-top: 1.5rem; border-top: var(--border); max-width: 62ch; }
 
-    /* 6. How it works */
-    .facts-grid { display: grid; gap: 1.5rem 2rem; margin-top: 1.5rem; grid-template-columns: 1fr 1fr; }
-    @media (min-width: 700px) { .facts-grid { grid-template-columns: repeat(3, 1fr); } }
-    .fact { display: flex; flex-direction: column; gap: 0.4rem; border-top: var(--border); padding-top: 0.9rem; }
-    .fact__label { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--grey); }
+    /* 6. How it works: schedule */
+    .schedule { margin-top: 2rem; display: grid; gap: 1.5rem; }
+    .day-card { border: var(--border); border-radius: var(--radius-lg); padding: 1.5rem 1.75rem; }
+    .day-card__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 1rem; margin-bottom: 0.9rem; }
+    .day-card__day { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h3); }
+    .day-card__meta { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--klein); }
+    .day-card ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.5rem; }
+    .day-card li { font-size: var(--fs-small); }
 
     /* 7. About the guide */
     .guide { display: grid; gap: 2rem; margin-top: 1.5rem; grid-template-columns: 1fr; }
@@ -85,8 +72,7 @@
     .placeholder-box { aspect-ratio: 4 / 5; border: 1px dashed var(--line); border-radius: var(--radius-lg);
                         display: flex; align-items: center; justify-content: center; color: var(--grey);
                         font-family: var(--font-mono); font-size: var(--fs-label); text-align: center; padding: 1rem; }
-    .stat-line { margin-top: 1.5rem; }
-    .stat-line .stat { font-family: var(--font-display); font-size: 1.75rem; color: var(--pink); font-weight: 500; margin-right: 0.3em; }
+    .stat-inline { color: var(--pink); font-weight: 600; }
 
     /* 8. What's included */
     .included-grid { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0.9rem; grid-template-columns: 1fr; }
@@ -150,70 +136,89 @@
       <span class="wordmark">Energencia</span>
     </div>
     <h1>Learn to hold a <span class="spark">sound bath</span>.</h1>
-    <p class="standfirst placeholder">[[ Subline: who it's for + your difference — body-led,
-      person-led, in València, taught in English. ]]</p>
+    <p class="standfirst">A small, hands-on training in València for people who want to facilitate
+      group sound baths with real skill, not a script. Body-led, person-led, taught in English.</p>
     <div class="cta-row">
       <a class="btn btn--primary" href="#apply">Apply ↗</a>
-      <span class="chip">Next cohort · [[ dates ]] · València</span>
-      <span class="chip">Early bird [[ €300 ]] · [[ N ]] spots</span>
+      <span class="chip">Next cohort · 2–4.10.2026 · València</span>
+      <span class="chip">Early bird €450 · Full €550 · 9 spots</span>
     </div>
   </section>
 
   <!-- 3. THE TRANSFORMATION -->
   <section id="transformation" class="section wrap">
-    <p class="label">01 — From → To</p>
-    <div class="transform">
-      <div class="transform__from">
-        <p class="eyebrow">From</p>
-        <h2 class="placeholder">[[ curious about sound / yoga teacher / massage therapist / complete beginner ]]</h2>
-      </div>
-      <div class="transform__arrow" aria-hidden="true">→</div>
-      <div class="transform__to">
-        <p class="eyebrow">To</p>
-        <h2 class="placeholder">[[ confidently facilitating a group sound bath ]]</h2>
-      </div>
-    </div>
-    <p class="standfirst-sm placeholder">[[ One or two honest lines on the shift. ]]</p>
+    <p class="label">01 — The transformation</p>
+    <p class="lead">You already know what a good sound bath does, you've felt it from the mat.
+      Maybe you've picked up a bowl and played a little. But holding a room of your own, start to
+      finish, still feels out of reach. By the end of this training you'll run a full sound bath
+      from the first note to the final silence, reading the people in front of you and adjusting
+      as you go.</p>
+    <p class="punch">Not performing a sequence. <span class="spark">Actually facilitating.</span></p>
   </section>
 
   <!-- 4. WHO IT'S FOR -->
   <section id="who" class="section wrap">
-    <p class="label">02 — Who it's for</p>
-    <ul class="audience-grid placeholder">
-      <li class="audience-card"><span class="n">A</span>[[ audience 1 ]]</li>
-      <li class="audience-card"><span class="n">B</span>[[ audience 2 ]]</li>
-      <li class="audience-card"><span class="n">C</span>[[ audience 3 ]]</li>
-    </ul>
-    <p class="not-for placeholder">[[ "This isn't for you if…" — one honest line. ]]</p>
+    <p class="label">02 — Who it's for, and who it's not</p>
+    <p class="lead">This is for you if you're a yoga teacher or massage therapist who wants to
+      bring sound into your work, someone who's been playing bowls informally and wants to do it
+      properly, or someone new to the field who feels the pull and wants an honest place to start.</p>
+    <p class="not-for">It's not for you if you want a quick certificate for the wall, or a fixed
+      formula to repeat at everyone. This is a body-led craft. It asks you to show up and practice.</p>
   </section>
 
-  <!-- 5. WHAT YOU'LL LEARN (curriculum) -->
+  <!-- 5. WHAT YOU'LL LEARN (the skills) -->
   <section id="learn" class="section wrap">
     <p class="label">03 — What you'll learn</p>
-    <h2>The curriculum</h2>
-    <ul class="modules placeholder">
-      <li><span class="n">01</span><span><b>Foundations</b> — [[ what a sound bath is and does; your body-led philosophy; honest scope ]]</span></li>
-      <li><span class="n">02</span><span><b>The instruments</b> — [[ metal Tibetan bowls: types, tones, choosing, care, setup ]]</span></li>
-      <li><span class="n">03</span><span><b>Technique</b> — [[ striking, rimming, sustain, dynamics, clean transitions ]]</span></li>
-      <li><span class="n">04</span><span><b>Reading the room</b> — [[ nervous-system basics; noticing states; adjusting in real time ]]</span></li>
-      <li><span class="n">05</span><span><b>Holding space</b> — [[ pacing, silence, voice, presence; opening and closing safely ]]</span></li>
-      <li><span class="n">06</span><span><b>Designing a session</b> — [[ the arc of a sound bath; sequencing; your own template ]]</span></li>
-      <li><span class="n">07</span><span><b>Safety and care</b> — [[ contraindications, consent, trauma-awareness, aftercare ]]</span></li>
-      <li><span class="n">08</span><span><b>Your first sessions</b> — [[ setting up your own practice; space; a supported practice run ]]</span></li>
+    <h2>The skills</h2>
+    <ul class="modules">
+      <li><span class="n">01</span><span>How to handle, hold and care for the bowls, and the common mistakes to avoid, from rings and jewellery to how not to grab a ringing bowl</span></li>
+      <li><span class="n">02</span><span>How to strike the bowl with control: the mallet, the space, the tempo, on both small and large sets</span></li>
+      <li><span class="n">03</span><span>How to work around the rim for a more activating sound</span></li>
+      <li><span class="n">04</span><span>The building blocks of a session: opening, building up with rhythm and repetition, moving between grounding and activating sound, and closing</span></li>
+      <li><span class="n">05</span><span>How to open and hold the space, and how to close it well</span></li>
+      <li><span class="n">06</span><span>Rituals and finishing touches, including a waking-up ritual and chimes</span></li>
+      <li><span class="n">07</span><span>How to facilitate a full sound bath on your own, practised on real people and assessed on day two</span></li>
     </ul>
   </section>
 
   <!-- 6. HOW IT WORKS -->
   <section id="how" class="section wrap">
     <p class="label">04 — How it works</p>
-    <h2>The logistics</h2>
-    <div class="facts-grid">
-      <div class="fact"><span class="fact__label">Format</span><span class="placeholder">[[ e.g. one weekend / four evenings ]]</span></div>
-      <div class="fact"><span class="fact__label">Total hours</span><span class="placeholder">[[ hours ]]</span></div>
-      <div class="fact"><span class="fact__label">Dates</span><span class="placeholder">[[ dates ]]</span></div>
-      <div class="fact"><span class="fact__label">Location</span><span class="placeholder">[[ València venue ]]</span></div>
-      <div class="fact"><span class="fact__label">Group size</span><span class="placeholder">[[ small — say the number ]]</span></div>
-      <div class="fact"><span class="fact__label">Language</span><span>English</span></div>
+    <p class="lead">One online theory evening on Friday, 19:30 to 21:00, then two full days in
+      person at De Moon Yoga in València, both from 10:00, around eight hours each with a lunch
+      break. Kept to a small group so everyone gets hands-on time and honest feedback. Taught in
+      English. Bowls are provided, small and large sets, so you don't need your own to begin. You
+      finish by facilitating your own full sound bath, assessed on day two.</p>
+
+    <div class="schedule">
+      <div class="day-card">
+        <p class="day-card__head"><span class="day-card__day">Friday</span><span class="day-card__meta">Online · 19:30–21:00</span></p>
+        <p>The theory evening. We cover the foundations online so both days in the room can be
+          spent playing and practising.</p>
+      </div>
+      <div class="day-card">
+        <p class="day-card__head"><span class="day-card__day">Day one</span><span class="day-card__meta">De Moon Yoga, València · from 10:00 · ~8 hours</span></p>
+        <ul>
+          <li>Opening sound bath, then an opening circle and introductions</li>
+          <li>Handling the bowls: what to avoid, and how to hold them properly</li>
+          <li>Striking the bowl: mallet, space and tempo, then freestyle practice feeling the sound on small and large sets</li>
+          <li>Working the rim for a more activating sound, then freestyle rim practice on small and large sets</li>
+          <li>Lunch</li>
+          <li>In two rotating groups, one playing and one receiving: how to open, how to build up with rhythm and repetition, grounding versus activating sound, and how to close</li>
+          <li>How to open and close the space</li>
+          <li>Two hours of solo practice, a full sound bath each, leaning more activating or more grounding</li>
+        </ul>
+      </div>
+      <div class="day-card">
+        <p class="day-card__head"><span class="day-card__day">Day two</span><span class="day-card__meta">From 10:00 · ~8 hours</span></p>
+        <ul>
+          <li>Opening sound bath and a sharing circle</li>
+          <li>Revision of day one</li>
+          <li>Guiding, rituals, the waking-up ritual and chimes</li>
+          <li>Two hours of guided practice with cues</li>
+          <li>The exam: each person facilitates a full sound bath of around twenty minutes, with timing scaled to the size of the group</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -223,10 +228,16 @@
     <div class="guide">
       <div class="placeholder-box" aria-hidden="true">[[ Photo of Adam ]]</div>
       <div>
-        <h2 class="placeholder">[[ About Adam ]]</h2>
-        <p class="placeholder">[[ Story; bodywork + sound; body-led not protocol-led; your own program,
-          informed by the Peter Hess method but NOT a Peter Hess certification. ]]</p>
-        <p class="stat-line"><span class="stat">350+</span>individual 1:1 clients, and group sound baths for many more.</p>
+        <h2>Adam</h2>
+        <p>I'm Adam. I've been working with the sound since 2020, across Berlin, Mexico and now
+          València. I've worked one to one with more than <span class="stat-inline">350</span>
+          people, and held group sound baths for many more than I could count. What I teach isn't
+          a fixed protocol. My work is body-led and person-led, which means I read the person or
+          the room and follow what's actually happening, rather than running the same sequence at
+          everyone. That comes straight from bodywork, and it's the thing I most want to pass on.
+          This is my own training, shaped by years of my own practice with real people in real
+          rooms, and by everything I've learned across bodywork and sound. The course you take is
+          mine.</p>
       </div>
     </div>
   </section>
@@ -235,19 +246,20 @@
   <section id="included" class="section wrap">
     <p class="label">06 — What's included</p>
     <h2>What's included</h2>
-    <ul class="included-grid placeholder">
-      <li><span class="check">✓</span>[[ contact hours ]]</li>
-      <li><span class="check">✓</span>[[ materials / handbook ]]</li>
-      <li><span class="check">✓</span>[[ practice sessions ]]</li>
-      <li><span class="check">✓</span>[[ follow-up / small group access after ]]</li>
-      <li><span class="check">✓</span>[[ certificate of completion from Adam ]]</li>
+    <ul class="included-grid">
+      <li><span class="check">✓</span>The Friday theory evening plus two full days of hands-on training in a small group</li>
+      <li><span class="check">✓</span>A printed handbook to keep and work from</li>
+      <li><span class="check">✓</span>Guided practice sessions, on each other and on real people</li>
+      <li><span class="check">✓</span>Bowls to learn on, small and large sets, provided throughout</li>
+      <li><span class="check">✓</span>A certificate of completion from me</li>
+      <li><span class="check">✓</span>A place in a small group of graduates to stay connected to afterwards</li>
     </ul>
   </section>
 
   <!-- 9. VOICES -->
   <section id="voices" class="section wrap">
     <p class="label">07 — Voices</p>
-    <h2>What people say</h2>
+    <h2>You don't have to take my word for it.</h2>
     <div class="voices-grid placeholder">
       <blockquote class="voice"><p>“[[ quote ]]”</p><cite>[[ Name ]]</cite></blockquote>
       <blockquote class="voice"><p>“[[ quote ]]”</p><cite>[[ Name ]]</cite></blockquote>
@@ -262,15 +274,19 @@
     <div class="price-grid">
       <div class="price-card price-card--highlight">
         <p class="label">Early bird</p>
-        <p class="price-amount placeholder">[[ €300 ]]</p>
-        <p class="price-deadline placeholder">until [[ deadline date ]]</p>
+        <p class="price-amount">€450</p>
+        <p class="price-deadline">until 13.09.2026</p>
       </div>
       <div class="price-card">
-        <p class="label">Standard</p>
-        <p class="price-amount placeholder">[[ €350 ]]</p>
+        <p class="label">Full price</p>
+        <p class="price-amount">€550</p>
       </div>
     </div>
-    <p class="standfirst-sm placeholder">[[ Recap what's included. ]]</p>
+    <p class="lead">Either price is the full training: the theory evening, both days, the
+      handbook, the practice and your certificate. A <span class="placeholder">[[ €100 ]]</span>
+      deposit holds your spot when you apply, and the balance is due
+      <span class="placeholder">[[ by date / before we begin ]]</span>. Spots are limited to 10,
+      and once the room is full, it's full.</p>
     <a class="btn btn--primary" href="#apply" style="margin-top:1.5rem;">Apply ↗</a>
   </section>
 
@@ -279,12 +295,19 @@
     <p class="label">09 — Questions</p>
     <h2>FAQ</h2>
     <div class="faq-list">
-      <details class="faq-item"><summary>Do I need experience?</summary><p class="placeholder">[[ answer ]]</p></details>
-      <details class="faq-item"><summary>Do I need my own bowls?</summary><p class="placeholder">[[ answer ]]</p></details>
-      <details class="faq-item"><summary>Is it certified?</summary><p class="placeholder">[[ your own certificate; not a Peter Hess certification ]]</p></details>
-      <details class="faq-item"><summary>What if I miss a session?</summary><p class="placeholder">[[ answer ]]</p></details>
-      <details class="faq-item"><summary>Refunds / deposit?</summary><p class="placeholder">[[ answer ]]</p></details>
-      <details class="faq-item"><summary>What should I bring?</summary><p class="placeholder">[[ answer ]]</p></details>
+      <details class="faq-item"><summary>Do I need any experience?</summary><p>No. Complete
+        beginners are welcome, and so are teachers and bodyworkers who want to go deeper. What
+        matters is that you want to practice.</p></details>
+      <details class="faq-item"><summary>Do I need my own bowls?</summary><p>Not to start. Bowls
+        are provided for the training, small and large sets. I'll also show you how to choose your
+        own when you're ready to buy.</p></details>
+      <details class="faq-item"><summary>Is it certified?</summary><p>You get a certificate of
+        completion from me. This is my own independent training, so it's the real, practical skill
+        of facilitating a sound bath rather than an outside accreditation, and I'm clear about
+        that.</p></details>
+      <details class="faq-item"><summary>What if I miss part of it?</summary><p class="placeholder">[[ Your policy. ]]</p></details>
+      <details class="faq-item"><summary>What's your refund policy?</summary><p class="placeholder">[[ Your terms. ]]</p></details>
+      <details class="faq-item"><summary>What should I bring?</summary><p class="placeholder">[[ Comfortable clothes, a notebook, anything else. ]]</p></details>
     </div>
   </section>
 
@@ -292,9 +315,9 @@
   <section id="apply" class="section wrap">
     <div class="final">
       <p class="label" style="color:#b9c2ff;">10 — Join the next cohort</p>
-      <h2 class="placeholder" style="color:var(--white);">[[ Restate the promise in one line ]]</h2>
-      <p style="color:#dfe3ff;" class="placeholder">[[ Booking goes here: link out to, or embed, your
-        chosen tool (Cal.com / Calendly / Fresha / application form). ]]</p>
+      <h2 style="color:var(--white);">If you've read this far, you already feel it.</h2>
+      <p style="color:#dfe3ff;">Learn to hold a sound bath, properly, in a small group in
+        València. Early bird €450 until 13.09.2026.</p>
       <a class="btn btn--signal" href="#" target="_blank" rel="noopener">Apply ↗</a>
     </div>
   </section>
@@ -308,7 +331,9 @@
       <img src="assets/logo-face-ink.png" alt="Energencia" style="height:72px;">
       <span class="wordmark" style="font-size:1.25rem;">Energencia</span>
     </div>
-    <p class="label" style="margin-top:1.5rem;">Sound · Reiki · Bodywork · Kobido · Made in València</p>
+    <p class="label" style="margin-top:1.5rem;">Sound baths, bodywork and training · Made in
+      València · <span class="placeholder">[[ email ]]</span> ·
+      <span class="placeholder">[[ @energencia.es ]]</span></p>
     <nav class="legal-links" style="display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; margin-top:1rem;">
       <a href="legal/legal-notice.html" class="label" style="text-decoration:none;">Legal Notice</a>
       <a href="legal/privacy-policy.html" class="label" style="text-decoration:none;">Privacy Policy</a>
