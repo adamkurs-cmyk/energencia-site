@@ -22,8 +22,8 @@
       position: sticky; top: 0; z-index: 10;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.9rem var(--pad-x);
-      background: linear-gradient(180deg, #FFDA26 0%, var(--yellow) 100%);
-      border-bottom: 1px solid rgba(20,17,13,0.15);
+      background: color-mix(in srgb, var(--white) 90%, transparent);
+      backdrop-filter: blur(6px); border-bottom: var(--border);
     }
     .site-header .lockup img { height: 40px; }
     .site-header .wordmark { font-size: 1.35rem; }
@@ -31,6 +31,7 @@
     .nav a { font-family: var(--font-mono); font-size: var(--fs-label);
              letter-spacing: var(--track-label); text-transform: uppercase;
              color: var(--ink); text-decoration: none; }
+    .nav a.btn--primary { color: var(--white); }
     @media (min-width: 800px) { .nav { display: flex; } }
 
     .hero { padding-block: clamp(3rem, 9vw, 7rem); }
@@ -90,11 +91,14 @@
                   letter-spacing: var(--track-label); text-transform: uppercase; font-style: normal; color: var(--grey); }
 
     /* 10. Price */
+    .price-block { background: var(--yellow); border-radius: var(--radius-lg); padding: clamp(2rem, 6vw, 4rem); }
+    .price-block .label { color: var(--ink); opacity: 0.6; }
+    .price-block .placeholder { color: rgba(20, 17, 13, 0.55); }
     .price-grid { display: grid; gap: 1.25rem; margin-top: 1.5rem; grid-template-columns: 1fr; max-width: 640px; }
     @media (min-width: 600px) { .price-grid { grid-template-columns: 1fr 1fr; } }
-    .price-card { border: var(--border); border-radius: var(--radius-lg); padding: 1.75rem; }
+    .price-card { border: 1px solid var(--ink); border-radius: var(--radius-lg); padding: 1.75rem; }
     .price-card--highlight { background: var(--klein); border-color: var(--klein); color: var(--white); }
-    .price-card--highlight .label { color: #b9c2ff; }
+    .price-card--highlight .label { color: #b9c2ff; opacity: 1; }
     .price-amount { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h2); margin: 0.5rem 0 0.25rem; }
     .price-deadline { font-family: var(--font-mono); font-size: var(--fs-label); }
 
@@ -138,7 +142,7 @@
     <div class="cta-row">
       <a class="btn btn--primary" href="#apply">Apply ↗</a>
       <span class="chip">Next cohort · 2–4.10.2026 · València</span>
-      <span class="chip">Early bird €450 · Full €550 · 9 spots</span>
+      <span class="chip">Early bird €450 · Full €550 · 9 of 10 spots left</span>
     </div>
   </section>
 
@@ -268,25 +272,27 @@
 
   <!-- 10. PRICE -->
   <section id="price" class="section wrap">
-    <p class="label">08 — Price</p>
-    <h2>Join the next cohort</h2>
-    <div class="price-grid">
-      <div class="price-card price-card--highlight">
-        <p class="label">Early bird</p>
-        <p class="price-amount">€450</p>
-        <p class="price-deadline">until 13.09.2026</p>
+    <div class="price-block">
+      <p class="label">08 — Price</p>
+      <h2>Join the next cohort</h2>
+      <div class="price-grid">
+        <div class="price-card price-card--highlight">
+          <p class="label">Early bird</p>
+          <p class="price-amount">€450</p>
+          <p class="price-deadline">until 13.09.2026</p>
+        </div>
+        <div class="price-card">
+          <p class="label">Full price</p>
+          <p class="price-amount">€550</p>
+        </div>
       </div>
-      <div class="price-card">
-        <p class="label">Full price</p>
-        <p class="price-amount">€550</p>
-      </div>
+      <p class="lead">Either price is the full training: the theory evening, both days, the
+        handbook, the practice and your certificate. A <span class="placeholder">[[ €100 ]]</span>
+        deposit holds your spot when you apply, and the balance is due
+        <span class="placeholder">[[ by date / before we begin ]]</span>. 9 of 10 spots left, and
+        once the room is full, it's full.</p>
+      <a class="btn btn--primary" href="#apply" style="margin-top:1.5rem;">Apply ↗</a>
     </div>
-    <p class="lead">Either price is the full training: the theory evening, both days, the
-      handbook, the practice and your certificate. A <span class="placeholder">[[ €100 ]]</span>
-      deposit holds your spot when you apply, and the balance is due
-      <span class="placeholder">[[ by date / before we begin ]]</span>. Spots are limited to 10,
-      and once the room is full, it's full.</p>
-    <a class="btn btn--primary" href="#apply" style="margin-top:1.5rem;">Apply ↗</a>
   </section>
 
   <!-- 11. FAQ -->
