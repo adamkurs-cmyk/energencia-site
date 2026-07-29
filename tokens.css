@@ -99,7 +99,7 @@ img { max-width: 100%; display: block; }
    Practical starting sizes (tune per placement):
    - inline:  mark height ~2x cap  -> e.g. mark 48px, wordmark 1.5rem
    - stacked: mark height ~3x cap  -> e.g. mark 96px, wordmark 2rem      */
-.lockup { display: flex; align-items: center; gap: 0.7em; }
+.lockup { display: flex; align-items: center; gap: 0.7em; text-decoration: none; }
 .lockup--stacked { flex-direction: column; align-items: center; gap: 0.5em; }
 .lockup--offset  { flex-direction: column; align-items: flex-start; gap: 0.5em; }
 .lockup img { height: auto; }

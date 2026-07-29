@@ -38,12 +38,13 @@
     .hero h1 { font-size: var(--fs-hero); font-weight: 600; letter-spacing: -0.02em;
                max-width: 16ch; }
     .accent-klein { color: var(--klein); }
+    .accent-pink { color: var(--pink); }
     .hero .standfirst { font-size: 1.25rem; margin-top: 1.25rem; max-width: 48ch; }
     .cta-row { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; margin-top: 2rem; }
     .chip-row { display: flex; flex-wrap: wrap; gap: 1rem; }
     .chip { font-family: var(--font-mono); font-size: var(--fs-label);
             letter-spacing: var(--track-label); text-transform: uppercase; color: var(--ink);
-            background: var(--yellow); border-radius: 999px; padding: 0.6em 1em; }
+            border: 1px solid var(--ink); border-radius: 999px; padding: 0.6em 1em; }
     .modules { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0; }
     .modules li { border-top: var(--border); padding: 1.1rem 0; display: flex; gap: 1.25rem; }
     .modules li .n { font-family: var(--font-mono); color: var(--klein); font-size: var(--fs-small); }
@@ -142,7 +143,8 @@
     <div class="cta-row">
       <div class="chip-row">
         <span class="chip">Next cohort · 2–4.10.2026 · València</span>
-        <span class="chip">Early bird €450 · Full €550 · 9 of 10 spots left</span>
+        <span class="chip">Early bird <span class="accent-pink">€450</span> · Full
+          <span class="accent-pink">€550</span> · <span class="accent-pink">9 of 10 spots left</span></span>
       </div>
       <a class="btn btn--primary" href="#apply">Apply ↗</a>
     </div>
@@ -330,26 +332,28 @@
   <!-- HOOK: Shop / singing bowls (build later) -->
 
   <!-- 13. FOOTER -->
-  <footer class="section wrap" style="border-top: var(--border);">
-    <div class="lockup lockup--offset">
-      <img src="assets/logo-face-ink.png" alt="Energencia" style="height:72px;">
-      <span class="wordmark" style="font-size:1.25rem;">Energencia</span>
-    </div>
-    <p class="label" style="margin-top:1.5rem;">Sound baths, bodywork and training · Made in
-      València · <span class="placeholder">[[ email ]]</span> ·
-      <span class="placeholder">[[ @energencia.es ]]</span></p>
-    <nav class="legal-links" style="display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; margin-top:1rem;">
-      <a href="legal/legal-notice.html" class="label" style="text-decoration:none;">Legal Notice</a>
-      <a href="legal/privacy-policy.html" class="label" style="text-decoration:none;">Privacy Policy</a>
-      <a href="legal/cookies.html" class="label" style="text-decoration:none;">Cookies</a>
-      <a href="legal/terms.html" class="label" style="text-decoration:none;">Terms &amp; Conditions</a>
-    </nav>
-    <div class="colour-strip" aria-hidden="true">
-      <span style="background:var(--white); border:var(--border);"></span>
-      <span style="background:var(--ink);"></span>
-      <span style="background:var(--yellow); border:1px solid var(--ink);"></span>
-      <span style="background:var(--klein);"></span>
-      <span style="background:var(--pink);"></span>
+  <footer class="section" style="border-top: var(--border);">
+    <div class="wrap">
+      <div class="lockup lockup--offset">
+        <img src="assets/logo-face-ink.png" alt="Energencia" style="height:72px;">
+        <span class="wordmark" style="font-size:1.25rem;">Energencia</span>
+      </div>
+      <p class="label" style="margin-top:1.5rem;">Sound baths, bodywork and training · Made in
+        València · <span class="placeholder">[[ email ]]</span> ·
+        <span class="placeholder">[[ @energencia.es ]]</span></p>
+      <nav class="legal-links" style="display:flex; flex-wrap:wrap; gap:0.5rem 1.25rem; margin-top:1rem;">
+        <a href="legal/legal-notice.html" class="label" style="text-decoration:none;">Legal Notice</a>
+        <a href="legal/privacy-policy.html" class="label" style="text-decoration:none;">Privacy Policy</a>
+        <a href="legal/cookies.html" class="label" style="text-decoration:none;">Cookies</a>
+        <a href="legal/terms.html" class="label" style="text-decoration:none;">Terms &amp; Conditions</a>
+      </nav>
+      <div class="colour-strip" aria-hidden="true">
+        <span style="background:var(--white); border:var(--border);"></span>
+        <span style="background:var(--ink);"></span>
+        <span style="background:var(--yellow); border:1px solid var(--ink);"></span>
+        <span style="background:var(--klein);"></span>
+        <span style="background:var(--pink);"></span>
+      </div>
     </div>
   </footer>
 
