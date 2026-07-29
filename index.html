@@ -22,8 +22,8 @@
       position: sticky; top: 0; z-index: 10;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.9rem var(--pad-x);
-      background: color-mix(in srgb, var(--white) 90%, transparent);
-      backdrop-filter: blur(6px); border-bottom: var(--border);
+      background: linear-gradient(180deg, #FFDA26 0%, var(--yellow) 100%);
+      border-bottom: 1px solid rgba(20,17,13,0.15);
     }
     .site-header .lockup img { height: 40px; }
     .site-header .wordmark { font-size: 1.35rem; }
@@ -34,22 +34,23 @@
     @media (min-width: 800px) { .nav { display: flex; } }
 
     .hero { padding-block: clamp(3rem, 9vw, 7rem); }
-    .hero .lockup--offset img { height: 128px; }
-    .hero .lockup--offset .wordmark { font-size: 2rem; }
     .hero h1 { font-size: var(--fs-hero); font-weight: 600; letter-spacing: -0.02em;
-               margin-top: 2rem; max-width: 16ch; }
-    .spark { color: var(--pink); }
+               max-width: 16ch; }
+    .accent-yellow { color: var(--yellow); }
+    .accent-pink { color: var(--pink); }
     .hero .standfirst { font-size: 1.25rem; margin-top: 1.25rem; max-width: 48ch; }
     .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem; }
     .chip { font-family: var(--font-mono); font-size: var(--fs-label);
             letter-spacing: var(--track-label); text-transform: uppercase; color: var(--ink);
-            border: 1px solid var(--ink); border-radius: 999px; padding: 0.6em 1em; }
+            background: var(--yellow); border-radius: 999px; padding: 0.6em 1em; }
     .modules { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0; }
     .modules li { border-top: var(--border); padding: 1.1rem 0; display: flex; gap: 1.25rem; }
     .modules li .n { font-family: var(--font-mono); color: var(--klein); font-size: var(--fs-small); }
     .placeholder { color: var(--grey); }
     .lead { font-size: 1.25rem; max-width: 62ch; margin-top: 1.5rem; }
-    .punch { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h3); margin-top: 1.5rem; }
+    .punch { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h3); margin: 0; color: var(--ink); }
+    .callout { border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); margin-top: 2rem; }
+    .callout--yellow { background: var(--yellow); }
     .final { background: var(--klein); color: var(--white); border-radius: var(--radius-lg); padding: clamp(2rem,6vw,4rem); }
     .final h2 { color: var(--white); }
     .final .btn--signal { margin-top: 1.5rem; }
@@ -131,11 +132,7 @@
 
   <!-- 2. HERO (above the fold) -->
   <section class="hero wrap">
-    <div class="lockup lockup--offset">
-      <img src="assets/logo-face-ink.png" alt="">
-      <span class="wordmark">Energencia</span>
-    </div>
-    <h1>Learn to hold a <span class="spark">sound bath</span>.</h1>
+    <h1>Learn to hold a <span class="accent-yellow">sound bath</span>.</h1>
     <p class="standfirst">A small, hands-on training in València for people who want to facilitate
       group sound baths with real skill, not a script. Body-led, person-led, taught in English.</p>
     <div class="cta-row">
@@ -153,7 +150,9 @@
       finish, still feels out of reach. By the end of this training you'll run a full sound bath
       from the first note to the final silence, reading the people in front of you and adjusting
       as you go.</p>
-    <p class="punch">Not performing a sequence. <span class="spark">Actually facilitating.</span></p>
+    <div class="callout callout--yellow">
+      <p class="punch">Not performing a sequence. Actually facilitating.</p>
+    </div>
   </section>
 
   <!-- 4. WHO IT'S FOR -->
