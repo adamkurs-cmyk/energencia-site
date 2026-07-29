@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Energencia — Sound Healing Facilitation Training · València</title>
+  <meta name="description" content="A sound healing facilitation training in València. Learn to hold a sound bath, body-led and person-led.">
+  <link rel="icon" href="assets/favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Outfit:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Brand tokens (the backbone) -->
+  <link rel="stylesheet" href="tokens.css">
+
+  <style>
+    /* Minimal starter styles. Claude Code expands these section by section.
+       Everything reads from tokens.css. The CTA text ("Apply ↗") is the single
+       repeated action — keep it identical everywhere. Swap to "Reserve your spot"
+       if you prefer, but change it in every button. */
+    .site-header {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.9rem var(--pad-x);
+      background: color-mix(in srgb, var(--white) 90%, transparent);
+      backdrop-filter: blur(6px); border-bottom: var(--border);
+    }
+    .site-header .lockup img { height: 40px; }
+    .site-header .wordmark { font-size: 1.35rem; }
+    .nav { display: none; gap: 1.5rem; align-items: center; }
+    .nav a { font-family: var(--font-mono); font-size: var(--fs-label);
+             letter-spacing: var(--track-label); text-transform: uppercase;
+             color: var(--ink); text-decoration: none; }
+    @media (min-width: 800px) { .nav { display: flex; } }
+
+    .hero { padding-block: clamp(3rem, 9vw, 7rem); }
+    .hero .lockup--offset img { height: 128px; }
+    .hero .lockup--offset .wordmark { font-size: 2rem; }
+    .hero h1 { font-size: var(--fs-hero); font-weight: 600; letter-spacing: -0.02em;
+               margin-top: 2rem; max-width: 16ch; }
+    .hero h1 .spark { color: var(--pink); }
+    .hero .standfirst { font-size: 1.25rem; margin-top: 1.25rem; max-width: 48ch; }
+    .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem; }
+    .chip { font-family: var(--font-mono); font-size: var(--fs-label);
+            letter-spacing: var(--track-label); text-transform: uppercase; color: var(--ink);
+            border: 1px solid var(--ink); border-radius: 999px; padding: 0.6em 1em; }
+    .modules { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0; }
+    .modules li { border-top: var(--border); padding: 1.1rem 0; display: flex; gap: 1.25rem; }
+    .modules li .n { font-family: var(--font-mono); color: var(--klein); font-size: var(--fs-small); }
+    .modules li b { font-family: var(--font-body); font-weight: 600; }
+    .placeholder { color: var(--grey); }
+    .final { background: var(--klein); color: var(--white); border-radius: var(--radius-lg); padding: clamp(2rem,6vw,4rem); }
+    .final h2 { color: var(--white); }
+    .final .btn--signal { margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- 1. HEADER -->
+  <header class="site-header">
+    <a class="lockup" href="#" aria-label="Energencia home">
+      <img src="assets/logo-face-ink.png" alt="Energencia">
+      <span class="wordmark">Energencia</span>
+    </a>
+    <nav class="nav">
+      <a href="#learn">Training</a>
+      <a href="#how">How it works</a>
+      <a href="#guide">About</a>
+      <a href="#price">Price</a>
+      <a class="btn btn--primary" href="#apply">Apply ↗</a>
+    </nav>
+  </header>
+
+  <!-- 2. HERO (above the fold) -->
+  <section class="hero wrap">
+    <div class="lockup lockup--offset">
+      <img src="assets/logo-face-ink.png" alt="">
+      <span class="wordmark">Energencia</span>
+    </div>
+    <h1>Learn to hold a <span class="spark">sound bath</span>.</h1>
+    <p class="standfirst placeholder">[[ Subline: who it's for + your difference — body-led,
+      person-led, in València, taught in English. ]]</p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="#apply">Apply ↗</a>
+      <span class="chip">Next cohort · [[ dates ]] · València</span>
+      <span class="chip">Early bird [[ €300 ]] · [[ N ]] spots</span>
+    </div>
+  </section>
+
+  <!-- 3. THE TRANSFORMATION -->
+  <section id="transformation" class="section wrap">
+    <p class="label">01 — From → To</p>
+    <h2 class="placeholder">[[ Where they are now → confidently facilitating a group sound bath ]]</h2>
+    <p class="placeholder">[[ One or two honest lines on the shift. ]]</p>
+  </section>
+
+  <!-- 4. WHO IT'S FOR -->
+  <section id="who" class="section wrap">
+    <p class="label">02 — Who it's for</p>
+    <h2 class="placeholder">[[ The three audiences, plainly ]]</h2>
+    <p class="placeholder">[[ "This isn't for you if…" — one honest line. ]]</p>
+  </section>
+
+  <!-- 5. WHAT YOU'LL LEARN (curriculum) -->
+  <section id="learn" class="section wrap">
+    <p class="label">03 — What you'll learn</p>
+    <h2>The curriculum</h2>
+    <ul class="modules placeholder">
+      <li><span class="n">01</span><span><b>Foundations</b> — [[ what a sound bath is and does; your body-led philosophy; honest scope ]]</span></li>
+      <li><span class="n">02</span><span><b>The instruments</b> — [[ metal Tibetan bowls: types, tones, choosing, care, setup ]]</span></li>
+      <li><span class="n">03</span><span><b>Technique</b> — [[ striking, rimming, sustain, dynamics, clean transitions ]]</span></li>
+      <li><span class="n">04</span><span><b>Reading the room</b> — [[ nervous-system basics; noticing states; adjusting in real time ]]</span></li>
+      <li><span class="n">05</span><span><b>Holding space</b> — [[ pacing, silence, voice, presence; opening and closing safely ]]</span></li>
+      <li><span class="n">06</span><span><b>Designing a session</b> — [[ the arc of a sound bath; sequencing; your own template ]]</span></li>
+      <li><span class="n">07</span><span><b>Safety and care</b> — [[ contraindications, consent, trauma-awareness, aftercare ]]</span></li>
+      <li><span class="n">08</span><span><b>Your first sessions</b> — [[ setting up your own practice; space; a supported practice run ]]</span></li>
+    </ul>
+  </section>
+
+  <!-- 6. HOW IT WORKS -->
+  <section id="how" class="section wrap">
+    <p class="label">04 — How it works</p>
+    <h2 class="placeholder">[[ Format, hours, dates, location, group size (small — say it), language ]]</h2>
+  </section>
+
+  <!-- 7. ABOUT THE GUIDE -->
+  <section id="guide" class="section wrap">
+    <p class="label">05 — Your guide</p>
+    <h2 class="placeholder">[[ About Adam ]]</h2>
+    <p class="placeholder">[[ Story; bodywork + sound; body-led not protocol-led; 350+ 1:1 clients and
+      group sound baths for many more; your own program, not a Peter Hess certification. ]]</p>
+  </section>
+
+  <!-- 8. WHAT'S INCLUDED -->
+  <section id="included" class="section wrap">
+    <p class="label">06 — What's included</p>
+    <h2 class="placeholder">[[ The value stack ]]</h2>
+    <p class="placeholder">[[ Contact hours · materials · practice sessions · follow-up · certificate
+      of completion from you · small group after. ]]</p>
+  </section>
+
+  <!-- 9. VOICES -->
+  <section id="voices" class="section wrap">
+    <p class="label">07 — Voices</p>
+    <h2 class="placeholder">[[ What people say ]]</h2>
+    <p class="placeholder">[[ Real testimonials only. 1:1 client ones work for now. ]]</p>
+  </section>
+
+  <!-- 10. PRICE -->
+  <section id="price" class="section wrap">
+    <p class="label">08 — Price</p>
+    <h2 class="placeholder">[[ Early bird vs standard, side by side ]]</h2>
+    <p class="placeholder">[[ Recap what's included; state the early-bird deadline as a real date. ]]</p>
+    <a class="btn btn--primary" href="#apply">Apply ↗</a>
+  </section>
+
+  <!-- 11. FAQ -->
+  <section id="faq" class="section wrap">
+    <p class="label">09 — Questions</p>
+    <h2 class="placeholder">[[ FAQ ]]</h2>
+    <p class="placeholder">[[ Experience needed? Own bowls? Certified (your own, not Peter Hess)?
+      Missed sessions? Refunds? What to bring? ]]</p>
+  </section>
+
+  <!-- 12. FINAL CALL -->
+  <section id="apply" class="section wrap">
+    <div class="final">
+      <p class="label" style="color:#b9c2ff;">10 — Join the next cohort</p>
+      <h2 class="placeholder" style="color:var(--white);">[[ Restate the promise in one line ]]</h2>
+      <p style="color:#dfe3ff;" class="placeholder">[[ Booking goes here: link out to, or embed, your
+        chosen tool (Cal.com / Calendly / Fresha / application form). ]]</p>
+      <a class="btn btn--signal" href="#" target="_blank" rel="noopener">Apply ↗</a>
+    </div>
+  </section>
+
+  <!-- HOOK: 1:1 Services section/page (build later) -->
+  <!-- HOOK: Shop / singing bowls (build later) -->
+
+  <!-- 13. FOOTER -->
+  <footer class="section wrap" style="border-top: var(--border);">
+    <div class="lockup lockup--offset">
+      <img src="assets/logo-face-ink.png" alt="Energencia" style="height:72px;">
+      <span class="wordmark" style="font-size:1.25rem;">Energencia</span>
+    </div>
+    <p class="label" style="margin-top:1.5rem;">Sound · Reiki · Bodywork · Kobido · Made in València</p>
+  </footer>
+
+</body>
+</html>
