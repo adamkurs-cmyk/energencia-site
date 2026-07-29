@@ -37,23 +37,23 @@
     .hero { padding-block: clamp(3rem, 9vw, 7rem); }
     .hero h1 { font-size: var(--fs-hero); font-weight: 600; letter-spacing: -0.02em;
                max-width: 16ch; }
-    .accent-yellow { color: var(--yellow); }
     .accent-pink { color: var(--pink); }
     .hero .standfirst { font-size: 1.25rem; margin-top: 1.25rem; max-width: 48ch; }
-    .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem; }
+    .cta-row { display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; margin-top: 2rem; }
     .chip { font-family: var(--font-mono); font-size: var(--fs-label);
             letter-spacing: var(--track-label); text-transform: uppercase; color: var(--ink);
-            background: var(--yellow); border-radius: 999px; padding: 0.6em 1em; }
+            background: var(--pink); border-radius: 999px; padding: 0.6em 1em; }
     .modules { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: 0; }
     .modules li { border-top: var(--border); padding: 1.1rem 0; display: flex; gap: 1.25rem; }
     .modules li .n { font-family: var(--font-mono); color: var(--klein); font-size: var(--fs-small); }
     .placeholder { color: var(--grey); }
     .lead { font-size: 1.25rem; max-width: 62ch; margin-top: 1.5rem; }
-    .punch { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h3); margin: 0; color: var(--ink); }
+    .punch { font-family: var(--font-body); font-weight: 600; font-size: var(--fs-h3); margin: 0; color: var(--white); }
     .callout { border-radius: var(--radius-lg); padding: clamp(1.5rem, 4vw, 2.5rem); margin-top: 2rem; }
-    .callout--yellow { background: var(--yellow); }
-    .final { background: var(--klein); color: var(--white); border-radius: var(--radius-lg); padding: clamp(2rem,6vw,4rem); }
-    .final h2 { color: var(--white); }
+    .callout--klein { background: var(--klein); }
+    .final { background: var(--yellow); color: var(--ink); border-radius: var(--radius-lg); padding: clamp(2rem,6vw,4rem); }
+    .final h2 { color: var(--ink); }
+    .final .label { color: var(--ink); opacity: 0.6; }
     .final .btn--signal { margin-top: 1.5rem; }
 
     /* 4. Who it's for */
@@ -136,7 +136,7 @@
 
   <!-- 2. HERO (above the fold) -->
   <section class="hero wrap">
-    <h1>Learn to hold a <span class="accent-yellow">sound bath</span>.</h1>
+    <h1>Learn to hold a <span class="accent-pink">sound bath</span>.</h1>
     <p class="standfirst">A small, hands-on training in València for people who want to facilitate
       group sound baths with real skill, not a script. Body-led, person-led, taught in English.</p>
     <div class="cta-row">
@@ -154,7 +154,7 @@
       finish, still feels out of reach. By the end of this training you'll run a full sound bath
       from the first note to the final silence, reading the people in front of you and adjusting
       as you go.</p>
-    <div class="callout callout--yellow">
+    <div class="callout callout--klein">
       <p class="punch">Not performing a sequence. Actually facilitating.</p>
     </div>
   </section>
@@ -318,10 +318,10 @@
   <!-- 12. FINAL CALL -->
   <section id="apply" class="section wrap">
     <div class="final">
-      <p class="label" style="color:#b9c2ff;">10 — Join the next cohort</p>
-      <h2 style="color:var(--white);">If you've read this far, you already feel it.</h2>
-      <p style="color:#dfe3ff;">Learn to hold a sound bath, properly, in a small group in
-        València. Early bird €450 until 13.09.2026.</p>
+      <p class="label">10 — Join the next cohort</p>
+      <h2>If you've read this far, you already feel it.</h2>
+      <p>Learn to hold a sound bath, properly, in a small group in València. Early bird €450 until
+        13.09.2026.</p>
       <a class="btn btn--signal" href="#" target="_blank" rel="noopener">Apply ↗</a>
     </div>
   </section>
