@@ -244,13 +244,17 @@
 
     scrubItems.forEach(function (li) {
       var r = li.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (vh * 0.88 - r.top) / (vh * 0.5)));
+      // A short, fixed-pixel window (not viewport-relative) so each line's fade
+      // completes well before the next line (spaced ~70-90px apart) starts —
+      // that's what makes them pop in one after another as you scroll, instead
+      // of every visible line cross-fading together as one smooth wave.
+      var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / 60));
       li.style.opacity = p.toFixed(3);
       li.style.transform = 'translateY(' + ((1 - p) * 16).toFixed(1) + 'px)';
     });
     if (scrubTail) {
       var tr = scrubTail.getBoundingClientRect();
-      var tp = Math.min(1, Math.max(0, (vh * 0.85 - tr.top) / (vh * 0.4)));
+      var tp = Math.min(1, Math.max(0, (vh * 0.85 - tr.top) / 60));
       scrubTail.style.opacity = tp.toFixed(3);
       scrubTail.style.transform = 'translateY(' + ((1 - tp) * 16).toFixed(1) + 'px)';
     }
