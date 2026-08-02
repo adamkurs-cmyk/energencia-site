@@ -207,18 +207,19 @@
   var curtain = document.querySelector('[data-photogrid]');
   var curtainWrap = curtain ? curtain.closest('[data-pinwrap]') : null;
 
-  // ---- Scroll-scrubbed reveal (03 — What you'll learn list + closing note) ----
+  // ---- Pinned reveal (03 — What you'll learn): the section pins in place,
+  // then each list item + the closing note steps in fully, one after another,
+  // before the next one starts — driven by progress through the pin itself
+  // (not each item's own position, which stays fixed once pinned).
+  var learnPin = document.querySelector('[data-learn-pin]');
   var scrubList = document.querySelector('[data-scrublist]');
   var scrubItems = scrubList ? Array.prototype.slice.call(scrubList.children) : [];
-  scrubItems.forEach(function (li) {
-    li.style.opacity = '0';
-    li.style.transform = 'translateY(56px)';
-  });
   var scrubTail = document.querySelector('[data-scrubtail]');
-  if (scrubTail) {
-    scrubTail.style.opacity = '0';
-    scrubTail.style.transform = 'translateY(56px)';
-  }
+  var scrubSteps = scrubItems.concat(scrubTail ? [scrubTail] : []);
+  scrubSteps.forEach(function (el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(56px)';
+  });
 
   // ---- Header progress bar ----
   var progress = document.querySelector('[data-progress]');
@@ -258,21 +259,18 @@
       curtain.style.transform = 'translateY(' + ((1 - cp) * 100).toFixed(1) + '%)';
     }
 
-    scrubItems.forEach(function (li) {
-      var r = li.getBoundingClientRect();
-      // A short, fixed-pixel window (not viewport-relative) so each line's fade
-      // completes well before the next line (spaced ~70-90px apart) starts —
-      // that's what makes them pop in one after another as you scroll, instead
-      // of every visible line cross-fading together as one smooth wave.
-      var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / 60));
-      li.style.opacity = p.toFixed(3);
-      li.style.transform = 'translateY(' + ((1 - p) * 56).toFixed(1) + 'px)';
-    });
-    if (scrubTail) {
-      var tr = scrubTail.getBoundingClientRect();
-      var tp = Math.min(1, Math.max(0, (vh * 0.85 - tr.top) / 60));
-      scrubTail.style.opacity = tp.toFixed(3);
-      scrubTail.style.transform = 'translateY(' + ((1 - tp) * 56).toFixed(1) + 'px)';
+    if (learnPin && scrubSteps.length) {
+      var lr = learnPin.getBoundingClientRect();
+      var lrange = learnPin.offsetHeight - vh;
+      var lp = lrange > 0 ? Math.min(1, Math.max(0, -lr.top / lrange)) : 0;
+      var n = scrubSteps.length;
+      scrubSteps.forEach(function (el, i) {
+        // Each step gets an equal, non-overlapping slice of the pin's scroll
+        // range — step i only starts once step i-1 has fully completed.
+        var t = Math.min(1, Math.max(0, (lp - i / n) * n));
+        el.style.opacity = t.toFixed(3);
+        el.style.transform = 'translateY(' + ((1 - t) * 56).toFixed(1) + 'px)';
+      });
     }
 
     daycards.forEach(function (card, i) {

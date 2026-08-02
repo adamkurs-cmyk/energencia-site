@@ -78,6 +78,17 @@
       background: var(--white); }
     .scene-quote.pinwrap { height: 260svh; background: var(--klein); }
     .scene-quote .pinwrap-inner { background: var(--klein); }
+    /* Pin the "03 — What you'll learn" section so the whole section first
+       scrolls fully into place (the natural sticky "catch-up" phase), then the
+       extra scroll room here is spent revealing bullets one at a time. */
+    .scene-learn.pinwrap { height: 300svh; }
+    /* The pinned box is exactly one viewport tall, and this section's full
+       content (heading + 7 items + closing note) sits right at that limit —
+       trim a little vertical rhythm here so it comfortably fits with margin
+       to spare on shorter phones, instead of clipping the last item/note. */
+    .scene-learn h2[data-split] { margin-bottom: 0.9rem; }
+    .scene-learn .num-list li { padding: 0.45rem 0; }
+    .scene-learn .list-tail { padding-top: 0.4rem; }
 
     /* ---- Marquee ---- */
     @keyframes energencia-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -212,6 +223,17 @@
       border-radius: var(--radius-lg); z-index: 1; box-shadow: 0 12px 28px rgba(0,0,0,0.18); }
     .card-stack .card-c blockquote { font-size: 0.95rem; }
     .card-stack .card-c figcaption { opacity: 0.8; }
+    /* On narrow viewports the ±110px peek offset pushed the two cream cards mostly
+       or entirely outside .card-stack's own clipped bounds (overflow-x: clip),
+       since the container itself is much narrower than on desktop — they were
+       essentially invisible, not just subtle. Pull the peek distance in so both
+       stay inside the visible area. */
+    @media (max-width: 640px) {
+      .card-stack { height: 420px; }
+      .card-stack figure { width: min(74%, 320px); }
+      .card-stack .card-a { transform: rotate(-6deg) translateX(-38px); }
+      .card-stack .card-b { transform: rotate(4deg) translateX(38px); }
+    }
 
     /* ---- Price ---- */
     .price-cards { display: flex; gap: 1.2rem; flex-wrap: wrap; }
@@ -396,25 +418,27 @@
   </section>
 
   <!-- 03 What you'll learn -->
-  <section class="num-section" style="z-index: 6;">
-    <div class="wrap section">
-      <p class="label section-label" data-reveal="true">03 — What you'll learn</p>
-      <h2 data-split="true" style="font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.1; margin: 0 0 1.4rem; max-width: 22ch;">By the end of the weekend you'll know how to:</h2>
-      <ol class="num-list num-list--hover" data-scrublist="true">
-        <li><span class="n">01</span><span>choose and care for Tibetan singing bowls</span></li>
-        <li><span class="n">02</span><span>strike and play them with confidence</span></li>
-        <li><span class="n">03</span><span>shape grounding and more activating parts of a session</span></li>
-        <li><span class="n">04</span><span>use rhythm, repetition and silence with intention</span></li>
-        <li><span class="n">05</span><span>guide people into and out of deep rest</span></li>
-        <li><span class="n">06</span><span>hold space for a group</span></li>
-        <li><span class="n">07</span><span>facilitate a complete sound bath from beginning to end</span></li>
-      </ol>
-      <div class="list-tail" data-scrubtail="true">
-        <span class="plus" aria-hidden="true">+</span>
-        <p>You'll also understand the foundations behind the practice: nervous system regulation, brain waves, the role of rhythm, and where sound sits within modern wellbeing.</p>
+  <div class="pinwrap scene-learn" data-pinwrap="true" data-learn-pin="true" style="z-index: 6;">
+    <div class="pinwrap-inner">
+      <div class="wrap section">
+        <p class="label section-label" data-reveal="true">03 — What you'll learn</p>
+        <h2 data-split="true" style="font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.1; margin: 0 0 1.4rem; max-width: 22ch;">By the end of the weekend you'll know how to:</h2>
+        <ol class="num-list num-list--hover" data-scrublist="true">
+          <li><span class="n">01</span><span>choose and care for Tibetan singing bowls</span></li>
+          <li><span class="n">02</span><span>strike and play them with confidence</span></li>
+          <li><span class="n">03</span><span>shape grounding and more activating parts of a session</span></li>
+          <li><span class="n">04</span><span>use rhythm, repetition and silence with intention</span></li>
+          <li><span class="n">05</span><span>guide people into and out of deep rest</span></li>
+          <li><span class="n">06</span><span>hold space for a group</span></li>
+          <li><span class="n">07</span><span>facilitate a complete sound bath from beginning to end</span></li>
+        </ol>
+        <div class="list-tail" data-scrubtail="true">
+          <span class="plus" aria-hidden="true">+</span>
+          <p>You'll also understand the foundations behind the practice: nervous system regulation, brain waves, the role of rhythm, and where sound sits within modern wellbeing.</p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- Photo break -->
   <section class="num-section" style="z-index: 7;">
@@ -442,9 +466,9 @@
           <div class="drawline" data-drawline="true"></div>
           <div class="head">Saturday · De Moon Yoga · 10:00–19:00</div>
           <ul>
-            <li>Opening sound bath, then an opening circle and introductions</li>
+            <li>Opening sound bath and an opening circle</li>
             <li>Handling the bowls: what to avoid, and how to hold them</li>
-            <li>Striking the bowl: mallet, space and tempo, then freestyle practice on small and large sets</li>
+            <li>Striking the bowl: mallet, space and tempo, then freestyle practice</li>
             <li>Working the rim for a more activating sound, then freestyle practice</li>
             <li class="meta">Lunch break</li>
             <li>In two rotating groups, one playing and one receiving: opening, building with rhythm and repetition, grounding and activating sound, and closing</li>
