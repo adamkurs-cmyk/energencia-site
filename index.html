@@ -44,7 +44,7 @@
 
     /* ---- Hero ---- */
     .hero-v2 { position: sticky; top: var(--header-h, 60px); background: var(--white); overflow: hidden;
-      height: calc(100svh - var(--header-h, 60px)); display: flex; z-index: 0; }
+      height: calc(100svh - var(--header-h, 60px)); display: flex; isolation: isolate; z-index: 1; }
     .hero-inner { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column;
       gap: clamp(1.2rem, 3svh, 2rem); padding-block: clamp(1.5rem, 3svh, 3rem) clamp(2rem, 5svh, 3.5rem); }
     .hero-v2 h1 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
@@ -66,8 +66,14 @@
     .hero-silhouette { position: absolute; right: clamp(1rem, 4vw, 4rem); bottom: clamp(-1rem, -2vh, 0px); z-index: 0;
       width: min(38vw, 420px); aspect-ratio: 4 / 5; }
 
+    /* ---- Every top-level section gets position:relative + isolation so its own
+       explicit z-index (set inline per section, strictly increasing in document
+       order) always wins — this is what guarantees later content can never be
+       bled through by an earlier sticky/pinned section, in any browser. ---- */
+    .num-section { position: relative; isolation: isolate; background: var(--white); }
+
     /* ---- Pin wrapper (facts curtain) ---- */
-    .pinwrap { position: relative; height: 210svh; background: var(--white); z-index: 2; isolation: isolate; }
+    .pinwrap { position: relative; isolation: isolate; height: 210svh; background: var(--white); }
     .pinwrap-inner { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column;
       background: var(--white); }
     .scene-quote.pinwrap { height: 260svh; background: var(--klein); }
@@ -138,7 +144,7 @@
     .day-card:nth-of-type(2) li.meta { color: rgba(20,17,13,0.6); }
 
     /* ---- Promise scene ---- */
-    .scene-promise { background: var(--klein); color: var(--white); }
+    .scene-promise { position: relative; isolation: isolate; background: var(--klein); color: var(--white); }
     .scene-promise .inner { min-height: 100svh; display: flex; align-items: center; justify-content: center;
       padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 4rem); }
     .scene-promise-content { display: flex; flex-direction: column; align-items: center; gap: clamp(1.4rem, 3svh, 2rem);
@@ -177,7 +183,7 @@
     .spread-grid figcaption { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); text-align: center; }
 
     /* ---- 07 Included (yellow chapter) ---- */
-    .included-chapter { background: var(--yellow); color: var(--ink); }
+    .included-chapter { position: relative; isolation: isolate; background: var(--yellow); color: var(--ink); }
     .chip-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
     .dark-callout { padding: clamp(1.8rem, 4vw, 2.5rem); background: var(--ink); color: var(--white); border-radius: var(--radius-lg);
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; }
@@ -226,7 +232,7 @@
     .faq-item p.placeholder { color: var(--grey); font-family: var(--font-mono); font-size: 0.9375rem; }
 
     /* ---- Final call ---- */
-    .final-call { background: var(--klein); color: var(--white); }
+    .final-call { position: relative; isolation: isolate; background: var(--klein); color: var(--white); }
     .final-call .inner { display: flex; flex-direction: column; gap: 1.6rem; padding-block: clamp(4.5rem, 11vw, 8.5rem); }
     .final-call img { height: 36px; width: auto; align-self: flex-start; }
     .final-call .kicker { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
@@ -242,7 +248,7 @@
     .btn:hover { transform: translateY(-3px) rotate(-1.5deg); }
 
     /* ---- Footer ---- */
-    footer.section { background: var(--white); border-top: var(--border); }
+    footer.section { position: relative; isolation: isolate; background: var(--white); border-top: var(--border); }
     .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); margin-bottom: 2rem; }
     @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } }
     .footer-col { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem; }
@@ -299,7 +305,7 @@
   </section>
 
   <!-- Facts chapter -->
-  <div class="pinwrap" data-pinwrap="true">
+  <div class="pinwrap" data-pinwrap="true" style="z-index: 2;">
     <div class="pinwrap-inner">
       <div class="marquee" data-marquee="true" aria-hidden="true">
         <div class="marquee-track">
@@ -330,7 +336,7 @@
   </div>
 
   <!-- 01 Learn by doing -->
-  <section id="training" class="num-section">
+  <section id="training" class="num-section" style="z-index: 3;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">01 — Learn by doing</p>
       <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 0.9rem; max-width: 20ch;">Most of the weekend is spent playing.</h2>
@@ -349,7 +355,7 @@
   </section>
 
   <!-- 02 Who it's for -->
-  <section class="num-section">
+  <section class="num-section" style="z-index: 4;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">02 — Who it's for</p>
       <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 1.6rem; max-width: 20ch;">This training is for you if any of this sounds like you:</h2>
@@ -367,14 +373,14 @@
   </section>
 
   <!-- Pinned quote scene -->
-  <section class="scene-quote pinwrap" data-scene-quote="true" data-pinwrap="true">
+  <section class="scene-quote pinwrap" data-scene-quote="true" data-pinwrap="true" style="z-index: 5;">
     <div class="pinwrap-inner" data-scene-pin="true">
       <blockquote data-scene-words="true">A sound bath doesn't need to be loud to be powerful.</blockquote>
     </div>
   </section>
 
   <!-- 03 What you'll learn -->
-  <section class="num-section">
+  <section class="num-section" style="z-index: 6;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">03 — What you'll learn</p>
       <h2 data-split="true" style="font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.1; margin: 0 0 1.4rem; max-width: 22ch;">By the end of the weekend you'll know how to:</h2>
@@ -395,7 +401,7 @@
   </section>
 
   <!-- Photo break -->
-  <section class="num-section">
+  <section class="num-section" style="z-index: 7;">
     <div class="wrap section" style="display: flex; justify-content: center;">
       <div class="photo-col">
         <div class="frame"><img src="assets/photos/photo-break.jpg" alt="Bowls laid out before a session" loading="lazy"></div>
@@ -405,7 +411,7 @@
   </section>
 
   <!-- 04 The two days -->
-  <section class="num-section">
+  <section class="num-section" style="z-index: 8;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">04 — The two days</p>
       <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 1.6rem; max-width: 20ch;">The two days</h2>
@@ -447,7 +453,7 @@
   </section>
 
   <!-- The promise -->
-  <section class="scene-promise">
+  <section class="scene-promise" style="z-index: 9;">
     <div class="inner">
       <div class="scene-promise-content" data-stagger="true">
         <div class="kicker">The promise</div>
@@ -459,7 +465,7 @@
   </section>
 
   <!-- 05 Why I created this training -->
-  <section class="num-section">
+  <section class="num-section" style="z-index: 10;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">05 — Why I created this training</p>
       <p class="pull-statement" data-split="true">My job isn't to give you a formula. It's to help you trust your own judgement.</p>
@@ -471,7 +477,7 @@
   </section>
 
   <!-- 06 About me -->
-  <section id="about" class="num-section" style="border-top: var(--border);">
+  <section id="about" class="num-section" style="border-top: var(--border); z-index: 11;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">06 — About me</p>
       <div class="about-grid">
@@ -492,7 +498,7 @@
   </section>
 
   <!-- Photo spread -->
-  <section class="num-section" style="border-top: var(--border);">
+  <section class="num-section" style="border-top: var(--border); z-index: 12;">
     <div class="wrap" style="padding-block: clamp(2.5rem, 6vw, 4rem);">
       <p class="label section-label" data-reveal="true">Experiencing the sound</p>
       <div class="spread-wide" data-speed="0.3">
@@ -520,7 +526,7 @@
   </section>
 
   <!-- 07 What's included -->
-  <section class="included-chapter">
+  <section class="included-chapter" style="z-index: 13;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true" style="color: var(--ink); opacity: 0.65;">07 — What's included</p>
       <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 2rem; max-width: 20ch;">Everything you need is in the room.</h2>
@@ -541,7 +547,7 @@
   </section>
 
   <!-- 08 Voices -->
-  <section class="num-section">
+  <section class="num-section" style="z-index: 14;">
     <div class="wrap section">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: clamp(3rem, 7vw, 4.5rem);">
         <div data-reveal="true">
@@ -571,7 +577,7 @@
   </section>
 
   <!-- 09 Price -->
-  <section id="price" class="num-section" style="border-top: var(--border);">
+  <section id="price" class="num-section" style="border-top: var(--border); z-index: 15;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">09 — Price</p>
       <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 2rem; max-width: 20ch;">One price, everything included.</h2>
@@ -597,7 +603,7 @@
   </section>
 
   <!-- 10 FAQ -->
-  <section class="num-section" style="border-top: var(--border);">
+  <section class="num-section" style="border-top: var(--border); z-index: 16;">
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">10 — FAQ</p>
       <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 2rem; max-width: 20ch;">FAQ</h2>
@@ -631,7 +637,7 @@
   </section>
 
   <!-- Final call -->
-  <section id="apply" class="final-call">
+  <section id="apply" class="final-call" style="z-index: 17;">
     <div class="wrap inner" data-stagger="true">
       <img src="assets/logo-face-white.png" alt="">
       <div class="kicker">Join the next training</div>
@@ -649,7 +655,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="section">
+  <footer class="section" style="z-index: 18;">
     <div class="wrap">
       <div class="footer-grid">
         <div class="footer-col footer-brand">
