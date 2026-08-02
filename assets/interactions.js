@@ -130,11 +130,11 @@
   // ---- Header collapse on scroll past hero ----
   var wordmark = document.querySelector('[data-wordmark]');
   var headnav = document.querySelector('[data-headnav]');
-  var heroSection = document.getElementById('top');
-  if (header && heroSection) {
+  var heroEnd = document.querySelector('[data-hero-end]');
+  if (header && heroEnd) {
     var headerIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        var scrolledPast = e.boundingClientRect.bottom <= (header.offsetHeight + 4);
+        var scrolledPast = e.boundingClientRect.top <= header.offsetHeight;
         if (scrolledPast) {
           header.classList.add('is-scrolled');
         } else {
@@ -142,7 +142,7 @@
         }
       });
     }, { threshold: [0, 1], rootMargin: '-' + (header.offsetHeight) + 'px 0px 0px 0px' });
-    headerIO.observe(heroSection);
+    headerIO.observe(heroEnd);
   }
 
   if (reduced) return;
@@ -180,12 +180,29 @@
       q.appendChild(s);
       return s;
     });
-    sceneWrap = scene.querySelector('[data-scene-pin]');
+    // Progress must be measured against the tall outer wrapper (scene itself, 260svh)
+    // not the inner position:sticky layer — the sticky layer's own height always
+    // equals the viewport, so measuring against it gave a zero scroll range and the
+    // words never lit up.
+    sceneWrap = scene;
   }
 
   // ---- Facts curtain: photo panel rises to cover the stat grid ----
   var curtain = document.querySelector('[data-photogrid]');
   var curtainWrap = curtain ? curtain.closest('[data-pinwrap]') : null;
+
+  // ---- Scroll-scrubbed reveal (03 — What you'll learn list + closing note) ----
+  var scrubList = document.querySelector('[data-scrublist]');
+  var scrubItems = scrubList ? Array.prototype.slice.call(scrubList.children) : [];
+  scrubItems.forEach(function (li) {
+    li.style.opacity = '0';
+    li.style.transform = 'translateY(16px)';
+  });
+  var scrubTail = document.querySelector('[data-scrubtail]');
+  if (scrubTail) {
+    scrubTail.style.opacity = '0';
+    scrubTail.style.transform = 'translateY(16px)';
+  }
 
   // ---- Header progress bar ----
   var progress = document.querySelector('[data-progress]');
@@ -223,6 +240,19 @@
       var crange = curtainWrap.offsetHeight - vh;
       var cp = crange > 0 ? Math.min(1, Math.max(0, -cr.top / crange)) : 0;
       curtain.style.transform = 'translateY(' + ((1 - cp) * 100).toFixed(1) + '%)';
+    }
+
+    scrubItems.forEach(function (li) {
+      var r = li.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, (vh * 0.88 - r.top) / (vh * 0.5)));
+      li.style.opacity = p.toFixed(3);
+      li.style.transform = 'translateY(' + ((1 - p) * 16).toFixed(1) + 'px)';
+    });
+    if (scrubTail) {
+      var tr = scrubTail.getBoundingClientRect();
+      var tp = Math.min(1, Math.max(0, (vh * 0.85 - tr.top) / (vh * 0.4)));
+      scrubTail.style.opacity = tp.toFixed(3);
+      scrubTail.style.transform = 'translateY(' + ((1 - tp) * 16).toFixed(1) + 'px)';
     }
 
     daycards.forEach(function (card, i) {
