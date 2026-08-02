@@ -215,9 +215,12 @@
     .dark-callout p { margin: 0; font-weight: 500; font-size: clamp(1.15rem, 2.5vw, 1.45rem); line-height: 1.35; max-width: 32ch; }
 
     /* ---- Voices card stack ---- */
-    .stat-5 { text-align: right; }
+    .stat-5 { text-align: right; text-decoration: none; display: block; transition: opacity .2s ease; }
+    .stat-5:hover { opacity: 0.7; }
     .stat-5 .num { font-family: var(--font-mono); font-weight: 500; font-size: clamp(2.4rem, 5vw, 3.2rem); line-height: 1; color: var(--klein); }
-    .stat-5 .lbl { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+    .stat-5 .lbl { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); text-decoration: underline; }
+    .reviews-link { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; color: var(--klein); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+    .reviews-link:hover { opacity: 0.7; }
     .card-stack { position: relative; height: 460px; display: flex; align-items: center; justify-content: center; overflow-x: clip; }
     .card-stack figure { position: absolute; margin: 0; width: min(70%, 320px); padding: 1.5rem; background: #F4F0E6;
       border-radius: var(--radius-lg); box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: transform .25s ease; }
@@ -604,25 +607,28 @@
           <p class="label section-label" style="color: var(--klein);">08 — Voices</p>
           <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0; max-width: 20ch;">You don't have to take my word for it.</h2>
         </div>
-        <div class="stat-5" data-reveal="true">
+        <a class="stat-5" data-reveal="true" href="https://maps.app.goo.gl/5hhmcyRJsXDfBCvb6" target="_blank" rel="noopener">
           <div class="num">5.0</div>
           <div class="lbl">on Google as Energencia</div>
-        </div>
+        </a>
       </div>
       <div class="card-stack" data-cards="true">
         <figure class="card-a">
           <blockquote>"I felt very safe with Adam. He has a beautiful energy and holds the space in the best of ways."</blockquote>
-          <figcaption>— [ name ]</figcaption>
+          <figcaption>— Marije Terluin</figcaption>
         </figure>
         <figure class="card-b">
           <blockquote>"Adam is a really nice and trustful person, so much warmness. It helped me be calm days after."</blockquote>
-          <figcaption>— [ name ]</figcaption>
+          <figcaption>— Brenda Hervás Fernández</figcaption>
         </figure>
         <figure class="card-c">
           <blockquote>"I at once felt very comfortable and at ease. His presence is one of relaxation and professionalism."</blockquote>
-          <figcaption>— [ name ]</figcaption>
+          <figcaption>— Elizabeth Eason</figcaption>
         </figure>
       </div>
+      <p style="margin: 1.6rem 0 0; text-align: center;">
+        <a href="https://maps.app.goo.gl/5hhmcyRJsXDfBCvb6" target="_blank" rel="noopener" class="reviews-link">Read these and more real reviews on Google →</a>
+      </p>
     </div>
   </section>
 
