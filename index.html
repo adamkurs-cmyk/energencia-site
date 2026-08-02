@@ -116,7 +116,10 @@
        sizing its frame from viewport WIDTH (like the other photo-cols) can make the
        frame + caption taller than the box on wide-but-short (laptop) viewports,
        clipping the caption. Size from viewport HEIGHT instead so it always fits. */
-    .photogrid .photo-col .frame { width: auto; height: min(42svh, 380px); }
+    /* Source video is 639x1035 — kept a bit under 2x-retina-safe width
+       (~320px, i.e. ~480px height at this 2:3 frame) so it stays crisp
+       rather than being upscaled past its native resolution. */
+    .photogrid .photo-col .frame { width: auto; height: min(46svh, 440px); }
     .photogrid .photo-caption { max-width: 32ch; }
 
     .section-label { margin-bottom: 1.2rem; }
@@ -207,10 +210,10 @@
     .spread-grid .frame img, .spread-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .spread-grid figcaption { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); text-align: center; }
 
-    /* ---- Learn-by-doing photo row (same frame treatment as the photo spread,
-       but 3 horizontal cards instead of 4 portrait ones) ---- */
-    .learn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
-    @media (max-width: 640px) { .learn-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; } }
+    /* ---- Learn-by-doing photo column (same frame treatment as the photo
+       spread, but 3 equal-size horizontal cards stacked one below another,
+       at every screen size, rather than a responsive row/grid) ---- */
+    .learn-grid { display: flex; flex-direction: column; gap: 0.7rem; max-width: 480px; margin-inline: auto; }
     .learn-grid figure { margin: 0; }
     .learn-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 4/3; overflow: hidden; }
     .learn-grid .frame img, .learn-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
