@@ -210,12 +210,12 @@
     .spread-grid .frame img, .spread-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .spread-grid figcaption { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); text-align: center; }
 
-    /* ---- Learn-by-doing photo column (same frame treatment as the photo
-       spread, but 3 equal-size horizontal cards stacked one below another,
-       at every screen size, rather than a responsive row/grid) ---- */
-    .learn-grid { display: flex; flex-direction: column; gap: 0.7rem; max-width: 480px; margin-inline: auto; }
+    /* ---- Learn-by-doing photo column: same frame treatment AND proportions
+       (16:7, matching .spread-wide) as the photo spread further down, but 3
+       equal-size cards stacked one below another, at every screen size. ---- */
+    .learn-grid { display: flex; flex-direction: column; gap: 0.8rem; }
     .learn-grid figure { margin: 0; }
-    .learn-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 4/3; overflow: hidden; }
+    .learn-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 16/7; overflow: hidden; }
     .learn-grid .frame img, .learn-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* ---- 07 Included (yellow chapter) ---- */
