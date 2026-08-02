@@ -18,8 +18,13 @@
     .legal-wrap p, .legal-wrap li { font-size: var(--fs-small); }
     .legal-wrap ul { padding-left: 1.25rem; }
     .fact-list { list-style: none; padding: 0; margin: 1.5rem 0; border-top: var(--border); }
-    .fact-list li { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: var(--border); }
+    .fact-list li { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; padding: 0.75rem 0; border-bottom: var(--border); }
     .fact-list .k { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--grey); flex: 0 0 11rem; }
+    /* The value after .k is a bare text node or a long link (e.g. an email
+       address) — as a flex item it defaults to a content-based minimum
+       width and won't shrink, forcing the row wider than the viewport on
+       mobile. min-width: 0 lets it actually wrap instead of overflowing. */
+    .fact-list li a { min-width: 0; overflow-wrap: break-word; word-break: break-word; }
     .placeholder { color: var(--grey); }
     .legal-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: var(--border); }
     .legal-nav a { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--klein); text-decoration: none; }
@@ -33,7 +38,7 @@
   <main class="legal-wrap">
     <p class="label">Privacy</p>
     <h1>Privacy Policy</h1>
-    <p class="updated placeholder">Last updated: [[ date ]]</p>
+    <p class="updated">Last updated: 2 August 2026</p>
 
     <p>This policy explains what personal data this website and Adam's related practice collect,
       why, and what rights you have over it, in line with the EU General Data Protection
@@ -48,33 +53,35 @@
     <h2>What we collect, and why</h2>
     <p>We only collect what's needed to reply to you, run the training, or provide 1:1 sessions:</p>
     <ul>
-      <li><strong>Enquiry / application forms</strong> — name, email, and anything else you choose
-        to write. Used to answer you and process your application. Legal basis: your consent and,
-        once you enrol, performance of the training contract.</li>
-      <li><strong>Booking &amp; payment</strong> — handled by an external provider
-        (<span class="placeholder">[[ Cal.com / Calendly / Fresha / application form provider ]]</span>),
-        not stored on this site. Their own privacy policy governs that data; a link to it is given
-        wherever their booking widget appears.</li>
+      <li><strong>Application</strong> — name, email, and anything else you choose to write,
+        collected through a Google Form. Used to answer you and process your application; Google
+        processes and stores that data as our processor, governed by their own privacy policy.
+        Legal basis: your consent and, once you enrol, performance of the training contract. There
+        is no booking widget embedded on this site.</li>
+      <li><strong>Payment</strong> — by direct bank transfer once your application is accepted. No
+        card or payment data is collected or stored on this site; the transfer itself is handled
+        between you and your bank, governed by their own terms.</li>
       <li><strong>Testimonials</strong> — first name (and photo, if given) published only with your
         explicit permission.</li>
     </ul>
-    <p class="placeholder">[[ If a mailing list / newsletter tool is added later, describe it here:
-      provider name, what's collected, and that people can unsubscribe at any time. ]]</p>
 
     <h2>How long we keep it</h2>
-    <p class="placeholder">[[ e.g. enquiry data kept for 12 months if you don't proceed; client
-      records kept for the period required by Spanish tax/accounting law (typically 4–6 years) once
-      you've paid for a service. ]]</p>
+    <p>Applications that don't lead to enrolment are kept for 12 months from your enquiry, then
+      deleted. Once you enrol, records tied to the training (application, correspondence, payment
+      confirmation) are kept for as long as Spanish law requires for tax and accounting purposes —
+      generally 4 years under the Ley General Tributaria, and up to 6 years for commercial
+      correspondence and books under Article 30 of the Código de Comercio — after which they're
+      deleted unless we're required to keep them longer.</p>
 
     <h2>Who we share it with</h2>
-    <p>Only the external booking/payment provider named above, and, if legally required, Spanish
-      tax authorities. We don't sell or trade personal data.</p>
+    <p>Only Google (as the form provider named above), and, if legally required, Spanish tax
+      authorities. We don't sell or trade personal data.</p>
 
     <h2>International transfers</h2>
-    <p class="placeholder">[[ State here if any tool used (booking, email, hosting) stores data
-      outside the EU/EEA, and note the safeguard in place (e.g. an EU-US Data Privacy Framework
-      certification or Standard Contractual Clauses). Leave this out entirely if every tool used
-      stores data inside the EU. ]]</p>
+    <p>Google Forms may process and store data outside the EU/EEA. Google LLC is certified under
+      the EU-U.S. Data Privacy Framework, which the European Commission recognises as providing an
+      adequate level of protection for this kind of transfer. No other tool used by this site
+      transfers data outside the EU/EEA.</p>
 
     <h2>Your rights</h2>
     <p>Under GDPR you can ask us at any time to:</p>

@@ -18,8 +18,13 @@
     .legal-wrap p, .legal-wrap li { font-size: var(--fs-small); }
     .legal-wrap ul { padding-left: 1.25rem; }
     .fact-list { list-style: none; padding: 0; margin: 1.5rem 0; border-top: var(--border); }
-    .fact-list li { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: var(--border); }
+    .fact-list li { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; padding: 0.75rem 0; border-bottom: var(--border); }
     .fact-list .k { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--grey); flex: 0 0 11rem; }
+    /* The value after .k is a bare text node or a long link (e.g. an email
+       address) — as a flex item it defaults to a content-based minimum
+       width and won't shrink, forcing the row wider than the viewport on
+       mobile. min-width: 0 lets it actually wrap instead of overflowing. */
+    .fact-list li a { min-width: 0; overflow-wrap: break-word; word-break: break-word; }
     .placeholder { color: var(--grey); }
     .legal-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: var(--border); }
     .legal-nav a { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--klein); text-decoration: none; }
@@ -33,7 +38,7 @@
   <main class="legal-wrap">
     <p class="label">Legal notice</p>
     <h1>Aviso Legal</h1>
-    <p class="updated placeholder">Last updated: [[ date ]]</p>
+    <p class="updated">Last updated: 2 August 2026</p>
 
     <p>In compliance with Spain's Law 34/2002 on Information Society Services and Electronic
       Commerce (LSSI-CE), the following information identifies who provides this website and the
