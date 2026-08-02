@@ -196,12 +196,12 @@
   var scrubItems = scrubList ? Array.prototype.slice.call(scrubList.children) : [];
   scrubItems.forEach(function (li) {
     li.style.opacity = '0';
-    li.style.transform = 'translateY(16px)';
+    li.style.transform = 'translateY(56px)';
   });
   var scrubTail = document.querySelector('[data-scrubtail]');
   if (scrubTail) {
     scrubTail.style.opacity = '0';
-    scrubTail.style.transform = 'translateY(16px)';
+    scrubTail.style.transform = 'translateY(56px)';
   }
 
   // ---- Header progress bar ----
@@ -250,13 +250,13 @@
       // of every visible line cross-fading together as one smooth wave.
       var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / 60));
       li.style.opacity = p.toFixed(3);
-      li.style.transform = 'translateY(' + ((1 - p) * 16).toFixed(1) + 'px)';
+      li.style.transform = 'translateY(' + ((1 - p) * 56).toFixed(1) + 'px)';
     });
     if (scrubTail) {
       var tr = scrubTail.getBoundingClientRect();
       var tp = Math.min(1, Math.max(0, (vh * 0.85 - tr.top) / 60));
       scrubTail.style.opacity = tp.toFixed(3);
-      scrubTail.style.transform = 'translateY(' + ((1 - tp) * 16).toFixed(1) + 'px)';
+      scrubTail.style.transform = 'translateY(' + ((1 - tp) * 56).toFixed(1) + 'px)';
     }
 
     daycards.forEach(function (card, i) {
