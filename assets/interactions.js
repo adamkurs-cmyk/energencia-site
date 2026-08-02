@@ -14,6 +14,22 @@
   setHeaderHeight();
   window.addEventListener('resize', setHeaderHeight);
 
+  // ---- Ensure background videos actually autoplay on mobile ----
+  // A below-the-fold <video autoplay> is unreliable on iOS/mobile Safari —
+  // it can stay paused until an explicit play() call fires after the
+  // element is actually on screen. This guarantees playback starts (and
+  // resumes if the OS paused it) once each video scrolls into view.
+  document.querySelectorAll('video[autoplay]').forEach(function (v) {
+    var tryPlay = function () { v.play().catch(function () {}); };
+    var vio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) tryPlay(); });
+    }, { threshold: 0.15 });
+    vio.observe(v);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) tryPlay();
+    });
+  });
+
   // ---- Word-split headlines (data-split) ----
   document.querySelectorAll('[data-split]').forEach(function (h) {
     var words = h.textContent.split(/\s+/).filter(Boolean);
