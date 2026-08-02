@@ -16,140 +16,201 @@
   <style>
     html { scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    ::selection { background: var(--yellow); color: var(--ink); }
+    @keyframes floatface-sm { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-3px) rotate(4deg); } }
+    @media (prefers-reduced-motion: reduce) { [data-headface] { animation: none !important; } }
 
-    /* ---- Header + scroll progress bar ---- */
-    .site-header {
-      position: sticky; top: 0; z-index: 50;
-      background: color-mix(in srgb, var(--white) 94%, transparent);
-      backdrop-filter: blur(8px); border-bottom: var(--border);
-    }
-    .site-header .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-      padding-block: 0.7rem; }
-    .progress { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
-      background: var(--klein); transform: scaleX(0); transform-origin: left; }
-    .site-header .lockup img { height: 34px; }
-    .site-header .wordmark { font-size: 1.05rem; }
-    .nav { display: none; gap: clamp(0.8rem, 3vw, 1.6rem); align-items: center; }
-    .nav a { font-family: var(--font-mono); font-size: 0.7rem;
-             letter-spacing: var(--track-label); text-transform: uppercase;
-             color: var(--ink); text-decoration: none; }
-    .nav a:hover { color: var(--klein); }
-    .nav a.btn--primary { color: var(--white); }
-    .nav a.btn--primary:hover { color: var(--white); }
-    @media (min-width: 800px) { .nav { display: flex; } }
+    .silhouette { clip-path: polygon(8% 0%, 92% 4%, 100% 22%, 88% 40%, 100% 58%, 94% 82%, 78% 100%, 40% 96%, 18% 100%, 0% 86%, 6% 60%, 0% 38%, 10% 18%);
+      overflow: hidden; background: #F4F0E6; }
+    .silhouette img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ---- Header ---- */
+    .site-header { position: sticky; top: 0; z-index: 50; background: var(--white); transition: background-color .35s ease; }
+    .site-header.is-scrolled { background: color-mix(in srgb, var(--white) 80%, transparent); backdrop-filter: blur(10px); }
+    .header-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.65rem; min-width: 0; }
+    .site-header .lockup img { height: 32px; animation: floatface-sm 6s ease-in-out infinite; }
+    .wordmark-wrap { display: inline-block; overflow: hidden; max-width: 200px; transition: max-width .35s ease, opacity .35s ease; }
+    .site-header.is-scrolled .wordmark-wrap { max-width: 0; opacity: 0; }
+    .nav { display: flex; align-items: center; gap: clamp(0.8rem, 3vw, 1.6rem); font-family: var(--font-mono);
+      font-size: 0.7rem; letter-spacing: var(--track-label); text-transform: uppercase; min-width: 0;
+      max-width: 0; opacity: 0; overflow: hidden; pointer-events: none; transition: max-width .35s ease, opacity .35s ease; }
+    .site-header.is-scrolled .nav { max-width: 600px; opacity: 1; pointer-events: auto; }
+    .nav a { text-decoration: none; color: var(--ink); white-space: nowrap; }
+    .nav a:hover { opacity: 0.6; }
+    .nav a.btn { color: var(--white); }
+    .nav a.btn:hover { opacity: 1; transform: translateY(-2px) rotate(-1deg); }
+    .progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--klein);
+      transform: scaleX(0); transform-origin: left; }
 
     /* ---- Hero ---- */
-    .hero { padding: clamp(3.5rem, 9vw, 7rem) 0 clamp(4rem, 10vw, 8rem); overflow-x: clip; }
-    .hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-      gap: clamp(2rem, 5vw, 3.5rem); align-items: end; }
-    .date-chip { display: inline-flex; font-family: var(--font-mono); font-size: 0.75rem;
-      letter-spacing: 0.08em; padding: 0.6em 1em; border-radius: var(--radius); background: var(--yellow);
-      color: var(--ink); margin-bottom: 1.6rem; }
-    .hero h1 { font-size: clamp(2.6rem, 7vw, 4.5rem); line-height: 1.06; letter-spacing: -0.01em;
-      margin: 0 0 1.4rem; max-width: 14ch; text-wrap: balance; }
-    .underline-yellow { background: linear-gradient(to top, var(--yellow) 0.18em, transparent 0.18em); }
-    .hero .standfirst { margin: 0 0 2rem; max-width: 40ch; font-size: clamp(1.125rem, 2.2vw, 1.3rem);
-      font-weight: 300; line-height: 1.5; }
-    .hero-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; }
-    .hero-cta-row .price-note { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; color: var(--grey); }
-    .hero-photo-col { max-width: 420px; width: 100%; justify-self: start; }
-    .hero-photo-frame { position: relative; aspect-ratio: 3 / 4; width: 100%; }
-    .hero-photo-panel { position: absolute; top: 1.2rem; left: 1.2rem; right: -1.2rem; bottom: -1.2rem;
-      background: var(--yellow); border-radius: var(--radius); }
-    .hero-credibility { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--grey); margin-top: 0.7rem; }
+    .hero-v2 { position: sticky; top: var(--header-h, 60px); background: var(--white); overflow: hidden;
+      height: calc(100svh - var(--header-h, 60px)); display: flex; }
+    .hero-inner { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column;
+      gap: clamp(1.2rem, 3svh, 2rem); padding-block: clamp(1.5rem, 3svh, 3rem) clamp(2rem, 5svh, 3.5rem); }
+    .hero-v2 h1 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+      font-size: clamp(2.2rem, min(9vw, 12svh), 6rem); line-height: 0.9; letter-spacing: -0.015em; margin: 0; max-width: 14ch; }
+    .hero-v2 h1 .row { display: block; overflow: hidden; }
+    .hero-v2 h1 .row > span { display: block; transform: translateY(110%); }
+    @keyframes heroline-in { to { transform: translateY(0); } }
+    .hero-v2 h1 .row > span { animation: heroline-in 1s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: var(--d, 0s); }
+    @media (prefers-reduced-motion: reduce) { .hero-v2 h1 .row > span { animation: none; transform: none; } }
+    .hero-v2 h1 .klein { color: var(--klein); }
+    .hero-v2 h1 .yellow { color: var(--yellow); }
+    .hero-media { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(1.2rem, 3svh, 2rem);
+      max-width: 60ch; opacity: 0; transform: translateY(20px); animation: heroline-in 1.2s cubic-bezier(.22,.61,.36,1) forwards;
+      animation-delay: .85s; }
+    @keyframes heroline-in-media { to { opacity: 1; transform: none; } }
+    .hero-media { animation-name: heroline-in-media; }
+    @media (prefers-reduced-motion: reduce) { .hero-media { animation: none; opacity: 1; transform: none; } }
+    .hero-media p { margin: 0; max-width: 34ch; font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.5; font-weight: 400; }
+    .hero-silhouette { position: absolute; right: clamp(1rem, 4vw, 4rem); bottom: clamp(-1rem, -2vh, 0px); z-index: 0;
+      width: min(38vw, 420px); aspect-ratio: 4 / 5; }
 
-    .photo-slot { position: relative; width: 100%; height: 100%; border-radius: var(--radius);
-      border: 1px dashed var(--grey); background: var(--line);
-      display: flex; align-items: center; justify-content: center; text-align: center; padding: 1rem;
-      color: var(--grey); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em; }
+    /* ---- Pin wrapper (facts curtain) ---- */
+    .pinwrap { position: relative; height: 210svh; }
+    .pinwrap-inner { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
+    .scene-quote.pinwrap { height: 260svh; }
 
     /* ---- Marquee ---- */
     @keyframes energencia-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .marquee { position: relative; z-index: 1; background: var(--yellow); color: var(--ink); overflow: hidden;
-      border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
-    .marquee-track { display: flex; width: max-content; animation: energencia-marquee 30s linear infinite; }
+    .marquee { background: var(--yellow); padding: 0.85rem 0; overflow: hidden; }
+    .marquee-track { display: flex; width: max-content; animation: energencia-marquee 26s linear infinite; }
     @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
-    .marquee-track span { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.12em;
-      text-transform: uppercase; white-space: nowrap; padding: 0.85rem 0; }
+    .marquee-track span { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.18em;
+      text-transform: uppercase; white-space: nowrap; padding-right: 3rem; }
 
-    /* ---- Numbered sections ---- */
-    .num-section { position: relative; z-index: 1; background: var(--white); border-top: var(--border); }
-    .num-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(2rem, 5vw, 4rem); }
-    .numeral { font-family: var(--font-mono); font-size: clamp(3rem, 7vw, 5.5rem); line-height: 1;
-      color: var(--klein); margin-bottom: 1.2rem; }
-    .numeral--yellow { color: var(--yellow); }
-    .numeral--pink { color: var(--pink); }
-    .num-section h2 { font-size: var(--fs-h2); }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: clamp(1.5rem, 4vw, 3rem); }
+    .stat-grid > div { border-top: 2px solid var(--yellow); padding-top: 1rem; }
+    .stat-grid .k { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+      opacity: 0.55; margin-bottom: 0.8rem; }
+    .stat-grid .v { font-family: var(--font-mono); font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.6; }
 
-    .pull-quote { margin: 0; padding-left: 1.4rem; border-left: 3px solid var(--klein);
-      font-weight: 500; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.3; letter-spacing: -0.01em;
-      max-width: 26ch; text-wrap: pretty; }
+    .photogrid { position: absolute; inset: 0; z-index: 5; background: var(--white); display: flex; align-items: center;
+      transform: translateY(100%); }
+    .photo-caption { margin: 0; text-align: center; font-family: var(--font-mono); font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+    .photo-col { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+    .photo-col .frame { width: min(48vw, 420px); aspect-ratio: 2 / 3; background: #F4F0E6; border-radius: var(--radius); overflow: hidden; }
+    .photo-col .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .bullet-list { list-style: none; margin: 0 0 1.8rem; padding: 0; display: flex; flex-direction: column;
-      gap: 0.7rem; max-width: 62ch; }
-    .bullet-list li { padding-left: 1.4rem; position: relative; }
-    .bullet-list li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 8px; height: 8px;
-      background: var(--yellow); }
+    .section-label { margin-bottom: 1.2rem; }
 
-    .hairline-list { list-style: none; margin: 0 0 1.8rem; padding: 0; display: flex; flex-direction: column;
-      max-width: 62ch; }
-    .hairline-list li { display: flex; gap: 1rem; padding: 0.7rem 0; border-bottom: var(--border); }
-    .hairline-list li:last-child { border-bottom: none; }
-    .hairline-list .n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--klein); padding-top: 0.35em; }
-    .hairline-list.plain li { display: block; }
-    .hairline-list .meta { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--grey); }
+    /* ---- Numbered lists with yellow rule ---- */
+    .num-list { list-style: none; margin: 0 0 1.8rem; padding: 0; display: flex; flex-direction: column; max-width: 62ch; }
+    .num-list li { display: flex; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--yellow); }
+    .num-list .n { font-family: var(--font-mono); font-size: 0.75rem; color: var(--klein); padding-top: 0.35em; flex-shrink: 0; }
+    .num-list--hover li { transition: padding-left .2s ease, background .2s ease; }
+    .num-list--hover li:hover { padding-left: 0.8rem; background: linear-gradient(to right, rgba(255,212,0,0.35), transparent); }
 
-    /* ---- The two days: sticky stacking cards ---- */
+    .klein-card { background: var(--klein); color: var(--white); border-radius: 8px; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .klein-card p { margin: 0; max-width: 62ch; }
+    .muted { color: var(--grey); }
+
+    /* ---- Quote scene ---- */
+    .scene-quote { background: var(--klein); color: var(--white); }
+    .scene-quote .pinwrap-inner { align-items: center; justify-content: center; }
+    .scene-quote blockquote { position: relative; margin: 0; font-family: var(--font-display); font-weight: 600;
+      text-transform: uppercase; font-size: clamp(1.9rem, 6vw, 4.4rem); line-height: 1.05; letter-spacing: -0.01em;
+      max-width: 18ch; text-align: center; padding-inline: clamp(1.25rem, 4vw, 4rem); }
+
+    /* ---- 03 tail note ---- */
+    .list-tail { display: flex; gap: 0.9rem; align-items: flex-start; max-width: 62ch; padding-top: 0.6rem; }
+    .list-tail .plus { font-family: var(--font-mono); font-weight: 500; font-size: 1.2rem; line-height: 1.4; color: var(--klein); flex-shrink: 0; }
+    .list-tail p { margin: 0; font-size: 0.95rem; }
+
+    /* ---- Day cards ---- */
     .day-stack { display: flex; flex-direction: column; }
-    .day-card { position: sticky; background: var(--white); border: var(--border); border-radius: var(--radius-lg);
-      padding: 1.6rem clamp(1.2rem, 3vw, 2rem) 2rem; margin-bottom: 1.2rem; }
-    .day-card:nth-of-type(1) { top: 88px; z-index: 1; }
-    .day-card:nth-of-type(2) { top: 104px; z-index: 2; }
-    .day-card:nth-of-type(3) { top: 120px; z-index: 3; margin-bottom: 0; }
-    .day-card .drawline { height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left;
-      margin-bottom: 1.4rem; }
-    .day-card .head { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.14em;
-      text-transform: uppercase; margin-bottom: 0.8rem; }
+    .day-card { position: sticky; top: calc(var(--header-h, 60px) + 15px); background: var(--white);
+      border: 1px solid var(--ink); border-radius: var(--radius-lg); padding: 1.6rem clamp(1.2rem, 3vw, 2rem) 2rem;
+      margin-bottom: 1.2rem; transition: transform .2s ease, opacity .2s ease; }
+    .day-card:nth-of-type(1) { z-index: 1; }
+    .day-card:nth-of-type(2) { z-index: 2; background: var(--yellow); border-color: rgba(20,17,13,0.4); }
+    .day-card:nth-of-type(3) { z-index: 3; margin-bottom: 0; }
+    .day-card .drawline { height: 2px; background: var(--ink); transform: scaleX(0); transform-origin: left; margin-bottom: 1.4rem; }
+    .day-card .head { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.8rem; }
     .day-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; max-width: 62ch; }
-    .day-card li { padding: 0.55rem 0; border-bottom: var(--border); }
+    .day-card li { padding: 0.55rem 0; border-bottom: 1px solid rgba(20,17,13,0.15); }
     .day-card li:last-child { border-bottom: none; }
-    .day-card li.meta { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--grey); }
+    .day-card li.meta { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+    .day-card:nth-of-type(2) li { border-bottom-color: rgba(20,17,13,0.3); }
+    .day-card:nth-of-type(2) li.meta { color: rgba(20,17,13,0.6); }
 
-    /* ---- Photo strip ---- */
-    .photo-strip { position: relative; z-index: 1; background: var(--white); border-top: var(--border);
-      padding: clamp(3rem, 7vw, 5rem) 0; overflow: hidden; }
-    .photo-strip-row { display: flex; gap: 1rem; width: max-content; padding-left: var(--pad-x); }
-    .photo-strip-row > div { flex: none; height: 340px; }
+    /* ---- Promise scene ---- */
+    .scene-promise { background: var(--klein); color: var(--white); }
+    .scene-promise .inner { min-height: 100svh; display: flex; align-items: center; justify-content: center;
+      padding: clamp(3rem, 8vw, 5rem) clamp(1.25rem, 4vw, 4rem); }
+    .scene-promise-content { display: flex; flex-direction: column; align-items: center; gap: clamp(1.4rem, 3svh, 2rem);
+      text-align: center; max-width: 700px; }
+    .scene-promise .kicker { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(254,253,250,0.6); }
+    .scene-promise img { height: clamp(48px, 8vw, 64px); width: auto; }
+    .scene-promise p.statement { margin: 0; font-weight: 600; letter-spacing: -0.01em; font-size: clamp(2rem, 6vw, 3.8rem);
+      line-height: 1.05; max-width: 16ch; }
 
-    /* ---- CTA band (included section) ---- */
-    .cta-band { margin-top: clamp(3rem, 7vw, 5rem); padding: clamp(1.8rem, 4vw, 2.5rem); background: var(--yellow);
-      border-radius: var(--radius-lg); display: flex; flex-wrap: wrap; align-items: center;
-      justify-content: space-between; gap: 1.2rem; }
-    .cta-band p { margin: 0; font-weight: 500; font-size: clamp(1.15rem, 2.5vw, 1.45rem); line-height: 1.35;
-      max-width: 32ch; color: var(--ink); text-wrap: pretty; }
+    .pull-statement { margin: 0 0 2.2rem; font-weight: 600; letter-spacing: -0.01em; font-size: clamp(1.9rem, 5vw, 3rem);
+      line-height: 1.15; max-width: 22ch; color: var(--klein); }
+    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(1.5rem, 4vw, 2.5rem); }
+    .two-col p { margin: 0; max-width: 40ch; }
 
-    /* ---- Voices ---- */
-    .voices-sub { margin: 0; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--grey); }
-    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
-    .testimonial-card { margin: 0; padding: 1.8rem; border: var(--border); border-radius: var(--radius-lg);
-      display: flex; flex-direction: column; gap: 0.9rem; }
-    .testimonial-card .glyph { font-family: var(--font-display); font-weight: 600; font-size: 3rem;
-      line-height: 0.5; color: var(--pink); }
-    .testimonial-card blockquote { margin: 0; font-size: var(--fs-body); line-height: var(--lh-body); }
-    .testimonial-card figcaption { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em;
-      color: var(--grey); margin-top: auto; }
+    /* ---- About me ---- */
+    .about-grid { display: grid; grid-template-columns: min(38vw, 340px) 1fr; gap: clamp(2rem, 5vw, 3rem); align-items: start; }
+    @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-photo { width: 100%; aspect-ratio: 4/5; transform: rotate(-2deg); }
+    .about-lead { margin: 0 0 1.2rem; font-weight: 600; letter-spacing: -0.01em; font-size: clamp(1.5rem, 3.4vw, 2rem);
+      line-height: 1.2; color: var(--klein); max-width: 26ch; }
+    .pill { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 999px; padding: 0.4em 0.9em; display: inline-flex; align-items: center; }
+    .pill--outline { border: 1px solid var(--ink); }
+    .pill--dark { background: var(--ink); color: var(--yellow); font-size: 0.9rem; letter-spacing: normal; text-transform: none; font-family: var(--font-body); padding: 0.55em 1.1em; }
+    .pill--final { border: 1px solid rgba(254,253,250,0.4); }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+    /* ---- Photo spread ---- */
+    .spread-wide { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 16/7; overflow: hidden; margin-bottom: 0.8rem; }
+    .spread-wide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .spread-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
+    @media (max-width: 640px) { .spread-grid { grid-template-columns: repeat(2, 1fr); } }
+    .spread-grid figure { margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    .spread-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 3/4; overflow: hidden; }
+    .spread-grid .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .spread-grid figcaption { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); text-align: center; }
+
+    /* ---- 07 Included (yellow chapter) ---- */
+    .included-chapter { background: var(--yellow); color: var(--ink); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+    .dark-callout { padding: clamp(1.8rem, 4vw, 2.5rem); background: var(--ink); color: var(--white); border-radius: var(--radius-lg);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; }
+    .dark-callout p { margin: 0; font-weight: 500; font-size: clamp(1.15rem, 2.5vw, 1.45rem); line-height: 1.35; max-width: 32ch; }
+
+    /* ---- Voices card stack ---- */
+    .stat-5 { text-align: right; }
+    .stat-5 .num { font-family: var(--font-mono); font-weight: 500; font-size: clamp(2.4rem, 5vw, 3.2rem); line-height: 1; color: var(--klein); }
+    .stat-5 .lbl { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+    .card-stack { position: relative; height: 460px; display: flex; align-items: center; justify-content: center; overflow-x: clip; }
+    .card-stack figure { position: absolute; margin: 0; width: min(70%, 320px); padding: 1.5rem; background: #F4F0E6;
+      border-radius: var(--radius-lg); box-shadow: 0 8px 20px rgba(0,0,0,0.08); transition: transform .25s ease; }
+    .card-stack figure:hover { transform: var(--hover-transform, none); }
+    .card-stack blockquote { margin: 0 0 0.6rem; font-size: 0.85rem; line-height: 1.45; }
+    .card-stack figcaption { font-family: var(--font-mono); font-size: 0.66rem; color: var(--grey); }
+    .card-stack .card-a { top: 0; transform: rotate(-6deg) translateX(-110px); }
+    .card-stack .card-b { bottom: 0; transform: rotate(4deg) translateX(110px); }
+    .card-stack .card-c { position: relative; width: min(75%, 360px); padding: 1.8rem; background: var(--klein); color: var(--white);
+      border-radius: var(--radius-lg); z-index: 1; box-shadow: 0 12px 28px rgba(0,0,0,0.18); }
+    .card-stack .card-c blockquote { font-size: 0.95rem; }
+    .card-stack .card-c figcaption { opacity: 0.8; }
 
     /* ---- Price ---- */
-    .price-figures { display: flex; gap: 2.5rem; align-items: baseline; }
-    .price-figures .amount { font-family: var(--font-mono); font-weight: 500; line-height: 1; }
-    .price-figures .amount--big { font-size: clamp(3rem, 7vw, 4.5rem); color: var(--klein); }
-    .price-figures .amount--small { font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 400; color: var(--grey); }
-    .price-figures .tag { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--grey); margin-top: 0.5rem; }
+    .price-cards { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    .price-card { border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2rem); }
+    .price-card--klein { background: var(--klein); color: var(--white); }
+    .price-card--outline { border: var(--border); }
+    .price-card .amount { font-family: var(--font-mono); font-size: clamp(3rem, 7vw, 4.5rem); font-weight: 500; line-height: 1; }
+    .price-card--outline .amount { font-weight: 400; color: var(--grey); }
+    .price-card .tag { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.6rem; opacity: 0.75; }
+    .price-card--outline .tag { color: var(--grey); opacity: 1; }
+    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(2rem, 5vw, 3rem); align-items: start; }
+    .fact-row { display: flex; gap: 1rem; padding: 0.7rem 0; border-bottom: var(--border); }
+    .fact-row:last-of-type { border-bottom: none; }
+    .fact-row .k { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); flex-shrink: 0; width: 9ch; }
 
     /* ---- FAQ ---- */
     .faq-list { display: flex; flex-direction: column; max-width: 62ch; }
@@ -157,187 +218,224 @@
     .faq-item summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between;
       align-items: baseline; gap: 1rem; padding: 1.3rem 0; font-weight: 600; font-size: var(--fs-body); }
     .faq-item summary::-webkit-details-marker { display: none; }
-    .faq-item summary::after { content: "+"; font-family: var(--font-mono); font-size: 0.9rem; color: var(--klein);
-      flex-shrink: 0; }
+    .faq-item summary::after { content: "+"; font-family: var(--font-mono); font-size: 0.9rem; color: var(--klein); flex-shrink: 0; }
     .faq-item[open] summary::after { content: "–"; }
     .faq-item p { margin: 0; padding: 0 0 1.3rem; }
     .faq-item p.placeholder { color: var(--grey); font-family: var(--font-mono); font-size: 0.9375rem; }
 
     /* ---- Final call ---- */
     .final-call { background: var(--klein); color: var(--white); }
-    .final-call .inner { display: flex; flex-direction: column; align-items: flex-start; gap: 1.4rem;
-      padding-block: clamp(4.5rem, 11vw, 8.5rem); }
-    .final-call .kicker { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.16em;
-      text-transform: uppercase; opacity: 0.75; }
-    .final-call h2 { font-size: clamp(2rem, 5.5vw, 3.25rem); margin: 0; max-width: 20ch; text-wrap: balance;
-      color: var(--white); }
-    .final-call p { margin: 0; max-width: 40ch; font-size: clamp(1.1rem, 2.2vw, 1.3rem); font-weight: 300; }
-    .btn--inverse { background: var(--white); color: var(--klein); margin-top: 0.8rem; }
+    .final-call .inner { display: flex; flex-direction: column; gap: 1.6rem; padding-block: clamp(4.5rem, 11vw, 8.5rem); }
+    .final-call img { height: 36px; width: auto; align-self: flex-start; }
+    .final-call .kicker { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; }
+    .final-call h2 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
+      font-size: clamp(2rem, 5.5vw, 3.4rem); line-height: 0.95; margin: 0; max-width: 20ch; color: var(--white); }
+    .final-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem;
+      padding-top: 0.6rem; border-top: 1px solid rgba(254,253,250,0.25); }
+    .final-bottom p { margin: 0; max-width: 34ch; font-size: clamp(1.1rem, 2.2vw, 1.3rem); font-weight: 300; }
+
+    /* ---- Buttons ---- */
+    .btn--yellow { background: var(--yellow); color: var(--ink); }
+    .btn--inverse { background: var(--white); color: var(--klein); }
+    .btn:hover { transform: translateY(-3px) rotate(-1.5deg); }
 
     /* ---- Footer ---- */
     footer.section { background: var(--white); border-top: var(--border); }
-    .footer-inner { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
-    .footer-tagline { margin: 0.5rem 0 0; color: var(--grey); font-size: var(--fs-small); }
-    .footer-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.4rem;
-      font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--grey); }
-    .footer-row a { color: var(--grey); text-decoration: none; }
-    .footer-row a:hover { color: var(--klein); }
-    .legal-row { margin-top: 0.5rem; }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); margin-bottom: 2rem; }
+    @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem; }
+    .footer-col .col-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); margin-bottom: 0.2rem; }
+    .footer-col a { text-decoration: none; }
+    .footer-col a:hover { color: var(--klein); }
+    .footer-brand img { height: 40px; width: auto; align-self: flex-start; transition: transform .3s ease; }
+    .footer-brand img:hover { transform: rotate(6deg); }
+    .footer-brand .wordmark { font-size: 1rem; }
+    .footer-brand p { margin: 0; color: var(--grey); font-size: 0.88rem; max-width: 22ch; }
+    .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem; padding-top: 1.2rem;
+      border-top: var(--border); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); }
+    .legal-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; margin-top: 1rem; }
     .legal-row a { text-decoration: none; }
   </style>
 </head>
 <body>
 
   <!-- Header -->
-  <header class="site-header">
+  <header class="site-header" data-header="true">
     <div class="progress" data-progress="true"></div>
-    <div class="wrap bar">
+    <div class="wrap header-bar">
       <a class="lockup" href="#top" aria-label="Energencia home">
-        <img src="assets/logo-face-ink.png" alt="Energencia">
-        <span class="wordmark">Energencia</span>
+        <img src="assets/logo-face-ink.png" alt="Energencia" data-headface="true">
+        <span class="wordmark-wrap"><span class="wordmark">Energencia</span></span>
       </a>
-      <nav class="nav">
+      <nav class="nav" data-headnav="true">
         <a href="#training">Training</a>
         <a href="#about">About</a>
         <a href="#price">Price</a>
-        <a class="btn btn--primary" href="#apply">Apply</a>
+        <a class="btn btn--signal" href="#apply">Apply</a>
       </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section id="top" class="hero wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="date-chip">Friday 2 to Sunday 4 October 2026 · València</span>
-        <h1>Learn to hold a <span class="underline-yellow">sound bath</span>.</h1>
-        <p class="standfirst">A small, practical training in València. Two days of playing and
-          practising, until you can guide a complete sound bath of your own. Taught in English.</p>
-        <div class="hero-cta-row">
-          <a class="btn btn--primary" href="#apply">Apply</a>
-          <span class="price-note">€450 early bird · 9 of 10 places left</span>
-        </div>
+  <section id="top" class="hero-v2">
+    <div class="wrap hero-inner">
+      <h1>
+        <span class="row"><span style="--d:0s">Learn</span></span>
+        <span class="row"><span style="--d:.16s">to hold</span></span>
+        <span class="row"><span class="klein" style="--d:.32s">a sound</span></span>
+        <span class="row"><span class="klein" style="--d:.48s">bath<span class="yellow">.</span></span></span>
+      </h1>
+      <div class="hero-media">
+        <p>A small, practical training in València. Two days of playing and practising, until you
+          can guide a complete sound bath of your own. Taught in English.</p>
+        <a class="btn btn--primary" href="#apply">Apply</a>
       </div>
-      <div class="hero-photo-col">
-        <div class="hero-photo-frame" data-parallax="-0.03">
-          <div class="hero-photo-panel"></div>
-          <div class="photo-slot" style="position: relative;">Drop a photo — hands on a bowl, warm light</div>
-        </div>
-        <div class="hero-credibility">Since 2020 · 350+ sessions · Berlin, Tulum &amp; València</div>
-      </div>
+    </div>
+    <div class="hero-silhouette silhouette" aria-hidden="true">
+      <img src="assets/photos/hero-photo.jpg" alt="" loading="eager">
     </div>
   </section>
 
-  <!-- Marquee -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>Friday 2 – Sunday 4 October 2026&nbsp;&nbsp;·&nbsp;&nbsp;De Moon Yoga, València&nbsp;&nbsp;·&nbsp;&nbsp;Early bird €450&nbsp;&nbsp;·&nbsp;&nbsp;9 of 10 places left&nbsp;&nbsp;·&nbsp;&nbsp;Taught in English&nbsp;&nbsp;·&nbsp;&nbsp;Friday 2 – Sunday 4 October 2026&nbsp;&nbsp;·&nbsp;&nbsp;De Moon Yoga, València&nbsp;&nbsp;·&nbsp;&nbsp;Early bird €450&nbsp;&nbsp;·&nbsp;&nbsp;9 of 10 places left&nbsp;&nbsp;·&nbsp;&nbsp;Taught in English&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-      <span>Friday 2 – Sunday 4 October 2026&nbsp;&nbsp;·&nbsp;&nbsp;De Moon Yoga, València&nbsp;&nbsp;·&nbsp;&nbsp;Early bird €450&nbsp;&nbsp;·&nbsp;&nbsp;9 of 10 places left&nbsp;&nbsp;·&nbsp;&nbsp;Taught in English&nbsp;&nbsp;·&nbsp;&nbsp;Friday 2 – Sunday 4 October 2026&nbsp;&nbsp;·&nbsp;&nbsp;De Moon Yoga, València&nbsp;&nbsp;·&nbsp;&nbsp;Early bird €450&nbsp;&nbsp;·&nbsp;&nbsp;9 of 10 places left&nbsp;&nbsp;·&nbsp;&nbsp;Taught in English&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+  <!-- Facts chapter -->
+  <div class="pinwrap" data-pinwrap="true">
+    <div class="pinwrap-inner">
+      <div class="marquee" data-marquee="true" aria-hidden="true">
+        <div class="marquee-track">
+          <span>València — 02–04 Oct 2026 — Tibetan bowl training — €450 early bird — 10 places — taught in English —</span>
+          <span>València — 02–04 Oct 2026 — Tibetan bowl training — €450 early bird — 10 places — taught in English —</span>
+        </div>
+      </div>
+      <div style="flex: 1; display: flex; align-items: center; width: 100%;">
+        <div class="wrap" style="padding-block: clamp(3rem, 7vw, 5rem); display: flex; flex-direction: column; gap: clamp(2.5rem, 6svh, 4.5rem);">
+          <h2 data-split="true" style="font-size: clamp(1.8rem, 4.5vw, 3rem); line-height: 1.08; margin: 0; max-width: 24ch;">A weekend training with Tibetan singing bowls.</h2>
+          <div class="stat-grid" data-stagger="true">
+            <div><div class="k">When</div><div class="v">FRI 2 – SUN 4<br>OCTOBER 2026</div></div>
+            <div><div class="k">Where</div><div class="v">DE MOON YOGA<br>VALÈNCIA + ONLINE FRI</div></div>
+            <div><div class="k">Price</div><div class="v">€450 EARLY BIRD<br>€550 FULL</div></div>
+            <div><div class="k">Places</div><div class="v">9 OF 10<br>STILL OPEN</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="photogrid" data-photogrid="true">
+        <div class="wrap" style="width: 100%; display: flex; justify-content: center;">
+          <div class="photo-col">
+            <div class="frame"><div class="photo-slot" style="width:100%;height:100%;">Drop a photo — the singing bowls</div></div>
+            <p class="photo-caption" data-reveal="true">Since 2020 · 350+ clients · group sound baths in Berlin, Tulum &amp; València</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- 01 Learn by doing -->
   <section id="training" class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral">01</div>
-        <h2>Learn by doing</h2>
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">01 — Learn by doing</p>
+      <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 0.9rem; max-width: 20ch;">Most of the weekend is spent playing.</h2>
+      <p data-reveal="true" style="margin: 0 0 clamp(2.5rem, 6vw, 3.5rem); max-width: 62ch;">You practise on your own and in pairs, and you receive as many sound baths as you facilitate. The skill comes from your hands.</p>
+      <div class="stat-grid" data-stagger="true" style="margin-bottom: clamp(3rem, 7vw, 5rem);">
+        <div><div class="k">Practice</div><div class="v">SOLO &amp;<br>IN PAIRS</div></div>
+        <div><div class="k">Ratio</div><div class="v">80% PRACTISING<br>20% THEORY</div></div>
+        <div><div class="k">Feedback</div><div class="v">AFTER EVERY<br>ROUND</div></div>
+        <div><div class="k">Outcome</div><div class="v">LEAD A FULL<br>SOUND BATH</div></div>
       </div>
-      <div>
-        <p>Most of the weekend is spent playing. You practise in pairs, in small groups and on your
-          own, and you receive as many sound baths as you facilitate. The theory explains why. The
-          skill comes from your hands. The aim is simple: to leave ready to lead your own sessions.</p>
-        <blockquote class="pull-quote" data-parallax="0.06" data-fill="true">A sound bath doesn't
-          need to be loud to be powerful.</blockquote>
+      <div class="photo-col" style="margin-inline: auto;">
+        <div class="frame"><div class="photo-slot" style="width:100%;height:100%;">Drop a photo — practising in pairs</div></div>
+        <p class="photo-caption" data-reveal="true">Hands-on from hour one · small groups · every round, feedback</p>
       </div>
     </div>
   </section>
 
   <!-- 02 Who it's for -->
   <section class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral numeral--yellow">02</div>
-        <h2>Who it's for</h2>
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">02 — Who it's for</p>
+      <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 1.6rem; max-width: 20ch;">This training is for you if any of this sounds like you:</h2>
+      <ol class="num-list">
+        <li><span class="n">01</span><span>you teach yoga, meditation or breathwork and want to bring sound into your classes</span></li>
+        <li><span class="n">02</span><span>you work with the body and want to expand your practice</span></li>
+        <li><span class="n">03</span><span>you've been playing bowls on your own and want more structure</span></li>
+        <li><span class="n">04</span><span>you're new to it, but feel drawn to working with sound</span></li>
+      </ol>
+      <div class="klein-card">
+        <p>You don't need your own bowls, and you don't need any experience.</p>
       </div>
-      <div>
-        <p>This training is for you if any of this sounds like you:</p>
-        <ul class="bullet-list">
-          <li>you teach yoga, meditation or breathwork and want to bring sound into your classes</li>
-          <li>you work with the body and want to expand your practice</li>
-          <li>you've been playing bowls on your own and want more structure</li>
-          <li>you're new to it, but feel drawn to working with sound</li>
-        </ul>
-        <p>You don't need your own bowls, and you don't need any experience. It probably isn't for
-          you if you're after a quick certificate or a fixed formula to repeat. This is a practical
-          craft, and it asks you to show up and play.</p>
-      </div>
+      <p class="muted" style="margin: 0; max-width: 62ch;">It probably isn't for you if you're after a quick certificate or a fixed formula to repeat. This is a practical craft, and it asks you to show up and play.</p>
+    </div>
+  </section>
+
+  <!-- Pinned quote scene -->
+  <section class="scene-quote pinwrap" data-scene-quote="true" data-pinwrap="true">
+    <div class="pinwrap-inner" data-scene-pin="true">
+      <blockquote data-scene-words="true">A sound bath doesn't need to be loud to be powerful.</blockquote>
     </div>
   </section>
 
   <!-- 03 What you'll learn -->
   <section class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral">03</div>
-        <h2>What you'll learn</h2>
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">03 — What you'll learn</p>
+      <h2 data-split="true" style="font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.1; margin: 0 0 1.4rem; max-width: 22ch;">By the end of the weekend you'll know how to:</h2>
+      <ol class="num-list num-list--hover" data-stagger="true">
+        <li><span class="n">01</span><span>choose and care for Tibetan singing bowls</span></li>
+        <li><span class="n">02</span><span>strike and play them with confidence</span></li>
+        <li><span class="n">03</span><span>shape grounding and more activating parts of a session</span></li>
+        <li><span class="n">04</span><span>use rhythm, repetition and silence with intention</span></li>
+        <li><span class="n">05</span><span>guide people into and out of deep rest</span></li>
+        <li><span class="n">06</span><span>hold space for a group</span></li>
+        <li><span class="n">07</span><span>facilitate a complete sound bath from beginning to end</span></li>
+      </ol>
+      <div class="list-tail" data-reveal="true">
+        <span class="plus" aria-hidden="true">+</span>
+        <p>You'll also understand the foundations behind the practice: nervous system regulation, brain waves, the role of rhythm, and where sound sits within modern wellbeing.</p>
       </div>
-      <div>
-        <p>By the end of the weekend you'll know how to:</p>
-        <ol class="hairline-list" data-stagger="true">
-          <li><span class="n">01</span><span>choose and care for Tibetan singing bowls</span></li>
-          <li><span class="n">02</span><span>strike and play them with confidence</span></li>
-          <li><span class="n">03</span><span>shape grounding and more activating parts of a session</span></li>
-          <li><span class="n">04</span><span>use rhythm, repetition and silence with intention</span></li>
-          <li><span class="n">05</span><span>guide people into and out of deep rest</span></li>
-          <li><span class="n">06</span><span>hold space for a group</span></li>
-          <li><span class="n">07</span><span>facilitate a complete sound bath from beginning to end</span></li>
-        </ol>
-        <p>You'll also understand the foundations behind the practice: nervous system regulation,
-          brain waves, the role of rhythm, and where sound sits within modern wellbeing.</p>
+    </div>
+  </section>
+
+  <!-- Photo break -->
+  <section class="num-section">
+    <div class="wrap section" style="display: flex; justify-content: center;">
+      <div class="photo-col">
+        <div class="frame"><img src="assets/photos/photo-break.jpg" alt="Bowls laid out before a session" loading="lazy"></div>
+        <p class="photo-caption" data-reveal="true">Bowls laid out before a session</p>
       </div>
     </div>
   </section>
 
   <!-- 04 The two days -->
   <section class="num-section">
-    <div class="wrap section" data-reveal="true">
-      <div style="max-width: 62ch; margin-bottom: clamp(2.5rem, 6vw, 4rem);">
-        <div class="numeral">04</div>
-        <h2 style="margin: 0 0 1.2rem;">The two days</h2>
-        <p style="margin: 0;">Three parts: a theory evening online on the Friday, then two full
-          days in the room at De Moon Yoga, València. A small group, taught in English, with all
-          the bowls provided.</p>
-      </div>
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">04 — The two days</p>
+      <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 1.6rem; max-width: 20ch;">The two days</h2>
+      <p data-reveal="true" style="margin: 0 0 clamp(2.5rem, 6vw, 4rem); max-width: 62ch;">Three parts: a theory evening online on the Friday, then two full days in the room at De Moon Yoga, València. A small group, taught in English, with all the bowls provided.</p>
       <div class="day-stack">
-        <div class="day-card">
+        <div class="day-card" data-daycard="true">
           <div class="drawline" data-drawline="true"></div>
           <div class="head">Friday · online · 19:30–21:00</div>
-          <p style="margin: 0;">The theory evening. We cover the foundations online, so both days
-            in the room can be spent playing.</p>
+          <p style="margin: 0;">The theory evening. We cover the foundations online, so both days in the room can be spent playing.</p>
         </div>
-        <div class="day-card">
+        <div class="day-card" data-daycard="true">
           <div class="drawline" data-drawline="true"></div>
-          <div class="head">Saturday · De Moon Yoga · 10:00 – 19:00 (8 hours, with a lunch break)</div>
+          <div class="head">Saturday · De Moon Yoga · 10:00–19:00</div>
           <ul>
             <li>Opening sound bath, then an opening circle and introductions</li>
             <li>Handling the bowls: what to avoid, and how to hold them</li>
             <li>Striking the bowl: mallet, space and tempo, then freestyle practice on small and large sets</li>
             <li>Working the rim for a more activating sound, then freestyle practice</li>
-            <li class="meta">Lunch</li>
+            <li class="meta">Lunch break</li>
             <li>In two rotating groups, one playing and one receiving: opening, building with rhythm and repetition, grounding and activating sound, and closing</li>
             <li>Opening and closing the space</li>
             <li>Two hours of solo practice, a full sound bath each</li>
           </ul>
         </div>
-        <div class="day-card">
+        <div class="day-card" data-daycard="true">
           <div class="drawline" data-drawline="true"></div>
-          <div class="head">Sunday · from 10:00 – 19:00 (8 hours, with a lunch break)</div>
+          <div class="head">Sunday · 10:00–19:00</div>
           <ul>
             <li>Opening sound bath and a sharing circle</li>
             <li>Revision of the day before</li>
             <li>Guiding, rituals, the waking-up ritual, and chimes</li>
+            <li class="meta">Lunch break</li>
             <li>Two hours of guided practice with cues</li>
             <li>The exam: each person facilitates their own full sound bath, around twenty minutes each</li>
           </ul>
@@ -346,115 +444,124 @@
     </div>
   </section>
 
+  <!-- The promise -->
+  <section class="scene-promise">
+    <div class="inner">
+      <div class="scene-promise-content" data-stagger="true">
+        <div class="kicker">The promise</div>
+        <img src="assets/logo-face-white.png" alt="">
+        <p class="statement">By Sunday evening, you hold a full sound bath yourself.</p>
+        <a class="btn btn--yellow" href="#apply">Apply</a>
+      </div>
+    </div>
+  </section>
+
   <!-- 05 Why I created this training -->
   <section class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral">05</div>
-        <h2>Why I created this training</h2>
-      </div>
-      <div>
-        <p>I wanted to teach for a long time before I felt ready. When I looked at other trainings,
-          many of them felt overwhelming. Some tried to cover every instrument. Others stayed so
-          broad that people finished without knowing how to actually begin.</p>
-        <p>I wanted something simpler. One instrument, plenty of practice, honest feedback, and
-          enough theory to understand why you're doing what you're doing.</p>
-        <p style="margin-bottom: 2rem;">My goal is simple. By the end of the weekend, you should
-          feel ready to go home and hold your own sound bath.</p>
-        <blockquote class="pull-quote" data-parallax="0.06" data-fill="true">My job isn't to give
-          you a formula. It's to help you trust your own judgement.</blockquote>
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">05 — Why I created this training</p>
+      <p class="pull-statement" data-split="true">My job isn't to give you a formula. It's to help you trust your own judgement.</p>
+      <div class="two-col" data-stagger="true">
+        <p>I wanted to teach for a long time before I felt ready. Other trainings felt overwhelming — some tried to cover every instrument, others stayed so broad people finished without knowing how to begin.</p>
+        <p>I wanted something simpler: one instrument, plenty of practice, honest feedback, and enough theory to understand why. By the end, you should feel ready to go home and hold your own sound bath.</p>
       </div>
     </div>
   </section>
 
   <!-- 06 About me -->
-  <section id="about" class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral">06</div>
-        <h2 style="margin-bottom: 2rem;">About me</h2>
-        <div data-parallax="-0.04" style="width: min(100%, 320px); aspect-ratio: 4 / 5;">
-          <div class="photo-slot">Drop a photo of Adam</div>
+  <section id="about" class="num-section" style="border-top: var(--border);">
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">06 — About me</p>
+      <div class="about-grid">
+        <div class="about-photo silhouette" data-speed="0.3">
+          <img src="assets/photos/adam-photo.jpg" alt="Adam" loading="lazy">
         </div>
-      </div>
-      <div>
-        <p>I'm Adam. I first found sound in 2018, during one of the hardest periods of my life. A
-          sound bath was what helped me feel like myself again. I began practising in 2020, and
-          since then I've supported more than 350 people in one-to-one sessions, alongside group
-          sound baths in Berlin, Tulum and València.</p>
-        <p style="margin-bottom: 2rem;">I've found there isn't one perfect way to play. My approach
-          is grounded and practical, and it centres on the nervous system. I want you to understand
-          the principles, trust your own judgement, and find a way of playing that feels like
-          yours.</p>
-        <blockquote class="pull-quote" data-parallax="0.06" data-fill="true">I don't follow a fixed
-          sequence. I respond to what's happening in the room.</blockquote>
+        <div data-reveal="true">
+          <p class="about-lead" data-split="true">I don't follow a fixed sequence. I respond to what's happening in the room.</p>
+          <p style="margin: 0 0 1.4rem; max-width: 48ch;">I'm Adam. I first found sound in 2018, during one of the hardest periods of my life — it's what helped me feel like myself again. There isn't one perfect way to play; I want you to trust your own judgement and find a way of playing that feels like yours.</p>
+          <div class="pill-row">
+            <span class="pill pill--outline">Since 2020</span>
+            <span class="pill pill--outline">350+ clients</span>
+            <span class="pill pill--outline">Berlin · Tulum · València</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Photo strip -->
-  <section class="photo-strip" data-hstrip="true">
-    <div class="photo-strip-row">
-      <div style="width: 300px;"><div class="photo-slot">Drop a photo — the room at De Moon Yoga</div></div>
-      <div style="width: 460px;"><div class="photo-slot">Drop a photo — a group sound bath</div></div>
-      <div style="width: 280px;"><div class="photo-slot">Drop a photo — bowls, close up</div></div>
-      <div style="width: 420px;"><div class="photo-slot">Drop a photo — Adam playing</div></div>
-      <div style="width: 320px;"><div class="photo-slot">Drop a photo — València</div></div>
+  <!-- Photo spread -->
+  <section class="num-section" style="border-top: var(--border);">
+    <div class="wrap" style="padding-block: clamp(2.5rem, 6vw, 4rem);">
+      <p class="label section-label" data-reveal="true">Experiencing the sound</p>
+      <div class="spread-wide" data-speed="0.3">
+        <img src="assets/photos/spread-wide.jpg" alt="The room at De Moon Yoga" loading="lazy">
+      </div>
+      <div class="spread-grid" data-stagger="true">
+        <figure>
+          <div class="frame"><img src="assets/photos/spread-1.jpg" alt="Summer Solstice Sound Bath" loading="lazy"></div>
+          <figcaption>Summer Solstice Sound Bath</figcaption>
+        </figure>
+        <figure>
+          <div class="frame"><img src="assets/photos/spread-2.jpg" alt="Papaya Playa, Tulum" loading="lazy"></div>
+          <figcaption>Papaya Playa, Tulum</figcaption>
+        </figure>
+        <figure>
+          <div class="frame"><img src="assets/photos/spread-3.jpg" alt="HAR Studio, Berlin" loading="lazy"></div>
+          <figcaption>HAR Studio, Berlin</figcaption>
+        </figure>
+        <figure>
+          <div class="frame"><img src="assets/photos/spread-4.jpg" alt="Tulum" loading="lazy"></div>
+          <figcaption>Tulum</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
   <!-- 07 What's included -->
-  <section class="num-section">
-    <div class="wrap section" data-reveal="true">
-      <div class="num-grid">
-        <div>
-          <div class="numeral numeral--yellow">07</div>
-          <h2>What's included</h2>
-        </div>
-        <ul class="hairline-list plain" data-stagger="true">
-          <li>The Friday online theory session</li>
-          <li>Two full days of practical training</li>
-          <li>A small group</li>
-          <li>Tibetan singing bowls, provided throughout the weekend</li>
-          <li>A printed handbook</li>
-          <li>A certificate of completion</li>
-          <li>An ongoing graduates' group</li>
-        </ul>
+  <section class="included-chapter">
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true" style="color: var(--ink); opacity: 0.65;">07 — What's included</p>
+      <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 2rem; max-width: 20ch;">Everything you need is in the room.</h2>
+      <div class="chip-row" data-stagger="true">
+        <span class="pill pill--dark">Friday online theory session</span>
+        <span class="pill pill--dark">Two full days of practical training</span>
+        <span class="pill pill--dark">A small group</span>
+        <span class="pill pill--dark">Bowls to practise on, provided</span>
+        <span class="pill pill--dark">A printed handbook</span>
+        <span class="pill pill--dark">A certificate of completion</span>
+        <span class="pill pill--dark">An ongoing graduates' group</span>
       </div>
-      <div class="cta-band" data-parallax="-0.05">
+      <div class="dark-callout" data-reveal="true">
         <p>Two days, a small group, and you leave ready to lead your own sessions.</p>
-        <a class="btn btn--primary" href="#apply">Apply</a>
+        <a class="btn btn--yellow" href="#apply">Apply</a>
       </div>
     </div>
   </section>
 
   <!-- 08 Voices -->
   <section class="num-section">
-    <div class="wrap section" data-reveal="true">
-      <div style="margin-bottom: clamp(2rem, 5vw, 3.5rem);">
-        <div class="numeral numeral--pink">08</div>
-        <h2 style="margin: 0 0 0.8rem;">You don't have to take my word for it.</h2>
-        <p class="voices-sub">From my one-to-one practice · 5.0 on Google (as The Unwindery)</p>
+    <div class="wrap section">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: clamp(3rem, 7vw, 4.5rem);">
+        <div data-reveal="true">
+          <p class="label section-label" style="color: var(--klein);">08 — Voices</p>
+          <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0; max-width: 20ch;">You don't have to take my word for it.</h2>
+        </div>
+        <div class="stat-5" data-reveal="true">
+          <div class="num">5.0</div>
+          <div class="lbl">on Google as Energencia</div>
+        </div>
       </div>
-      <div class="testimonial-grid" data-stagger="true">
-        <figure class="testimonial-card">
-          <span class="glyph" aria-hidden="true">&ldquo;</span>
-          <blockquote>"I at once felt very comfortable and at ease. His presence is one of
-            relaxation and professionalism. It was my first experience of sound massage, and I can
-            say it will not be my last."</blockquote>
+      <div class="card-stack" data-cards="true">
+        <figure class="card-a">
+          <blockquote>"I felt very safe with Adam. He has a beautiful energy and holds the space in the best of ways."</blockquote>
           <figcaption>— [ name ]</figcaption>
         </figure>
-        <figure class="testimonial-card">
-          <span class="glyph" aria-hidden="true">&ldquo;</span>
-          <blockquote>"Adam is a really nice and trustful person. He will treat you with so much
-            warmness, and give interesting infos about the sound healing activity and related
-            topics. It has helped me to be more calm and focused even the days after."</blockquote>
+        <figure class="card-b">
+          <blockquote>"Adam is a really nice and trustful person, so much warmness. It helped me be calm days after."</blockquote>
           <figcaption>— [ name ]</figcaption>
         </figure>
-        <figure class="testimonial-card">
-          <span class="glyph" aria-hidden="true">&ldquo;</span>
-          <blockquote>"I felt very safe with Adam and trusted him fully. He has a very beautiful
-            energy and holds the space in the best of ways."</blockquote>
+        <figure class="card-c">
+          <blockquote>"I at once felt very comfortable and at ease. His presence is one of relaxation and professionalism."</blockquote>
           <figcaption>— [ name ]</figcaption>
         </figure>
       </div>
@@ -462,57 +569,48 @@
   </section>
 
   <!-- 09 Price -->
-  <section id="price" class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral">09</div>
-        <h2 style="margin-bottom: 2rem;">Price</h2>
-        <div class="price-figures" data-stagger="true">
-          <div>
-            <div class="amount amount--big">€450</div>
-            <div class="tag">Early bird</div>
+  <section id="price" class="num-section" style="border-top: var(--border);">
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">09 — Price</p>
+      <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 2rem; max-width: 20ch;">One price, everything included.</h2>
+      <div class="price-grid">
+        <div class="price-cards" data-stagger="true">
+          <div class="price-card price-card--klein">
+            <div class="amount">€<span data-count="450">450</span></div>
+            <div class="tag">Early bird · until 13 Sep</div>
           </div>
-          <div>
-            <div class="amount amount--small">€550</div>
-            <div class="tag">Full</div>
+          <div class="price-card price-card--outline">
+            <div class="amount">€<span data-count="550">550</span></div>
+            <div class="tag">Full price</div>
           </div>
         </div>
-      </div>
-      <div>
-        <p>€450 early bird, until 13 September 2026. €550 after that.</p>
-        <p>Either price is the whole training: the Friday theory evening, both days, the bowls to
-          learn on, the handbook and your certificate.</p>
-        <p>A €100 deposit holds your place when you apply. The balance is due by 13 September at
-          the early-bird price, or by 30 September at the full price.</p>
-        <p>The group is small: 10 places, 9 still open. Once it's full, it's full.</p>
-        <a class="btn btn--primary" href="#apply" style="margin-top: 1rem;">Apply</a>
+        <div data-reveal="true">
+          <div class="fact-row"><span class="k">Includes</span><span>Theory evening, both days, bowls to practise on, handbook, certificate</span></div>
+          <div class="fact-row"><span class="k">Deposit</span><span>€100 to hold your place, balance due by the deadline</span></div>
+          <div class="fact-row"><span class="k">Places</span><span>9 of 10 still open. Once it's full, it's full.</span></div>
+          <a class="btn btn--primary" href="#apply" style="margin-top: 1.4rem;">Apply</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- 10 FAQ -->
-  <section class="num-section">
-    <div class="wrap section num-grid" data-reveal="true">
-      <div>
-        <div class="numeral">10</div>
-        <h2>FAQ</h2>
-      </div>
-      <div class="faq-list">
+  <section class="num-section" style="border-top: var(--border);">
+    <div class="wrap section">
+      <p class="label section-label" data-reveal="true">10 — FAQ</p>
+      <h2 data-split="true" style="font-size: clamp(1.9rem, 5vw, 3.2rem); line-height: 1.06; margin: 0 0 2rem; max-width: 20ch;">FAQ</h2>
+      <div class="faq-list" data-stagger="true">
         <details class="faq-item" open>
           <summary>Do I need any experience?</summary>
-          <p>No. Beginners are welcome, and so are teachers and bodyworkers who want to go deeper.
-            What matters is that you want to practise.</p>
+          <p>No. Beginners are welcome, and so are teachers and bodyworkers who want to go deeper. What matters is that you want to practise.</p>
         </details>
         <details class="faq-item">
           <summary>Do I need my own bowls?</summary>
-          <p>Not to start. Bowls are provided, small and large sets. I'll also show you how to
-            choose your own when you're ready.</p>
+          <p>No. Bowls to practise on during the training are provided, small and large sets — you don't take them home. I'll also show you how to choose your own when you're ready.</p>
         </details>
         <details class="faq-item">
           <summary>Is it certified?</summary>
-          <p>You get a certificate of completion from me. This is my own independent training, so
-            it's the practical skill of facilitating a sound bath rather than an outside
-            accreditation, and I'm clear about that.</p>
+          <p>You get a certificate of completion for the training.</p>
         </details>
         <details class="faq-item">
           <summary>What if I miss part of it?</summary>
@@ -533,28 +631,48 @@
   <!-- Final call -->
   <section id="apply" class="final-call">
     <div class="wrap inner" data-stagger="true">
+      <img src="assets/logo-face-white.png" alt="">
       <div class="kicker">Join the next training</div>
-      <h2>Friday 2 to Sunday 4 October 2026 · València.</h2>
-      <p>If you're looking for a practical way to start facilitating sound baths, I'll see you in
-        València.</p>
-      <a class="btn btn--inverse" href="#apply">Apply</a>
+      <h2>2–4 October 2026 · València.</h2>
+      <div class="pill-row">
+        <span class="pill pill--final">€450 early bird</span>
+        <span class="pill pill--final">9 of 10 places open</span>
+        <span class="pill pill--final">Taught in English</span>
+      </div>
+      <div class="final-bottom">
+        <p>If you're looking for a practical way to start facilitating sound baths, I'll see you in València.</p>
+        <a class="btn btn--inverse" href="#apply">Apply</a>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer class="section">
-    <div class="wrap footer-inner">
-      <div class="lockup lockup--stacked">
-        <img src="assets/logo-face-ink.png" alt="" style="height: 72px;">
-        <span class="wordmark" style="font-size: 1.3rem;">Energencia</span>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <img src="assets/logo-face-ink.png" alt="">
+          <span class="wordmark">Energencia</span>
+          <p>Sound, body and nervous-system work.</p>
+        </div>
+        <div class="footer-col">
+          <span class="col-label">Training</span>
+          <a href="#training">Training</a>
+          <a href="#about">About</a>
+          <a href="#price">Price</a>
+        </div>
+        <div class="footer-col">
+          <span class="col-label">Contact</span>
+          <span class="placeholder">[[ email ]]</span>
+          <a href="https://instagram.com/energencia.es">@energencia.es</a>
+          <span>València, Spain</span>
+        </div>
       </div>
-      <p class="footer-tagline">Sound, body and nervous-system work</p>
-      <div class="footer-row">
+      <div class="footer-bottom">
+        <span>© 2026 Energencia</span>
         <span>Made in València</span>
-        <span class="placeholder">[[ email ]]</span>
-        <a href="https://instagram.com/energencia.es">@energencia.es</a>
       </div>
-      <nav class="footer-row legal-row">
+      <nav class="legal-row footer-bottom" style="border-top: none; padding-top: 0;">
         <a href="legal/legal-notice.html">Legal Notice</a>
         <a href="legal/privacy-policy.html">Privacy Policy</a>
         <a href="legal/cookies.html">Cookies</a>

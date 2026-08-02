@@ -1,110 +1,242 @@
-// Scroll-driven interactions: section reveal, staggered children, drawn
-// rules, parallax, pull-quote scroll-fill, and the horizontal photo strip.
-// Ported from the design handoff prototype. Disabled under prefers-reduced-motion.
+// Scroll-driven interactions for the Energencia landing page.
+// Vanilla JS port of the design handoff's GSAP/ScrollTrigger choreography —
+// same visual language, no third-party animation library. Disabled under
+// prefers-reduced-motion.
 (function () {
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ease = 'cubic-bezier(.22,.61,.36,1)';
 
-  // Section reveal
+  // ---- Header height custom property (used by sticky hero + day-cards) ----
+  var header = document.querySelector('[data-header]');
+  function setHeaderHeight() {
+    if (header) document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+  }
+  setHeaderHeight();
+  window.addEventListener('resize', setHeaderHeight);
+
+  // ---- Word-split headlines (data-split) ----
+  document.querySelectorAll('[data-split]').forEach(function (h) {
+    var words = h.textContent.split(/\s+/).filter(Boolean);
+    h.textContent = '';
+    words.forEach(function (w, i) {
+      var s = document.createElement('span');
+      s.style.display = 'inline-block';
+      s.style.opacity = '0';
+      s.style.transform = 'translateY(50%)';
+      s.style.transition = 'opacity .7s ' + ease + ', transform .7s ' + ease;
+      s.style.transitionDelay = (i * 60) + 'ms';
+      s.textContent = w + (i < words.length - 1 ? ' ' : '');
+      h.appendChild(s);
+    });
+  });
+  var splitIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      Array.prototype.forEach.call(e.target.children, function (s) {
+        s.style.opacity = '1';
+        s.style.transform = 'none';
+      });
+      splitIO.unobserve(e.target);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('[data-split]').forEach(function (h) { splitIO.observe(h); });
+
+  // ---- Fade-up reveals ----
   var reveals = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
   reveals.forEach(function (el) {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(26px)';
-    el.style.transition = 'opacity .8s ' + ease + ', transform .8s ' + ease;
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity .9s ' + ease + ', transform .9s ' + ease;
   });
-  var io = new IntersectionObserver(function (entries) {
+  var revealIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) {
         e.target.style.opacity = '1';
         e.target.style.transform = 'none';
-        io.unobserve(e.target);
+        revealIO.unobserve(e.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
-  reveals.forEach(function (el) { io.observe(el); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  reveals.forEach(function (el) { revealIO.observe(el); });
 
-  if (reduced) return;
-
-  // Staggered children
+  // ---- Staggered children ----
   var staggers = Array.prototype.slice.call(document.querySelectorAll('[data-stagger]'));
   staggers.forEach(function (c) {
     Array.prototype.forEach.call(c.children, function (ch, i) {
       ch.style.opacity = '0';
-      ch.style.transform = 'translateY(16px)';
-      ch.style.transition = 'opacity .55s ' + ease + ', transform .55s ' + ease;
-      ch.style.transitionDelay = (i * 80) + 'ms';
+      ch.style.transform = 'translateY(14px)';
+      ch.style.transition = 'opacity .7s ' + ease + ', transform .7s ' + ease;
+      ch.style.transitionDelay = (i * 90) + 'ms';
     });
   });
-  var io2 = new IntersectionObserver(function (entries) {
+  var staggerIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
       Array.prototype.forEach.call(e.target.children, function (ch) {
         ch.style.opacity = '1';
         ch.style.transform = 'none';
       });
-      io2.unobserve(e.target);
+      staggerIO.unobserve(e.target);
     });
   }, { threshold: 0.15 });
-  staggers.forEach(function (c) { io2.observe(c); });
+  staggers.forEach(function (c) { staggerIO.observe(c); });
 
-  // Drawn rules above day cards
+  // ---- Card stack tumble (Voices) ----
+  document.querySelectorAll('[data-cards]').forEach(function (grid) {
+    var cards = Array.prototype.slice.call(grid.children);
+    cards.forEach(function (card, i) {
+      var base = card.style.transform || '';
+      card.dataset.baseTransform = base;
+      card.style.transform = base + ' translateY(40px)';
+      card.style.opacity = '0';
+      card.style.transition = 'opacity .8s ' + ease + ', transform .8s ' + ease;
+      card.style.transitionDelay = (i * 130) + 'ms';
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        cards.forEach(function (card) {
+          card.style.opacity = '1';
+          card.style.transform = card.dataset.baseTransform;
+        });
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.2 });
+    io.observe(grid);
+  });
+
+  // ---- Price count-up ----
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var start = null;
+        var duration = 1100;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min(1, (ts - start) / duration);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased);
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    io.observe(el);
+  });
+
+  // ---- Header collapse on scroll past hero ----
+  var wordmark = document.querySelector('[data-wordmark]');
+  var headnav = document.querySelector('[data-headnav]');
+  var heroSection = document.getElementById('top');
+  if (header && heroSection) {
+    var headerIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var scrolledPast = e.boundingClientRect.bottom <= (header.offsetHeight + 4);
+        if (scrolledPast) {
+          header.classList.add('is-scrolled');
+        } else {
+          header.classList.remove('is-scrolled');
+        }
+      });
+    }, { threshold: [0, 1], rootMargin: '-' + (header.offsetHeight) + 'px 0px 0px 0px' });
+    headerIO.observe(heroSection);
+  }
+
+  if (reduced) return;
+
+  // ---- Marquee (CSS animation; nothing else to wire) ----
+
+  // ---- Drawn rules above day cards ----
   var lines = Array.prototype.slice.call(document.querySelectorAll('[data-drawline]'));
   lines.forEach(function (l) { l.style.transition = 'transform 1.1s ' + ease; });
-  var io3 = new IntersectionObserver(function (entries) {
+  var lineIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
       e.target.style.transform = 'scaleX(1)';
-      io3.unobserve(e.target);
+      lineIO.unobserve(e.target);
     });
-  }, { threshold: 0.9 });
-  lines.forEach(function (l) { io3.observe(l); });
+  }, { threshold: 0.85 });
+  lines.forEach(function (l) { lineIO.observe(l); });
 
-  var px = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
-  px.forEach(function (el) { el.style.willChange = 'transform'; });
+  // ---- Parallax (data-speed) ----
+  var speedEls = Array.prototype.slice.call(document.querySelectorAll('[data-speed]'));
+  speedEls.forEach(function (el) { el.style.willChange = 'transform'; });
 
-  var fills = Array.prototype.slice.call(document.querySelectorAll('[data-fill]'));
-  fills.forEach(function (q) {
-    q.style.webkitBackgroundClip = 'text';
-    q.style.backgroundClip = 'text';
-    q.style.color = 'transparent';
-    q.style.backgroundImage = 'linear-gradient(180deg, #14110D 0%, #B9B2A6 0%)';
-  });
+  // ---- Quote scene: pinned, words light up as you scroll through ----
+  var scene = document.querySelector('[data-scene-quote]');
+  var sceneWords = null, sceneWrap = null;
+  if (scene) {
+    var q = scene.querySelector('[data-scene-words]');
+    var words = q.textContent.split(/\s+/).filter(Boolean);
+    q.textContent = '';
+    sceneWords = words.map(function (w, i) {
+      var s = document.createElement('span');
+      s.textContent = w + (i < words.length - 1 ? ' ' : '');
+      s.style.opacity = '0.18';
+      s.style.transition = 'opacity .2s linear';
+      q.appendChild(s);
+      return s;
+    });
+    sceneWrap = scene.querySelector('[data-scene-pin]');
+  }
 
-  var strip = document.querySelector('[data-hstrip]');
-  var stripRow = strip ? strip.firstElementChild : null;
-  if (stripRow) stripRow.style.willChange = 'transform';
+  // ---- Facts curtain: photo panel rises to cover the stat grid ----
+  var curtain = document.querySelector('[data-photogrid]');
+  var curtainWrap = curtain ? curtain.closest('[data-pinwrap]') : null;
 
+  // ---- Header progress bar ----
   var progress = document.querySelector('[data-progress]');
+
+  // ---- Day-card scale-away as the next card stacks over it ----
+  var daycards = Array.prototype.slice.call(document.querySelectorAll('[data-daycard]'));
 
   var ticking = false;
   function update() {
     ticking = false;
     var vh = window.innerHeight;
 
-    px.forEach(function (el) {
+    speedEls.forEach(function (el) {
       var r = el.getBoundingClientRect();
-      var speed = parseFloat(el.getAttribute('data-parallax')) || 0;
-      var off = (r.top + r.height / 2 - vh / 2) * speed;
-      el.style.transform = 'translateY(' + off.toFixed(1) + 'px)';
+      // Skip elements nowhere near the viewport — on first paint (scrollY 0),
+      // a far-below-the-fold element would otherwise get a huge one-off
+      // translateY baked in before any real scroll event ever recalculates it,
+      // visually displacing the image into unrelated sections.
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      var speed = parseFloat(el.getAttribute('data-speed')) || 0.3;
+      var off = (r.top + r.height / 2 - vh / 2) * speed * 0.3;
+      el.style.transform = (el.dataset.baseTransform || '') + ' translateY(' + off.toFixed(1) + 'px)';
+    });
+
+    if (sceneWrap && sceneWords) {
+      var sr = sceneWrap.getBoundingClientRect();
+      var srange = sceneWrap.offsetHeight - vh;
+      var sp = srange > 0 ? Math.min(1, Math.max(0, -sr.top / srange)) : 0;
+      var lit = Math.round(sp * sceneWords.length);
+      sceneWords.forEach(function (s, i) { s.style.opacity = i < lit ? '1' : '0.18'; });
+    }
+
+    if (curtain && curtainWrap) {
+      var cr = curtainWrap.getBoundingClientRect();
+      var crange = curtainWrap.offsetHeight - vh;
+      var cp = crange > 0 ? Math.min(1, Math.max(0, -cr.top / crange)) : 0;
+      curtain.style.transform = 'translateY(' + ((1 - cp) * 100).toFixed(1) + '%)';
+    }
+
+    daycards.forEach(function (card, i) {
+      var next = daycards[i + 1];
+      if (!next) return;
+      var nr = next.getBoundingClientRect();
+      var p = Math.min(1, Math.max(0, (vh * 0.9 - nr.top) / (vh * 0.65)));
+      card.style.transform = 'scale(' + (1 - p * 0.06).toFixed(3) + ')';
+      card.style.opacity = (1 - p * 0.25).toFixed(3);
     });
 
     if (progress) {
-      var max = document.documentElement.scrollHeight - vh;
-      progress.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, window.scrollY / max) : 0).toFixed(4) + ')';
-    }
-
-    fills.forEach(function (q) {
-      var r = q.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.55)));
-      var pct = (p * 100).toFixed(1) + '%';
-      q.style.backgroundImage = 'linear-gradient(180deg, #14110D ' + pct + ', #B9B2A6 ' + pct + ')';
-    });
-
-    if (stripRow) {
-      var sr = strip.getBoundingClientRect();
-      var sp = Math.min(1, Math.max(0, (vh - sr.top) / (vh + sr.height)));
-      var smax = stripRow.scrollWidth - strip.clientWidth;
-      if (smax > 0) stripRow.style.transform = 'translateX(' + (-sp * smax).toFixed(1) + 'px)';
+      var maxScroll = document.documentElement.scrollHeight - vh;
+      progress.style.transform = 'scaleX(' + (maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0).toFixed(4) + ')';
     }
   }
 
