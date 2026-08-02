@@ -99,7 +99,14 @@
       letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
     .photo-col { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
     .photo-col .frame { width: min(48vw, 420px); aspect-ratio: 2 / 3; background: #F4F0E6; border-radius: var(--radius); overflow: hidden; }
-    .photo-col .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-col .frame img, .photo-col .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* This particular photo-col lives inside the Facts curtain's fixed 100svh box —
+       sizing its frame from viewport WIDTH (like the other photo-cols) can make the
+       frame + caption taller than the box on wide-but-short (laptop) viewports,
+       clipping the caption. Size from viewport HEIGHT instead so it always fits. */
+    .photogrid .photo-col .frame { width: auto; height: min(42svh, 380px); }
+    .photogrid .photo-caption { max-width: 32ch; }
 
     .section-label { margin-bottom: 1.2rem; }
 
@@ -333,7 +340,10 @@
       <div class="photogrid" data-photogrid="true">
         <div class="wrap" style="width: 100%; display: flex; justify-content: center;">
           <div class="photo-col">
-            <div class="frame"><div class="photo-slot" style="width:100%;height:100%;">Drop a photo — the singing bowls</div></div>
+            <div class="frame">
+              <video src="assets/photos/facts-bowls.mov" poster="assets/photos/facts-bowls-poster.jpg"
+                autoplay muted loop playsinline aria-hidden="true"></video>
+            </div>
             <p class="photo-caption" data-reveal="true">Since 2020 · 350+ clients · group sound baths in Berlin, Tulum &amp; València</p>
           </div>
         </div>
@@ -677,7 +687,7 @@
         </div>
         <div class="footer-col">
           <span class="col-label">Contact</span>
-          <span class="placeholder">[[ email ]]</span>
+          <a href="mailto:energencia.es@gmail.com">energencia.es@gmail.com</a>
           <a href="https://instagram.com/energencia.es">@energencia.es</a>
           <span>València, Spain</span>
         </div>

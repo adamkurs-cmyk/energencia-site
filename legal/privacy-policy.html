@@ -23,8 +23,6 @@
     .placeholder { color: var(--grey); }
     .legal-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: var(--border); }
     .legal-nav a { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--klein); text-decoration: none; }
-    .colour-strip { display: flex; height: 6px; margin-top: 2.5rem; border-radius: 999px; overflow: hidden; }
-    .colour-strip span { flex: 1; }
   </style>
 </head>
 <body>
@@ -42,11 +40,9 @@
       Regulation (GDPR) and Spain's LOPDGDD (Organic Law 3/2018).</p>
 
     <h2>Who is responsible for your data</h2>
-    <ul class="fact-list placeholder">
-      <li><span class="k">Data controller</span> [[ Adam's full legal name ]]</li>
-      <li><span class="k">Tax ID (NIF)</span> [[ NIF ]]</li>
-      <li><span class="k">Address</span> [[ address, València ]]</li>
-      <li><span class="k">Contact email</span> [[ email ]]</li>
+    <ul class="fact-list">
+      <li><span class="k">Data controller</span> Adam Kurs</li>
+      <li><span class="k">Contact email</span> <a href="mailto:energencia.es@gmail.com">energencia.es@gmail.com</a></li>
     </ul>
 
     <h2>What we collect, and why</h2>
@@ -89,7 +85,7 @@
       <li>restrict or object to how it's used;</li>
       <li>receive a copy in a portable format.</li>
     </ul>
-    <p>Email <span class="placeholder">[[ email ]]</span> to use any of these. If you think we've
+    <p>Email <a href="mailto:energencia.es@gmail.com">energencia.es@gmail.com</a> to use any of these. If you think we've
       mishandled your data, you can also complain to Spain's data protection authority, the
       <a href="https://www.aepd.es" target="_blank" rel="noopener">Agencia Española de Protección de
       Datos (AEPD)</a>.</p>
@@ -104,13 +100,6 @@
       <a href="terms.html">Terms &amp; Conditions</a>
       <a href="../index.html">Home</a>
     </nav>
-    <div class="colour-strip" aria-hidden="true">
-      <span style="background:var(--white); border:var(--border);"></span>
-      <span style="background:var(--ink);"></span>
-      <span style="background:var(--yellow);"></span>
-      <span style="background:var(--klein);"></span>
-      <span style="background:var(--pink);"></span>
-    </div>
   </main>
 </body>
 </html>

@@ -20,8 +20,6 @@
     .placeholder { color: var(--grey); }
     .legal-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: var(--border); }
     .legal-nav a { font-family: var(--font-mono); font-size: var(--fs-label); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--klein); text-decoration: none; }
-    .colour-strip { display: flex; height: 6px; margin-top: 2.5rem; border-radius: 999px; overflow: hidden; }
-    .colour-strip span { flex: 1; }
   </style>
 </head>
 <body>
@@ -38,8 +36,7 @@
       1:1 session, through this website.</p>
 
     <h2>Who you're contracting with</h2>
-    <p class="placeholder">[[ Adam's full legal name ]], NIF [[ NIF ]], [[ address, València ]] —
-      trading as Energencia.</p>
+    <p>Adam Kurs, trading as Energencia.</p>
 
     <h2>The training</h2>
     <p class="placeholder">[[ Short description of what's being sold: the training, its dates,
@@ -72,7 +69,7 @@
       <strong>not a Peter Hess certification</strong> and is never presented as one.</p>
 
     <h2>Complaints and disputes</h2>
-    <p>If something's gone wrong, email <span class="placeholder">[[ email ]]</span> first so it
+    <p>If something's gone wrong, email <a href="mailto:energencia.es@gmail.com">energencia.es@gmail.com</a> first so it
       can be sorted out directly. As an EU consumer, you can also use the European Commission's
       <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">Online Dispute
       Resolution platform</a> for purchases made online.</p>
@@ -88,13 +85,6 @@
       <a href="cookies.html">Cookie Policy</a>
       <a href="../index.html">Home</a>
     </nav>
-    <div class="colour-strip" aria-hidden="true">
-      <span style="background:var(--white); border:var(--border);"></span>
-      <span style="background:var(--ink);"></span>
-      <span style="background:var(--yellow);"></span>
-      <span style="background:var(--klein);"></span>
-      <span style="background:var(--pink);"></span>
-    </div>
   </main>
 </body>
 </html>
