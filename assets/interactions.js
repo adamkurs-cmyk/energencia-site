@@ -20,6 +20,7 @@
   // element is actually on screen. This guarantees playback starts (and
   // resumes if the OS paused it) once each video scrolls into view.
   document.querySelectorAll('video[autoplay]').forEach(function (v) {
+    if (v.dataset.rate) v.playbackRate = parseFloat(v.dataset.rate);
     var tryPlay = function () { v.play().catch(function () {}); };
     var vio = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) tryPlay(); });

@@ -45,7 +45,8 @@
     /* ---- Hero ---- */
     .hero-v2 { position: sticky; top: var(--header-h, 60px); background: var(--white); overflow: hidden;
       height: calc(100svh - var(--header-h, 60px)); display: flex; isolation: isolate; z-index: 1; }
-    .hero-inner { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column;
+    .hero-row { display: flex; align-items: center; gap: clamp(2rem, 5vw, 4rem); width: 100%; }
+    .hero-inner { position: relative; z-index: 1; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column;
       gap: clamp(1.2rem, 3svh, 2rem); padding-block: clamp(1.5rem, 3svh, 3rem) clamp(2rem, 5svh, 3.5rem); }
     .hero-v2 h1 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
       font-size: clamp(2.2rem, min(9vw, 12svh), 6rem); line-height: 0.9; letter-spacing: -0.015em; margin: 0; max-width: 14ch; }
@@ -63,8 +64,22 @@
     .hero-media { animation-name: heroline-in-media; }
     @media (prefers-reduced-motion: reduce) { .hero-media { animation: none; opacity: 1; transform: none; } }
     .hero-media p { margin: 0; max-width: 34ch; font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.5; font-weight: 400; }
-    .hero-silhouette { position: absolute; right: clamp(1rem, 4vw, 4rem); bottom: clamp(-1rem, -2vh, 0px); z-index: 0;
-      width: min(38vw, 420px); aspect-ratio: 4 / 5; }
+    /* Clean rounded-rectangle photo card (replaces the old irregular
+       silhouette clip-path for the hero specifically — other silhouette
+       photos on the page are untouched). Fixed-ish width on desktop so it
+       reads as a proper photo card beside the text, not an overlay. */
+    .hero-silhouette { position: relative; flex: 0 0 clamp(280px, 34vw, 460px); aspect-ratio: 4 / 5;
+      border-radius: 28px; overflow: hidden; background: #F4F0E6; }
+    .hero-silhouette img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    @media (max-width: 860px) {
+      /* Photo first, full-width, then the text stacked below — matching
+         the mobile design reference exactly. Height is capped by viewport
+         (not just width-driven aspect-ratio) so photo + headline + subline
+         + button always fit inside the sticky hero's fixed height budget. */
+      .hero-row { flex-direction: column; justify-content: center; gap: clamp(1rem, 4svh, 1.6rem); }
+      .hero-silhouette { order: -1; flex: none; width: 100%; aspect-ratio: auto; height: min(34svh, 320px); }
+      .hero-inner { flex: none; padding-block: 0; gap: clamp(0.9rem, 2.5svh, 1.4rem); }
+    }
 
     /* ---- Every top-level section gets position:relative + isolation so its own
        explicit z-index (set inline per section, strictly increasing in document
@@ -197,6 +212,10 @@
       border-radius: 999px; padding: 0.4em 0.9em; display: inline-flex; align-items: center; }
     .pill--outline { border: 1px solid var(--ink); }
     .pill--dark { background: var(--ink); color: var(--yellow); font-size: 0.9rem; letter-spacing: normal; text-transform: none; font-family: var(--font-body); padding: 0.55em 1.1em; }
+    /* Mobile only: shrink the included-items pills slightly so short ones
+       (e.g. "A small group") sit two to a row instead of each forcing its
+       own line — design-only change, same copy, same desktop sizing. */
+    @media (max-width: 640px) { .pill--dark { font-size: 0.78rem; padding: 0.48em 0.85em; } }
     .pill--final { border: 1px solid rgba(254,253,250,0.4); }
     .pill-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
@@ -217,6 +236,10 @@
     .learn-grid figure { margin: 0; }
     .learn-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 16/7; overflow: hidden; }
     .learn-grid .frame img, .learn-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Warms and softens the video slightly so it reads as the same editorial
+       tone as the two photos either side of it, rather than looking cooler/
+       flatter by comparison. */
+    .learn-grid .frame video { filter: sepia(0.14) saturate(0.88) contrast(0.96) brightness(1.03); }
 
     /* ---- 07 Included (yellow chapter) ---- */
     .included-chapter { position: relative; isolation: isolate; background: var(--yellow); color: var(--ink); }
@@ -263,6 +286,14 @@
     .price-card--outline { border: var(--border); }
     .price-card .amount { font-family: var(--font-mono); font-size: clamp(3rem, 7vw, 4.5rem); font-weight: 500; line-height: 1; }
     .price-card--outline .amount { font-weight: 400; color: var(--grey); }
+    /* Mobile only: the two cards were just barely too wide to both fit on
+       one row and fell back to stacking full-width. Force them side by
+       side (equal width) instead, matching the design reference. */
+    @media (max-width: 640px) {
+      .price-cards { flex-wrap: nowrap; gap: 0.7rem; }
+      .price-card { flex: 1 1 0; min-width: 0; padding: 1.1rem 1rem; }
+      .price-card .amount { font-size: clamp(1.8rem, 9vw, 2.4rem); }
+    }
     .price-card .tag { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 0.6rem; opacity: 0.75; }
     .price-card--outline .tag { color: var(--grey); opacity: 1; }
     .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(2rem, 5vw, 3rem); align-items: start; }
@@ -336,21 +367,23 @@
 
   <!-- Hero -->
   <section id="top" class="hero-v2">
-    <div class="wrap hero-inner">
-      <h1>
-        <span class="row"><span style="--d:0s">Learn</span></span>
-        <span class="row"><span style="--d:.16s">to hold</span></span>
-        <span class="row"><span class="klein" style="--d:.32s">a sound</span></span>
-        <span class="row"><span class="klein" style="--d:.48s">bath<span class="yellow">.</span></span></span>
-      </h1>
-      <div class="hero-media">
-        <p>A small, practical training in València. Two days of playing and practising, until you
-          can guide a complete sound bath of your own. Taught in English.</p>
-        <a class="btn btn--primary" href="https://forms.gle/iTy1PEj1dVYHadny7" target="_blank" rel="noopener">Apply</a>
+    <div class="wrap hero-row">
+      <div class="hero-inner">
+        <h1>
+          <span class="row"><span style="--d:0s">Learn</span></span>
+          <span class="row"><span style="--d:.16s">to hold</span></span>
+          <span class="row"><span class="klein" style="--d:.32s">a sound</span></span>
+          <span class="row"><span class="klein" style="--d:.48s">bath<span class="yellow">.</span></span></span>
+        </h1>
+        <div class="hero-media">
+          <p>A small, practical training in València. Two days of playing and practising, until you
+            can guide a complete sound bath of your own. Taught in English.</p>
+          <a class="btn btn--primary" href="https://forms.gle/iTy1PEj1dVYHadny7" target="_blank" rel="noopener">Apply</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-silhouette silhouette" aria-hidden="true">
-      <img src="assets/photos/hero-photo.jpg" alt="" loading="eager">
+      <div class="hero-silhouette" aria-hidden="true">
+        <img src="assets/photos/hero-photo.jpg" alt="" loading="eager">
+      </div>
     </div>
   </section>
 
@@ -408,13 +441,13 @@
       </div>
       <div class="learn-grid" data-stagger="true">
         <figure>
-          <div class="frame">
-            <video src="assets/photos/learn-video.mp4" poster="assets/photos/learn-video-poster.jpg"
-              autoplay muted loop playsinline aria-hidden="true"></video>
-          </div>
+          <div class="frame"><img src="assets/photos/spread-wide.jpg" alt="Passing a singing bowl in a group sound bath" loading="lazy"></div>
         </figure>
         <figure>
-          <div class="frame"><img src="assets/photos/spread-wide.jpg" alt="Passing a singing bowl in a group sound bath" loading="lazy"></div>
+          <div class="frame">
+            <video src="assets/photos/learn-video.mp4" poster="assets/photos/learn-video-poster.jpg"
+              autoplay muted loop playsinline data-rate="0.6" aria-hidden="true"></video>
+          </div>
         </figure>
         <figure>
           <div class="frame"><img src="assets/photos/learn-photo.jpg" alt="Practising with the bowls" loading="lazy"></div>
