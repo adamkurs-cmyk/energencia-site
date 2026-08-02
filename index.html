@@ -148,7 +148,14 @@
     .day-stack { display: flex; flex-direction: column; }
     .day-card { position: sticky; top: calc(var(--header-h, 60px) + 15px); background: var(--white);
       border: 1px solid var(--ink); border-radius: var(--radius-lg); padding: 1.6rem clamp(1.2rem, 3vw, 2rem) 2rem;
-      margin-bottom: 1.2rem; transition: transform .2s ease, opacity .2s ease; }
+      margin-bottom: 1.2rem; transition: transform .2s ease, opacity .2s ease;
+      /* A sticky card's own overflow (past the viewport bottom) can never be
+         scrolled into view — the page keeps scrolling but a stuck element's
+         box doesn't move, so anything below the fold stays permanently
+         unreachable. Saturday's plan (8 items) is long enough to hit this on
+         phones. Cap the card to the space actually available and let it
+         scroll internally so every item is reachable on any screen size. */
+      max-height: calc(100svh - var(--header-h, 60px) - 40px); overflow-y: auto; }
     .day-card:nth-of-type(1) { z-index: 1; }
     .day-card:nth-of-type(2) { z-index: 2; background: var(--yellow); border-color: rgba(20,17,13,0.4); }
     .day-card:nth-of-type(3) { z-index: 3; margin-bottom: 0; }
@@ -386,7 +393,7 @@
         <div><div class="k">Outcome</div><div class="v">LEAD A FULL<br>SOUND BATH</div></div>
       </div>
       <div class="photo-col" style="margin-inline: auto;">
-        <div class="frame"><div class="photo-slot" style="width:100%;height:100%;">Drop a photo — practising in pairs</div></div>
+        <div class="frame"><img src="assets/photos/practising-pairs.jpg" alt="Practising in a group session" loading="lazy"></div>
         <p class="photo-caption" data-reveal="true">Hands-on from hour one · small groups · every round, feedback</p>
       </div>
     </div>
@@ -478,7 +485,7 @@
         </div>
         <div class="day-card" data-daycard="true">
           <div class="drawline" data-drawline="true"></div>
-          <div class="head">Sunday · 10:00–19:00</div>
+          <div class="head">Sunday · De Moon Yoga · 10:00–19:00</div>
           <ul>
             <li>Opening sound bath and a sharing circle</li>
             <li>Revision of the day before</li>
