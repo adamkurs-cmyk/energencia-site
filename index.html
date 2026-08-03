@@ -126,6 +126,10 @@
     .photo-col { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
     .photo-col .frame { width: min(48vw, 420px); aspect-ratio: 2 / 3; background: #F4F0E6; border-radius: var(--radius); overflow: hidden; }
     .photo-col .frame img, .photo-col .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Mobile only: the "Bowls laid out before a session" photo-break image
+       was capped at the same 48vw as every other photo-col — give it more
+       room on phones specifically, where 48vw reads quite small. */
+    @media (max-width: 640px) { .photo-break .frame { width: min(82vw, 480px); } }
 
     /* This particular photo-col lives inside the Facts curtain's fixed 100svh box —
        sizing its frame from viewport WIDTH (like the other photo-cols) can make the
@@ -205,7 +209,11 @@
     /* ---- About me ---- */
     .about-grid { display: grid; grid-template-columns: min(38vw, 340px) 1fr; gap: clamp(2rem, 5vw, 3rem); align-items: start; }
     @media (max-width: 640px) { .about-grid { grid-template-columns: 1fr; } }
-    .about-photo { width: 100%; aspect-ratio: 4/5; transform: rotate(-2deg); }
+    /* Plain rounded-rect frame, consistent with the other photos on the
+       page (hero, photo spread, etc.) instead of the old irregular
+       silhouette clip-path. */
+    .about-photo { width: 100%; aspect-ratio: 4/5; border-radius: 28px; overflow: hidden; background: #F4F0E6; }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .about-lead { margin: 0 0 1.2rem; font-weight: 600; letter-spacing: -0.01em; font-size: clamp(1.5rem, 3.4vw, 2rem);
       line-height: 1.2; color: var(--klein); max-width: 26ch; }
     .pill { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
@@ -441,7 +449,7 @@
       </div>
       <div class="learn-grid" data-stagger="true">
         <figure>
-          <div class="frame"><img src="assets/photos/spread-wide.jpg" alt="Passing a singing bowl in a group sound bath" loading="lazy"></div>
+          <div class="frame"><img src="assets/photos/spread-wide.jpg" alt="Summer Solstice, Berlin" loading="lazy"></div>
         </figure>
         <figure>
           <div class="frame">
@@ -508,7 +516,7 @@
   <!-- Photo break -->
   <section class="num-section" style="z-index: 7;">
     <div class="wrap section" style="display: flex; justify-content: center;">
-      <div class="photo-col">
+      <div class="photo-col photo-break">
         <div class="frame"><img src="assets/photos/photo-break.jpg" alt="Bowls laid out before a session" loading="lazy"></div>
         <p class="photo-caption" data-reveal="true">Bowls laid out before a session</p>
       </div>
@@ -586,7 +594,7 @@
     <div class="wrap section">
       <p class="label section-label" data-reveal="true">06 — About me</p>
       <div class="about-grid">
-        <div class="about-photo silhouette" data-speed="0.3">
+        <div class="about-photo" data-speed="0.3">
           <img src="assets/photos/adam-photo.jpg" alt="Adam" loading="lazy">
         </div>
         <div data-reveal="true">
@@ -607,7 +615,7 @@
     <div class="wrap" style="padding-block: clamp(2.5rem, 6vw, 4rem);">
       <p class="label section-label" data-reveal="true">Experiencing the sound</p>
       <div class="spread-wide" data-speed="0.3">
-        <img src="assets/photos/spread-wide.jpg" alt="Passing a singing bowl in a group sound bath" loading="lazy">
+        <img src="assets/photos/spread-wide.jpg" alt="Summer Solstice, Berlin" loading="lazy">
       </div>
       <div class="spread-grid" data-stagger="true">
         <figure>
@@ -626,8 +634,8 @@
           <figcaption>HAR Studio, Berlin</figcaption>
         </figure>
         <figure>
-          <div class="frame"><img src="assets/photos/spread-4.jpg" alt="Summer Solstice, Berlin" loading="lazy"></div>
-          <figcaption>Summer Solstice, Berlin</figcaption>
+          <div class="frame"><img src="assets/photos/spread-4.jpg" alt="Espiritu Wellness, Tulum" loading="lazy"></div>
+          <figcaption>Espiritu Wellness, Tulum</figcaption>
         </figure>
       </div>
     </div>
@@ -725,15 +733,11 @@
         </details>
         <details class="faq-item">
           <summary>Do I need my own bowls?</summary>
-          <p>No. Bowls to practise on during the training are provided, small and large sets — you don't take them home. I'll also show you how to choose your own when you're ready.</p>
+          <p>No. Bowls to practise on during the training are provided. I'll also show you how to choose your own when you're ready.</p>
         </details>
         <details class="faq-item">
           <summary>Is it certified?</summary>
           <p>You get a certificate of completion for the training.</p>
-        </details>
-        <details class="faq-item">
-          <summary>What if I miss part of it?</summary>
-          <p class="placeholder">[[ your policy ]]</p>
         </details>
         <details class="faq-item">
           <summary>What's your refund policy?</summary>
