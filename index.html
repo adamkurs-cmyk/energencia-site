@@ -340,6 +340,12 @@
     .footer-col .col-label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); margin-bottom: 0.2rem; }
     .footer-col a { text-decoration: none; }
     .footer-col a:hover { color: var(--klein); }
+    .ig-link { display: inline-flex; align-items: center; }
+    /* Header IG icon: only on the mobile top bar, always visible there
+       (not tied to the scroll-triggered nav reveal). Hidden on desktop,
+       where the footer link is enough. */
+    .header-ig { display: none; color: var(--ink); }
+    @media (max-width: 640px) { .header-ig { display: inline-flex; } }
     .footer-brand img { height: 40px; width: auto; align-self: flex-start; transition: transform .3s ease; }
     .footer-brand img:hover { transform: rotate(6deg); }
     .footer-brand .wordmark { font-size: 1rem; }
@@ -359,6 +365,13 @@
       <a class="lockup" href="#top" aria-label="Energencia home">
         <img src="assets/logo-face-ink.png" alt="Energencia" data-headface="true">
         <span class="wordmark-wrap"><span class="wordmark">Energencia</span></span>
+      </a>
+      <a href="https://instagram.com/energencia.es" aria-label="Energencia on Instagram" class="ig-link header-ig">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/>
+        </svg>
       </a>
       <nav class="nav" data-headnav="true">
         <a href="#training">Training</a>
@@ -538,11 +551,11 @@
           <div class="head">Saturday · De Moon Yoga · 10:00–19:00</div>
           <ul>
             <li>Opening sound bath and an opening circle</li>
-            <li>Handling the bowls: what to avoid, and how to hold them</li>
-            <li>Striking the bowl: mallet, space and tempo, then freestyle practice</li>
-            <li>Working the rim for a more activating sound, then freestyle practice</li>
+            <li>How to handle the singing bowls</li>
+            <li>Ground sound + freestyle practice</li>
+            <li>Activating sound + freestyle practice</li>
             <li class="meta">Lunch break</li>
-            <li>In two rotating groups, one playing and one receiving: opening, building with rhythm and repetition, grounding and activating sound, and closing</li>
+            <li>Practice in two rotating groups, one playing and one receiving</li>
             <li>Opening and closing the space</li>
             <li>Two hours of solo practice, a full sound bath each</li>
           </ul>
@@ -556,7 +569,7 @@
             <li>Guiding, rituals, the waking-up ritual, and chimes</li>
             <li class="meta">Lunch break</li>
             <li>Two hours of guided practice with cues</li>
-            <li>The exam: each person facilitates their own full sound bath, around twenty minutes each</li>
+            <li>The exam: each person facilitates their own full sound bath</li>
           </ul>
         </div>
       </div>
@@ -738,12 +751,20 @@
           <p>You get a certificate of completion for the training.</p>
         </details>
         <details class="faq-item">
+          <summary>Will I be ready to lead my own sound baths afterwards?</summary>
+          <p>Yes. By the end of the training, you'll have facilitated your own complete sound bath as part of the course. You'll leave with practical experience, personal feedback and the confidence to begin leading your own sessions.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I use this in my existing work?</summary>
+          <p>Absolutely. Many participants join to bring sound into their yoga classes, massage practice or other wellbeing work. Others come because they want to start offering sound baths as a new path. The training is designed to help you develop your own way of facilitating rather than follow a fixed formula.</p>
+        </details>
+        <details class="faq-item">
           <summary>What's your refund policy?</summary>
-          <p class="placeholder">[[ your terms ]]</p>
+          <p>If you book more than 14 days before the training, you have a 14-day cooling-off period after your booking is confirmed. After that period, payments are non-refundable. If you cancel before the training begins, we may refund any amount paid above the deposit, but the deposit itself is always non-refundable. Once the training has started, no payments are refundable. Please see our <a href="legal/terms.html">Terms &amp; Conditions</a> for full details.</p>
         </details>
         <details class="faq-item">
           <summary>What should I bring?</summary>
-          <p class="placeholder">[[ comfortable clothes, a notebook, anything else ]]</p>
+          <p>Comfortable clothes, a water bottle and something to take notes with if you'd like. Everything else, including the bowls, is provided.</p>
         </details>
       </div>
     </div>
@@ -785,7 +806,13 @@
         <div class="footer-col">
           <span class="col-label">Contact</span>
           <a href="mailto:energencia.es@gmail.com">energencia.es@gmail.com</a>
-          <a href="https://instagram.com/energencia.es">@energencia.es</a>
+          <a href="https://instagram.com/energencia.es" aria-label="Energencia on Instagram" class="ig-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/>
+            </svg>
+          </a>
           <span>Valencia, Spain</span>
         </div>
       </div>
