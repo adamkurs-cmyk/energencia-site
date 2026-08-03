@@ -39,13 +39,11 @@
     .nav a:hover { opacity: 0.6; }
     .nav a.btn { color: var(--white); }
     .nav a.btn:hover { opacity: 1; transform: translateY(-2px) rotate(-1deg); }
-    /* Mobile top bar, simplified and always the same: just the face icon
-       (no wordmark text), the IG icon, and Apply — no Training/About/Price
-       links, and not dependent on the scroll-triggered reveal used on
-       desktop, since there's no room to grow this bar on a phone. */
+    /* Mobile top bar: full logo at first, same as before. Once scrolled,
+       the wordmark collapses to just the icon (existing desktop behaviour)
+       and Apply + the IG icon appear together — no Training/About/Price
+       links on mobile, there's no room to grow this bar on a phone. */
     @media (max-width: 640px) {
-      .wordmark-wrap { max-width: 0; opacity: 0; }
-      .nav { max-width: none; opacity: 1; overflow: visible; pointer-events: auto; }
       .nav a:not(.btn) { display: none; }
     }
     .progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--klein);
@@ -354,7 +352,11 @@
        (not tied to the scroll-triggered nav reveal). Hidden on desktop,
        where the footer link is enough. */
     .header-ig { display: none; color: var(--ink); }
-    @media (max-width: 640px) { .header-ig { display: inline-flex; } }
+    @media (max-width: 640px) {
+      .header-ig { display: inline-flex; max-width: 0; opacity: 0; overflow: hidden; pointer-events: none;
+        transition: max-width .35s ease, opacity .35s ease; }
+      .site-header.is-scrolled .header-ig { max-width: 40px; opacity: 1; pointer-events: auto; }
+    }
     .footer-brand img { height: 40px; width: auto; align-self: flex-start; transition: transform .3s ease; }
     .footer-brand img:hover { transform: rotate(6deg); }
     .footer-brand .wordmark { font-size: 1rem; }
