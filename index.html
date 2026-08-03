@@ -39,6 +39,15 @@
     .nav a:hover { opacity: 0.6; }
     .nav a.btn { color: var(--white); }
     .nav a.btn:hover { opacity: 1; transform: translateY(-2px) rotate(-1deg); }
+    /* Mobile top bar, simplified and always the same: just the face icon
+       (no wordmark text), the IG icon, and Apply — no Training/About/Price
+       links, and not dependent on the scroll-triggered reveal used on
+       desktop, since there's no room to grow this bar on a phone. */
+    @media (max-width: 640px) {
+      .wordmark-wrap { max-width: 0; opacity: 0; }
+      .nav { max-width: none; opacity: 1; overflow: visible; pointer-events: auto; }
+      .nav a:not(.btn) { display: none; }
+    }
     .progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--klein);
       transform: scaleX(0); transform-origin: left; }
 
@@ -557,7 +566,7 @@
             <li class="meta">Lunch break</li>
             <li>Practice in two rotating groups, one playing and one receiving</li>
             <li>Opening and closing the space</li>
-            <li>Two hours of solo practice, a full sound bath each</li>
+            <li>Two hours of practice</li>
           </ul>
         </div>
         <div class="day-card" data-daycard="true">
@@ -630,8 +639,8 @@
       </div>
       <div class="spread-grid" data-stagger="true">
         <figure>
-          <div class="frame"><img src="assets/photos/spread-1.jpg" alt="Autumn Equinox, Berlin" loading="lazy"></div>
-          <figcaption>Autumn Equinox, Berlin</figcaption>
+          <div class="frame"><img src="assets/photos/spread-1.jpg" alt="Sound Bath, Berlin" loading="lazy"></div>
+          <figcaption>Sound Bath, Berlin</figcaption>
         </figure>
         <figure>
           <div class="frame">
@@ -641,12 +650,15 @@
           <figcaption>Papaya Playa, Tulum</figcaption>
         </figure>
         <figure>
-          <div class="frame"><img src="assets/photos/spread-3.jpg" alt="HAR Studio, Berlin" loading="lazy"></div>
-          <figcaption>HAR Studio, Berlin</figcaption>
+          <div class="frame">
+            <video src="assets/photos/espiritu-video.mov" poster="assets/photos/espiritu-video-poster.jpg"
+              autoplay muted loop playsinline aria-hidden="true"></video>
+          </div>
+          <figcaption>Espiritu Wellness, Tulum</figcaption>
         </figure>
         <figure>
-          <div class="frame"><img src="assets/photos/spread-4.jpg" alt="Espiritu Wellness, Tulum" loading="lazy"></div>
-          <figcaption>Espiritu Wellness, Tulum</figcaption>
+          <div class="frame"><img src="assets/photos/spread-4.jpg" alt="Autumn Equinox, Berlin" loading="lazy"></div>
+          <figcaption>Autumn Equinox, Berlin</figcaption>
         </figure>
       </div>
     </div>
