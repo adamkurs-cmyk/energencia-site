@@ -235,7 +235,12 @@
     .spread-wide img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .spread-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
     @media (max-width: 640px) { .spread-grid { grid-template-columns: repeat(2, 1fr); } }
-    .spread-grid figure { margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+    /* min-width: 0 overrides the grid item's default auto min-width, which
+       otherwise gets sized from a <video>'s intrinsic pixel dimensions (e.g.
+       1080px wide) rather than the 1fr track — that was intermittently
+       blowing the grid (and the whole page) wider than the viewport,
+       killing the left/right margin, on the slots that hold a video. */
+    .spread-grid figure { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: 0.6rem; }
     .spread-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 3/4; overflow: hidden; }
     .spread-grid .frame img, .spread-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .spread-grid figcaption { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); text-align: center; }
@@ -243,8 +248,8 @@
     /* ---- Learn-by-doing photo column: same frame treatment AND proportions
        (16:7, matching .spread-wide) as the photo spread further down, but 3
        equal-size cards stacked one below another, at every screen size. ---- */
-    .learn-grid { display: flex; flex-direction: column; gap: 0.8rem; }
-    .learn-grid figure { margin: 0; }
+    .learn-grid { display: flex; flex-direction: column; gap: 0.8rem; min-width: 0; }
+    .learn-grid figure { margin: 0; min-width: 0; }
     .learn-grid .frame { background: #F4F0E6; border-radius: var(--radius); aspect-ratio: 16/7; overflow: hidden; }
     .learn-grid .frame img, .learn-grid .frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
     /* Warms and softens the video slightly so it reads as the same editorial
