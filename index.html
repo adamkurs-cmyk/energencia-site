@@ -92,6 +92,11 @@
          block below is tightened up to make room for it. */
       .hero-row { flex-direction: column; justify-content: center; gap: clamp(0.6rem, 2.2svh, 1rem); }
       .hero-silhouette { order: -1; flex: none; width: 100%; aspect-ratio: auto; height: min(48svh, 460px); }
+      /* The photo's native ratio (4:5) is taller than this box, so cover
+         crops top/bottom. Default center-crop was cutting into the bowl
+         held up top-right; anchoring to the top keeps the face and that
+         bowl in frame and crops the (less important) bottom edge instead. */
+      .hero-silhouette img { object-position: center top; }
       .hero-inner { flex: none; padding-block: 0; gap: clamp(0.5rem, 1.4svh, 0.9rem); }
       .hero-v2 h1 { font-size: clamp(1.75rem, min(7.6vw, 8.5svh), 6rem); }
       /* Two grouped lines instead of four: rows sit inline (with the
