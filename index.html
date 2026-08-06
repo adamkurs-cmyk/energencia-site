@@ -82,10 +82,15 @@
       /* Photo first, full-width, then the text stacked below — matching
          the mobile design reference exactly. Height is capped by viewport
          (not just width-driven aspect-ratio) so photo + headline + subline
-         + button always fit inside the sticky hero's fixed height budget. */
-      .hero-row { flex-direction: column; justify-content: center; gap: clamp(1rem, 4svh, 1.6rem); }
-      .hero-silhouette { order: -1; flex: none; width: 100%; aspect-ratio: auto; height: min(34svh, 320px); }
-      .hero-inner { flex: none; padding-block: 0; gap: clamp(0.9rem, 2.5svh, 1.4rem); }
+         + button always fit inside the sticky hero's fixed height budget.
+         The photo gets the bulk of that budget so it reads as a tall,
+         upright portrait rather than a shallow cropped strip; the text
+         block below is tightened up to make room for it. */
+      .hero-row { flex-direction: column; justify-content: center; gap: clamp(0.6rem, 2.2svh, 1rem); }
+      .hero-silhouette { order: -1; flex: none; width: 100%; aspect-ratio: auto; height: min(42svh, 420px); }
+      .hero-inner { flex: none; padding-block: 0; gap: clamp(0.5rem, 1.4svh, 0.9rem); }
+      .hero-v2 h1 { font-size: clamp(1.75rem, min(7.6vw, 8.5svh), 6rem); }
+      .hero-media { gap: clamp(0.5rem, 1.4svh, 0.9rem); }
     }
 
     /* ---- Every top-level section gets position:relative + isolation so its own
