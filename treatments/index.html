@@ -46,7 +46,7 @@
     .tp-hero { position: relative; background: var(--espresso); color: var(--white); height: 100svh;
       display: flex; overflow: hidden; }
     .tp-hero-photo { position: absolute; inset: 0; opacity: 0.94; }
-    .tp-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tp-hero-photo video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .tp-hero-scrim { position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(20,15,10,.55) 0%, rgba(20,15,10,.08) 22%, rgba(20,15,10,.1) 55%, rgba(20,15,10,.88) 100%); }
     .tp-hero h1 { position: absolute; left: clamp(1.25rem, 4vw, 3.5rem); right: clamp(1.25rem, 4vw, 3.5rem);
@@ -76,14 +76,13 @@
     .tp-philosophy h2 { font-weight: 700; font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.05; }
     .tp-philosophy p { margin: 0; font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.5; max-width: 44ch; }
 
-    /* ---- Pinned scene: reuses the site's scene-quote (word-light) + photogrid (curtain) mechanics ---- */
+    /* ---- Pinned scene: reuses the site's scene-quote (word-light) mechanic exactly —
+       same pin, same word-by-word opacity reveal, no sliding photo curtain. ---- */
     .tp-scene { position: relative; background: var(--espresso); color: var(--white); overflow: hidden; }
     .tp-scene .pinwrap-inner { align-items: center; justify-content: center; padding: 0 clamp(1.25rem, 4vw, 4rem); }
     .tp-scene p[data-scene-words] { position: relative; z-index: 1; margin: 0; font-family: var(--font-display);
       font-weight: 600; text-transform: uppercase; font-size: clamp(1.9rem, 6vw, 4.4rem); line-height: 1.05;
       letter-spacing: -0.01em; max-width: 18ch; text-align: center; text-wrap: balance; }
-    .tp-scene-curtain { position: absolute; inset: 0; z-index: 5; background: var(--sand); transform: translateY(100%); }
-    .tp-scene-curtain img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* ---- Is this for you ---- */
     .tp-fits { background: var(--white); border-top: var(--border); min-height: 100svh; display: flex; }
@@ -230,10 +229,10 @@
     .tp-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
       text-align: center; padding: 1rem; background: var(--sand); color: var(--grey); font-family: var(--font-mono);
       font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
-    .tp-scene-curtain .tp-placeholder { background: var(--sand); }
 
-    /* Reuse the site's pin mechanics: .pinwrap / .pinwrap-inner (from tokens/main site pattern) */
-    .pinwrap { position: relative; isolation: isolate; height: 280svh; }
+    /* Reuse the site's pin mechanics: .pinwrap / .pinwrap-inner (from tokens/main site pattern).
+       Height matches the training page's own scene-quote pin exactly (260svh). */
+    .pinwrap { position: relative; isolation: isolate; height: 260svh; }
     .pinwrap-inner { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
   </style>
 </head>
@@ -255,7 +254,10 @@
 
   <!-- Hero -->
   <section id="top" class="tp-hero">
-    <div class="tp-hero-photo"><img src="../assets/photos/treatments-hero.jpg" alt="A sound massage session, Tibetan bowls placed on and around the body" loading="eager"></div>
+    <div class="tp-hero-photo">
+      <video src="../assets/photos/treatments-hero.mov" poster="../assets/photos/treatments-hero-poster.jpg"
+        autoplay muted loop playsinline aria-hidden="true"></video>
+    </div>
     <div class="tp-hero-scrim"></div>
     <h1>Come back<br>to <span class="yellow">yourself.</span></h1>
     <p>One-to-one sessions in Valencia for people who've spent too long surviving instead of living. Sound Massage, Reiki and Kundalini Activation.</p>
@@ -273,13 +275,10 @@
     </div>
   </section>
 
-  <!-- Pinned scene -->
+  <!-- Pinned scene: pure word-lighting, same mechanic as the training page's scene-quote -->
   <div class="pinwrap tp-scene" data-pinwrap="true">
     <div class="pinwrap-inner">
       <p data-scene-words="true">A place to slow down, breathe and reconnect with yourself.</p>
-      <div class="tp-scene-curtain" data-photogrid="true" data-curtain-start="0.65">
-        <div class="tp-placeholder">Photo — the studio, wide shot</div>
-      </div>
     </div>
   </div>
 

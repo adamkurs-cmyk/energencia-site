@@ -164,9 +164,14 @@
 
   // ---- Treatments page: sessions switcher (tabs + scroll sentinels) ----
   // State lives here, not in a framework — render() just writes the active
-  // session's fields into the one card shell already in the DOM.
+  // session's fields into the one card shell already in the DOM. sSentinels/
+  // sessionsWrap/sRender/sActive default here (rather than only inside the
+  // `if` below) so update()'s scroll-driven check further down can safely
+  // reference them even on pages without a sessions switcher at all.
   var sessionsRoot = document.querySelector('[data-sessions]');
+  var sessionsWrap = null, sSentinels = [], sRender = null, sActive = 0;
   if (sessionsRoot) {
+    sessionsWrap = sessionsRoot.querySelector('.tp-switcher');
     var SESSIONS = [
       { name: 'Sound Massage', durationLabel: '60/90 min · €60–85',
         description: 'You lie down, fully clothed, face down and then face up, while therapeutic singing bowls are placed on and around your body and played. The massage is the vibration itself, moving through you and carried by the water in your body, softening the nervous system and letting everything settle.',
@@ -189,11 +194,12 @@
     ];
     var sTabs = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-tab]'));
     var sPhotos = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-photo]'));
-    var sSentinels = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-sentinel]'));
+    sSentinels = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-sentinel]'));
     var sCard = sessionsRoot.querySelector('.tp-card-content');
-    var sActive = 0;
 
-    function sRender(i) {
+    // Assigned (not declared) — sRender is a `var` above so update() can call
+    // it safely on pages without a sessions switcher, where it stays null.
+    sRender = function (i) {
       var s = SESSIONS[i];
       sCard.querySelector('[data-field="name"]').textContent = s.name;
       sCard.querySelector('[data-field="durationLabel"]').textContent = s.durationLabel;
@@ -219,7 +225,7 @@
       sTabs.forEach(function (t, idx) { t.classList.toggle('is-active', idx === i); });
       sPhotos.forEach(function (p, idx) { p.classList.toggle('is-active', idx === i); });
       sActive = i;
-    }
+    };
 
     sTabs.forEach(function (tab, i) {
       tab.addEventListener('click', function () {
@@ -238,20 +244,12 @@
         });
       });
     });
-
-    // Scroll-driven switching only makes sense with the desktop sticky-card
-    // layout; mobile falls back to tap-only per the design spec.
-    if (window.innerWidth >= 768) {
-      var sessionsIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            var idx = Number(entry.target.getAttribute('data-sentinel'));
-            if (idx !== sActive) sRender(idx);
-          }
-        });
-      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
-      sSentinels.forEach(function (s) { sessionsIO.observe(s); });
-    }
+    // Scroll-driven switching itself is handled continuously inside update()
+    // below, alongside the other pin-progress calculations (curtain, scene
+    // words) — see the sessionsWrap block. A one-shot IntersectionObserver
+    // with a thin rootMargin band left dead zones where scrolling past a
+    // sentinel too fast skipped the trigger; measuring progress every frame
+    // like the rest of the page's pins does not.
   }
 
   // ---- Quote scene words + photo curtain: DOM setup happens unconditionally
@@ -354,13 +352,19 @@
       var cr = curtainWrap.getBoundingClientRect();
       var crange = curtainWrap.offsetHeight - vh;
       var cp = crange > 0 ? Math.min(1, Math.max(0, -cr.top / crange)) : 0;
-      // Optional data-curtain-start lets the curtain wait until the pin's
-      // progress passes that fraction before it starts rising (e.g. so word
-      // reveal finishes first); defaults to 0, i.e. rises from the start —
-      // the original, unchanged behavior for the Facts curtain.
-      var cStart = parseFloat(curtain.getAttribute('data-curtain-start')) || 0;
-      var ct = cStart >= 1 ? (cp >= 1 ? 1 : 0) : Math.min(1, Math.max(0, (cp - cStart) / (1 - cStart)));
-      curtain.style.transform = 'translateY(' + ((1 - ct) * 100).toFixed(1) + '%)';
+      curtain.style.transform = 'translateY(' + ((1 - cp) * 100).toFixed(1) + '%)';
+    }
+
+    // Sessions switcher: which third of the sentinel track is centered in
+    // the viewport, recomputed every frame — desktop only (see sRender's
+    // own tap-only fallback below 768px, matching the sticky-card layout
+    // that only exists at that width).
+    if (sessionsWrap && sRender && sSentinels.length && window.innerWidth >= 768) {
+      var swr = sessionsWrap.getBoundingClientRect();
+      var swrange = sessionsWrap.offsetHeight - vh;
+      var swp = swrange > 0 ? Math.min(1, Math.max(0, -swr.top / swrange)) : 0;
+      var swIdx = Math.min(sSentinels.length - 1, Math.floor(swp * sSentinels.length));
+      if (swIdx !== sActive) sRender(swIdx);
     }
 
     if (learnPin && scrubSteps.length) {
