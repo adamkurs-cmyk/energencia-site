@@ -162,7 +162,130 @@
     headerIO.observe(heroEnd);
   }
 
-  if (reduced) return;
+  // ---- Treatments page: sessions switcher (tabs + scroll sentinels) ----
+  // State lives here, not in a framework — render() just writes the active
+  // session's fields into the one card shell already in the DOM.
+  var sessionsRoot = document.querySelector('[data-sessions]');
+  if (sessionsRoot) {
+    var SESSIONS = [
+      { name: 'Sound Massage', durationLabel: '60/90 min · €60–85',
+        description: 'You lie down, fully clothed, face down and then face up, while therapeutic singing bowls are placed on and around your body and played. The massage is the vibration itself, moving through you and carried by the water in your body, softening the nervous system and letting everything settle.',
+        tags: ['Lie down', 'Fully clothed', '60 or 90 min', 'Nothing to do'],
+        note: 'People often come burned out, overwhelmed or unable to switch off, and leave grounded, clearer, and sleeping better.',
+        quote: '“You don’t have to become calmer. Your body already knows how.”',
+        priceRows: ['60 min €60', '90 min €85', '3 sessions €165'], cta: 'Book Sound Massage' },
+      { name: 'Reiki', durationLabel: '60 min · €50',
+        description: 'You lie comfortably on your back while I gently place my hands on, or just above, different parts of your body. The session is quiet and deeply restful. Nothing to achieve. Nothing to perform. Simply space to receive.',
+        tags: ['On your back', 'Fully clothed', '60 min', 'Simply rest'],
+        note: 'People often come running on empty or emotionally drained, and leave recharged, clearer, and more like themselves.',
+        quote: '“Sometimes receiving is harder than giving.”',
+        priceRows: ['60 min €50', '3 sessions €135'], cta: 'Book Reiki' },
+      { name: 'Kundalini Activation', durationLabel: '60 min · €90',
+        description: 'You lie comfortably on a mat while music plays, and I work with your energy throughout. Nothing is guided or forced. Some people experience deep relaxation. Others notice spontaneous movement, emotion, laughter, tears or insight. Every experience is different.',
+        tags: ['On a mat', 'Comfortable', '60 min', 'Allow whatever comes'],
+        note: 'People often come curious, or carrying something they’re ready to put down, and leave lighter, clearer, and more open.',
+        quote: '“Nothing needs to happen. Whatever comes is enough.”',
+        priceRows: ['60 min €90'], cta: 'Book Kundalini Activation' }
+    ];
+    var sTabs = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-tab]'));
+    var sPhotos = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-photo]'));
+    var sSentinels = Array.prototype.slice.call(sessionsRoot.querySelectorAll('[data-sentinel]'));
+    var sCard = sessionsRoot.querySelector('.tp-card-content');
+    var sActive = 0;
+
+    function sRender(i) {
+      var s = SESSIONS[i];
+      sCard.querySelector('[data-field="name"]').textContent = s.name;
+      sCard.querySelector('[data-field="durationLabel"]').textContent = s.durationLabel;
+      sCard.querySelector('[data-field="description"]').textContent = s.description;
+      var tagsEl = sCard.querySelector('[data-field="tags"]');
+      tagsEl.innerHTML = '';
+      s.tags.forEach(function (t) {
+        var span = document.createElement('span');
+        span.className = 'tp-tag';
+        span.textContent = t;
+        tagsEl.appendChild(span);
+      });
+      sCard.querySelector('[data-field="note"]').textContent = s.note;
+      sCard.querySelector('[data-field="quote"]').textContent = s.quote;
+      var priceEl = sCard.querySelector('[data-field="priceRows"]');
+      priceEl.innerHTML = '';
+      s.priceRows.forEach(function (row) {
+        var span = document.createElement('span');
+        span.textContent = row;
+        priceEl.appendChild(span);
+      });
+      sCard.querySelector('[data-field="cta"]').textContent = s.cta;
+      sTabs.forEach(function (t, idx) { t.classList.toggle('is-active', idx === i); });
+      sPhotos.forEach(function (p, idx) { p.classList.toggle('is-active', idx === i); });
+      sActive = i;
+    }
+
+    sTabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        sRender(i);
+        // Measure the scroll target only after the click's render has committed —
+        // measuring first (or if the card's height could still change) lets the
+        // sentinels shift under the scroll, landing one session short of the tab
+        // that was actually clicked. The card's fixed 480px height (desktop) plus
+        // this post-render rAF are both required to keep the math honest.
+        requestAnimationFrame(function () {
+          var el = sSentinels[i];
+          if (el && window.innerWidth >= 768) {
+            var top = el.getBoundingClientRect().top + window.scrollY - window.innerHeight / 2;
+            window.scrollTo({ top: top, behavior: reduced ? 'auto' : 'smooth' });
+          }
+        });
+      });
+    });
+
+    // Scroll-driven switching only makes sense with the desktop sticky-card
+    // layout; mobile falls back to tap-only per the design spec.
+    if (window.innerWidth >= 768) {
+      var sessionsIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var idx = Number(entry.target.getAttribute('data-sentinel'));
+            if (idx !== sActive) sRender(idx);
+          }
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      sSentinels.forEach(function (s) { sessionsIO.observe(s); });
+    }
+  }
+
+  // ---- Quote scene words + photo curtain: DOM setup happens unconditionally
+  // so reduced-motion can drop straight to the finished state below, instead
+  // of leaving the words dimmed / the curtain hidden with no scroll-driven
+  // update() ever running to bring them in. ----
+  var scene = document.querySelector('[data-scene-quote], [data-scene-words]');
+  var sceneWords = null, sceneWrap = null;
+  if (scene) {
+    var q = scene.hasAttribute('data-scene-words') ? scene : scene.querySelector('[data-scene-words]');
+    var words = q.textContent.split(/\s+/).filter(Boolean);
+    q.textContent = '';
+    sceneWords = words.map(function (w, i) {
+      var s = document.createElement('span');
+      s.textContent = w + (i < words.length - 1 ? ' ' : '');
+      s.style.opacity = '0.18';
+      s.style.transition = 'opacity .2s linear';
+      q.appendChild(s);
+      return s;
+    });
+    // Progress must be measured against the tall outer wrapper (the pinned
+    // section itself) not the inner position:sticky layer — the sticky
+    // layer's own height always equals the viewport, so measuring against
+    // it gave a zero scroll range and the words never lit up.
+    sceneWrap = q.closest('[data-pinwrap]') || scene;
+  }
+  var curtain = document.querySelector('[data-photogrid]');
+  var curtainWrap = curtain ? curtain.closest('[data-pinwrap]') : null;
+
+  if (reduced) {
+    if (sceneWords) sceneWords.forEach(function (s) { s.style.opacity = '1'; });
+    if (curtain) curtain.style.transform = 'translateY(0)';
+    return;
+  }
 
   // ---- Marquee (CSS animation; nothing else to wire) ----
 
@@ -181,32 +304,6 @@
   // ---- Parallax (data-speed) ----
   var speedEls = Array.prototype.slice.call(document.querySelectorAll('[data-speed]'));
   speedEls.forEach(function (el) { el.style.willChange = 'transform'; });
-
-  // ---- Quote scene: pinned, words light up as you scroll through ----
-  var scene = document.querySelector('[data-scene-quote]');
-  var sceneWords = null, sceneWrap = null;
-  if (scene) {
-    var q = scene.querySelector('[data-scene-words]');
-    var words = q.textContent.split(/\s+/).filter(Boolean);
-    q.textContent = '';
-    sceneWords = words.map(function (w, i) {
-      var s = document.createElement('span');
-      s.textContent = w + (i < words.length - 1 ? ' ' : '');
-      s.style.opacity = '0.18';
-      s.style.transition = 'opacity .2s linear';
-      q.appendChild(s);
-      return s;
-    });
-    // Progress must be measured against the tall outer wrapper (scene itself, 260svh)
-    // not the inner position:sticky layer — the sticky layer's own height always
-    // equals the viewport, so measuring against it gave a zero scroll range and the
-    // words never lit up.
-    sceneWrap = scene;
-  }
-
-  // ---- Facts curtain: photo panel rises to cover the stat grid ----
-  var curtain = document.querySelector('[data-photogrid]');
-  var curtainWrap = curtain ? curtain.closest('[data-pinwrap]') : null;
 
   // ---- Pinned reveal (03 — What you'll learn): the section pins in place,
   // then each list item + the closing note steps in fully, one after another,
@@ -257,7 +354,13 @@
       var cr = curtainWrap.getBoundingClientRect();
       var crange = curtainWrap.offsetHeight - vh;
       var cp = crange > 0 ? Math.min(1, Math.max(0, -cr.top / crange)) : 0;
-      curtain.style.transform = 'translateY(' + ((1 - cp) * 100).toFixed(1) + '%)';
+      // Optional data-curtain-start lets the curtain wait until the pin's
+      // progress passes that fraction before it starts rising (e.g. so word
+      // reveal finishes first); defaults to 0, i.e. rises from the start —
+      // the original, unchanged behavior for the Facts curtain.
+      var cStart = parseFloat(curtain.getAttribute('data-curtain-start')) || 0;
+      var ct = cStart >= 1 ? (cp >= 1 ? 1 : 0) : Math.min(1, Math.max(0, (cp - cStart) / (1 - cStart)));
+      curtain.style.transform = 'translateY(' + ((1 - ct) * 100).toFixed(1) + '%)';
     }
 
     if (learnPin && scrubSteps.length) {

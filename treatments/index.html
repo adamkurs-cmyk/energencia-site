@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sessions in Valencia — Sound Massage, Reiki &amp; Kundalini Activation | Energencia</title>
+  <meta name="description" content="One-to-one sound and energy sessions in Valencia. Sound Massage, Reiki and Kundalini Activation with Adam.">
+  <link rel="icon" href="../assets/favicon.png">
+
+  <!-- Fonts: self-hosted (see assets/fonts/fonts.css). No third-party requests, no IP sent to Google. -->
+  <link rel="stylesheet" href="../assets/fonts/fonts.css">
+
+  <!-- Brand tokens (the backbone) -->
+  <link rel="stylesheet" href="../tokens.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    ::selection { background: var(--yellow); color: var(--ink); }
+    body { overflow-x: clip; }
+
+    /* ---- Header (transparent-over-photo, matches the site's is-scrolled pattern) ---- */
+    .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: transparent;
+      transition: background-color .3s ease; }
+    .site-header.is-scrolled { background: rgba(42,33,24,.9); backdrop-filter: blur(10px); }
+    .header-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: clamp(0.9rem, 2vh, 1.4rem) clamp(1.25rem, 4vw, 3.5rem); color: var(--white); min-width: 0; }
+    .tp-lockup { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--white); }
+    .tp-lockup img { height: 26px; width: auto; }
+    .wordmark-wrap { display: inline-block; overflow: hidden; max-width: 200px; transition: max-width .3s ease, opacity .3s ease;
+      font-family: var(--font-display); font-weight: 500; text-transform: uppercase; letter-spacing: var(--track-wordmark); font-size: 0.95rem; }
+    .site-header.is-scrolled .wordmark-wrap { max-width: 0; opacity: 0; }
+    .nav { display: flex; align-items: center; gap: clamp(1rem, 3vw, 1.6rem); font-family: var(--font-mono);
+      font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; min-width: 0;
+      max-width: 0; opacity: 0; overflow: hidden; pointer-events: none; transition: max-width .3s ease, opacity .3s ease; }
+    .site-header.is-scrolled .nav { max-width: 600px; opacity: 1; pointer-events: auto; }
+    .nav a { text-decoration: none; color: var(--white); white-space: nowrap; }
+    .nav a:hover { opacity: 0.75; }
+    .nav a.btn { background: var(--yellow); color: var(--ink); padding: 0.55em 1.1em; border-radius: 8px; }
+    .nav a.btn:hover { opacity: .85; }
+    @media (max-width: 640px) {
+      .nav a:not(.btn) { display: none; }
+    }
+
+    /* ---- Hero ---- */
+    .tp-hero { position: relative; background: var(--espresso); color: var(--white); height: 100svh;
+      display: flex; overflow: hidden; }
+    .tp-hero-photo { position: absolute; inset: 0; opacity: 0.94; }
+    .tp-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tp-hero-scrim { position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(20,15,10,.55) 0%, rgba(20,15,10,.08) 22%, rgba(20,15,10,.1) 55%, rgba(20,15,10,.88) 100%); }
+    .tp-hero h1 { position: absolute; left: clamp(1.25rem, 4vw, 3.5rem); right: clamp(1.25rem, 4vw, 3.5rem);
+      bottom: clamp(13rem, 32vh, 18rem); z-index: 2; margin: 0; font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(2.4rem, 7.5vh, 7rem); line-height: 0.84; letter-spacing: -0.03em; }
+    .tp-hero h1 .yellow { color: var(--yellow); }
+    .tp-hero p { position: absolute; left: clamp(1.25rem, 4vw, 3.5rem); right: clamp(1.25rem, 4vw, 3.5rem);
+      bottom: clamp(7.5rem, 17vh, 9.5rem); z-index: 2; margin: 0; max-width: 44ch; font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+      line-height: 1.5; color: rgba(254,253,250,.9); text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+    .tp-hero-cta { position: absolute; left: clamp(1.25rem, 4vw, 3.5rem); bottom: clamp(1.5rem, 5vh, 3rem); z-index: 2;
+      display: inline-flex; align-items: center; padding: 0.9em 1.9em; border-radius: 8px; background: var(--yellow);
+      color: var(--ink); font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none; transition: transform .12s ease; }
+    .tp-hero-cta:hover { transform: translateY(-1px); }
+
+    /* ---- Section shells ---- */
+    .tp-section { padding-block: clamp(4rem, 9vw, 6.5rem); }
+    .tp-wrap { max-width: 1200px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 3.5rem); }
+    .tp-prose { max-width: 900px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 3.5rem); }
+    .tp-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+      margin: 0 0 1.4rem; }
+    .tp-h2 { margin: 0 0 1.2rem; font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+      font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.15; }
+
+    /* ---- Philosophy ---- */
+    .tp-philosophy { background: var(--yellow); color: var(--ink); }
+    .tp-philosophy h2 { font-weight: 700; font-size: clamp(2rem, 4.6vw, 2.8rem); line-height: 1.05; }
+    .tp-philosophy p { margin: 0; font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.5; max-width: 44ch; }
+
+    /* ---- Pinned scene: reuses the site's scene-quote (word-light) + photogrid (curtain) mechanics ---- */
+    .tp-scene { position: relative; background: var(--espresso); color: var(--white); overflow: hidden; }
+    .tp-scene .pinwrap-inner { align-items: center; justify-content: center; padding: 0 clamp(1.25rem, 4vw, 4rem); }
+    .tp-scene p[data-scene-words] { position: relative; z-index: 1; margin: 0; font-family: var(--font-display);
+      font-weight: 600; text-transform: uppercase; font-size: clamp(1.9rem, 6vw, 4.4rem); line-height: 1.05;
+      letter-spacing: -0.01em; max-width: 18ch; text-align: center; text-wrap: balance; }
+    .tp-scene-curtain { position: absolute; inset: 0; z-index: 5; background: var(--sand); transform: translateY(100%); }
+    .tp-scene-curtain img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ---- Is this for you ---- */
+    .tp-fits { background: var(--white); border-top: var(--border); min-height: 100svh; display: flex; }
+    .tp-fits .tp-prose { text-align: center; display: flex; flex-direction: column; justify-content: space-between;
+      flex: 1; padding-block: clamp(3.5rem, 8vw, 6rem) 2rem; }
+    .tp-fits .tp-eyebrow { color: var(--clay); }
+    .tp-fits p { margin: 0 auto; max-width: 700px; font-family: var(--font-display); font-weight: 500;
+      font-size: clamp(1.5rem, 2.8vw, 2rem); line-height: 1.5; }
+    .tp-pill { border-radius: 999px; padding: 0 0.55em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .tp-pill--blue { background: var(--klein); color: var(--white); }
+    .tp-pill--yellow { background: var(--yellow); color: var(--ink); white-space: nowrap; }
+    .tp-fits-note { display: inline-flex; align-self: center; align-items: center; margin-top: 2rem; padding: 0.7em 1.5em;
+      border-radius: 999px; background: var(--white); border: 1.5px solid var(--ink); color: var(--ink);
+      font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    /* ---- Sessions switcher ---- */
+    .tp-sessions { background: var(--yellow); color: var(--ink); }
+    .tp-sessions .tp-eyebrow, .tp-sessions h2 { text-align: center; color: rgba(20,17,13,.6); }
+    .tp-sessions h2 { color: var(--ink); }
+    .tp-switcher { position: relative; }
+    .tp-switcher-sticky { position: sticky; top: 90px; z-index: 1; display: flex; flex-direction: column;
+      gap: 1.1rem; padding-bottom: 0.4rem; }
+    .tp-tabs { display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center; }
+    .tp-tab { padding: 0.7em 1.3em; border-radius: 999px; border: none; cursor: pointer; font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; background: var(--white); color: var(--ink);
+      transition: background-color .2s ease, color .2s ease; }
+    .tp-tab.is-active { background: var(--ink); color: var(--white); }
+    .tp-card { background: var(--sand); border-radius: 20px; overflow: hidden; display: grid;
+      grid-template-columns: 1fr 1.2fr; align-items: stretch; height: 480px; }
+    .tp-card-photos { position: relative; background: var(--espresso); }
+    .tp-card-photo { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s ease; }
+    .tp-card-photo.is-active { opacity: 1; pointer-events: auto; }
+    .tp-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tp-card-content { padding: clamp(1.8rem, 4vw, 2.6rem); display: flex; flex-direction: column; gap: 1rem; overflow: hidden; }
+    .tp-card-title-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.6rem; }
+    .tp-card-title-row h3 { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.6rem; }
+    .tp-duration { font-family: var(--font-mono); font-size: 0.8rem; color: var(--clay); white-space: nowrap; }
+    .tp-card-desc { margin: 0; color: var(--grey); font-size: 0.98rem; line-height: 1.65;
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .tp-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .tp-tag { background: var(--white); border-radius: 999px; padding: 0.4em 0.9em; font-size: 0.85rem; white-space: nowrap; }
+    .tp-card-note { margin: 0; font-size: 0.92rem; color: var(--grey); }
+    .tp-card-quote { margin: 0; font-family: var(--font-display); font-style: italic; font-size: 1rem; color: var(--klein); }
+    .tp-card-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+      margin-top: auto; padding-top: 1.2rem; border-top: var(--border); }
+    .tp-price-rows { display: flex; gap: 1.4rem; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.85rem; }
+    .tp-pill-cta { display: inline-flex; align-items: center; padding: 0.75em 1.5em; border-radius: 999px;
+      background: var(--ink); color: var(--white); font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: opacity .12s ease; }
+    .tp-pill-cta:hover { opacity: .85; }
+    .tp-hint { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(20,17,13,.55); text-align: center; }
+    .tp-sentinels { display: flex; flex-direction: column; }
+    .tp-sentinels > div { height: 55svh; }
+    @media (max-width: 767px) {
+      .tp-switcher-sticky { position: static; }
+      .tp-card { grid-template-columns: 1fr; height: auto; }
+      .tp-card-photos { height: 200px; }
+      .tp-card-photo { position: static; opacity: 1 !important; pointer-events: auto !important; display: none; }
+      .tp-card-photo.is-active { display: block; }
+      .tp-sentinels { display: none; }
+      /* The 4-line clamp exists only to keep the desktop card's height fixed
+         (load-bearing for the sentinel scroll math) — mobile has no fixed
+         height to protect, so let the description show in full. */
+      .tp-card-desc { -webkit-line-clamp: unset; overflow: visible; }
+    }
+
+    /* ---- Not sure where to start ---- */
+    .tp-cta-mid { background: var(--espresso); color: var(--white); text-align: center; }
+    .tp-cta-mid .tp-prose { display: flex; flex-direction: column; align-items: center; gap: 1.4rem;
+      max-width: 700px; padding-block: clamp(3.5rem, 8vw, 5.5rem); }
+    .tp-cta-mid h2 { margin: 0; font-weight: 500; letter-spacing: -0.01em; font-size: clamp(1.7rem, 3.6vw, 2.3rem); line-height: 1.15; }
+    .tp-cta-mid p { margin: 0; max-width: 48ch; font-size: 1.02rem; line-height: 1.6; color: rgba(254,253,250,.75); }
+    .tp-link-arrow { display: inline-flex; align-items: center; gap: 0.4em; color: var(--yellow); font-family: var(--font-mono);
+      font-size: 0.76rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; }
+    .tp-link-arrow:hover { opacity: .8; }
+
+    /* ---- Meet Adam ---- */
+    .tp-about { background: var(--white); }
+    .tp-about .tp-wrap { display: grid; grid-template-columns: min(30vw, 280px) 1fr; gap: clamp(2rem, 5vw, 3rem); align-items: center; }
+    .tp-about-photo { border-radius: 999px; overflow: hidden; aspect-ratio: 1/1; background: var(--sand); }
+    .tp-about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .tp-about .tp-eyebrow { color: var(--grey); margin-bottom: 1rem; }
+    .tp-about h2 { font-weight: 500; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.3; color: var(--klein); max-width: 24ch; }
+    .tp-about p { margin: 0 0 1.1rem; max-width: 56ch; color: var(--body-grey); line-height: 1.65; }
+    .tp-about .tp-link-arrow { color: var(--klein); margin-top: 0.5rem; }
+    @media (max-width: 640px) {
+      .tp-about .tp-wrap { grid-template-columns: 1fr; text-align: left; }
+      .tp-about-photo { width: min(160px, 40vw); }
+    }
+
+    /* ---- Kind words ---- */
+    .tp-reviews { background: var(--espresso); color: var(--white); }
+    .tp-reviews-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end;
+      gap: 1.5rem; margin-bottom: clamp(2.5rem, 6vw, 3.5rem); }
+    .tp-reviews-head h2 { margin: 0; font-weight: 500; max-width: 18ch; }
+    .tp-reviews-score { text-align: right; }
+    .tp-reviews-score .v { font-family: var(--font-mono); font-weight: 500; font-size: clamp(2rem, 4vw, 2.6rem); line-height: 1; color: var(--yellow); }
+    .tp-reviews-score .k { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(254,253,250,.55); }
+    .tp-review-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+    .tp-review-card { margin: 0; background: rgba(254,253,250,.06); border: 1px solid rgba(254,253,250,.14);
+      border-radius: 16px; padding: 1.6rem; }
+    .tp-review-card.is-yellow { background: var(--yellow); color: var(--ink); border-color: transparent; }
+    .tp-review-card blockquote { margin: 0; font-size: 0.95rem; line-height: 1.55; }
+
+    /* ---- FAQ ---- */
+    .tp-faq { background: var(--yellow); color: var(--ink); }
+    .tp-faq .tp-prose { max-width: 800px; }
+    .tp-faq h2 { text-align: center; }
+    .tp-faq-list { display: flex; flex-direction: column; gap: 0.7rem; }
+    .tp-faq-list details { background: var(--white); border-radius: 12px; padding: 0 1.3rem; }
+    .tp-faq-list summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between;
+      align-items: baseline; gap: 1rem; padding: 1.1rem 0; font-family: var(--font-body); font-weight: 600; font-size: 1.02rem; }
+    .tp-faq-list summary::-webkit-details-marker { display: none; }
+    .tp-faq-list summary .plus { font-family: var(--font-mono); color: var(--klein); flex-shrink: 0; }
+    .tp-faq-list details[open] summary .plus { content: '\2212'; }
+    .tp-faq-list p { margin: 0; padding: 0 0 1.1rem; color: var(--body-grey); }
+
+    /* ---- Ready ---- */
+    .tp-ready { background: var(--klein); color: var(--white); text-align: center; }
+    .tp-ready .tp-prose { max-width: 700px; display: flex; flex-direction: column; align-items: center; gap: 1.4rem;
+      padding-block: clamp(4rem, 9vw, 6.5rem); }
+    .tp-ready h2 { margin: 0; font-weight: 600; letter-spacing: -0.01em; font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.2; }
+    .tp-ready p { margin: 0; max-width: 40ch; font-size: 1.05rem; line-height: 1.6; color: rgba(254,253,250,.85); }
+
+    /* ---- Footer ---- */
+    .tp-footer { background: var(--espresso); color: var(--white); }
+    .tp-footer .tp-wrap { padding-block: clamp(3rem, 7vw, 4.5rem); }
+    .tp-footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); margin-bottom: 2rem; }
+    @media (max-width: 640px) { .tp-footer-grid { grid-template-columns: 1fr; } }
+    .tp-footer-col { display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem; }
+    .tp-footer-col img { height: 32px; width: auto; align-self: flex-start; }
+    .tp-footer-brand-name { font-family: var(--font-display); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.95rem; }
+    .tp-footer-col p { margin: 0; color: rgba(254,253,250,.55); font-size: 0.86rem; max-width: 24ch; }
+    .tp-footer-col a { color: var(--white); text-decoration: none; }
+    .tp-footer-col a:hover { color: var(--yellow); }
+    .tp-footer-label { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(254,253,250,.5); margin-bottom: 0.2rem; }
+    .tp-footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.6rem; padding-top: 1.2rem;
+      border-top: 1px solid rgba(254,253,250,.15); font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: rgba(254,253,250,.5); }
+
+    /* ---- Placeholder photo treatment (client to supply real photos) ---- */
+    .tp-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 1rem; background: var(--sand); color: var(--grey); font-family: var(--font-mono);
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .tp-scene-curtain .tp-placeholder { background: var(--sand); }
+
+    /* Reuse the site's pin mechanics: .pinwrap / .pinwrap-inner (from tokens/main site pattern) */
+    .pinwrap { position: relative; isolation: isolate; height: 280svh; }
+    .pinwrap-inner { position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; flex-direction: column; }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header" data-header="true">
+    <div class="header-bar">
+      <a class="tp-lockup" href="#top" aria-label="Energencia home">
+        <img src="../assets/logo-face-white.png" alt="Energencia">
+        <span class="wordmark-wrap">Energencia</span>
+      </a>
+      <nav class="nav" data-headnav="true">
+        <a href="../index.html">Facilitator Training</a>
+        <a class="btn" href="https://wa.me/491794343167" target="_blank" rel="noopener">Book a session</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="top" class="tp-hero">
+    <div class="tp-hero-photo"><img src="../assets/photos/treatments-hero.jpg" alt="A sound massage session, Tibetan bowls placed on and around the body" loading="eager"></div>
+    <div class="tp-hero-scrim"></div>
+    <h1>Come back<br>to <span class="yellow">yourself.</span></h1>
+    <p>One-to-one sessions in Valencia for people who've spent too long surviving instead of living. Sound Massage, Reiki and Kundalini Activation.</p>
+    <a class="tp-hero-cta" href="https://wa.me/491794343167" target="_blank" rel="noopener">Book a session</a>
+  </section>
+
+  <div data-hero-end="true" style="height: 1px;" aria-hidden="true"></div>
+
+  <!-- 01 Philosophy -->
+  <section class="tp-section tp-philosophy">
+    <div class="tp-prose">
+      <p class="tp-eyebrow">01 / Philosophy</p>
+      <h2 class="tp-h2">Maybe you don't need more.</h2>
+      <p>The wellness world tells us to do more. More routines, more habits, more ways to fix yourself. And maybe what you need is <strong>somewhere you don't have to perform</strong>.</p>
+    </div>
+  </section>
+
+  <!-- Pinned scene -->
+  <div class="pinwrap tp-scene" data-pinwrap="true">
+    <div class="pinwrap-inner">
+      <p data-scene-words="true">A place to slow down, breathe and reconnect with yourself.</p>
+      <div class="tp-scene-curtain" data-photogrid="true" data-curtain-start="0.65">
+        <div class="tp-placeholder">Photo — the studio, wide shot</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 Is this for you -->
+  <section class="tp-fits">
+    <div class="tp-prose">
+      <div>
+        <p class="tp-eyebrow">02 / Is this for you?</p>
+        <p>You might be here because you feel <span class="tp-pill tp-pill--blue">overwhelmed</span>, <span class="tp-pill tp-pill--blue" style="white-space:nowrap;">constantly "on"</span>, <span class="tp-pill tp-pill--blue">disconnected</span> or have simply <span class="tp-pill tp-pill--yellow">forgotten what calm feels like</span>.</p>
+      </div>
+      <span class="tp-fits-note">No experience needed — just arrive</span>
+    </div>
+  </section>
+
+  <!-- Sessions switcher -->
+  <section id="sessions" class="tp-section tp-sessions" data-sessions="true">
+    <div class="tp-wrap">
+      <p class="tp-eyebrow">Sessions</p>
+      <h2 class="tp-h2">Three sessions, made simple.</h2>
+
+      <div class="tp-switcher">
+        <div class="tp-switcher-sticky">
+          <div class="tp-tabs">
+            <button class="tp-tab is-active" data-tab="0">Sound Massage</button>
+            <button class="tp-tab" data-tab="1">Reiki</button>
+            <button class="tp-tab" data-tab="2">Kundalini Activation</button>
+          </div>
+          <div class="tp-card">
+            <div class="tp-card-photos">
+              <div class="tp-card-photo is-active" data-photo="0">
+                <img src="../assets/photos/treatments-hero.jpg" alt="Sound Massage session" loading="lazy">
+              </div>
+              <div class="tp-card-photo" data-photo="1">
+                <div class="tp-placeholder">Photo — Reiki</div>
+              </div>
+              <div class="tp-card-photo" data-photo="2">
+                <div class="tp-placeholder">Photo — Kundalini Activation</div>
+              </div>
+            </div>
+            <div class="tp-card-content">
+              <div class="tp-card-title-row">
+                <h3 data-field="name">Sound Massage</h3>
+                <span class="tp-duration" data-field="durationLabel">60/90 min · €60–85</span>
+              </div>
+              <p class="tp-card-desc" data-field="description">You lie down, fully clothed, face down and then face up, while therapeutic singing bowls are placed on and around your body and played. The massage is the vibration itself, moving through you and carried by the water in your body, softening the nervous system and letting everything settle.</p>
+              <div class="tp-tags" data-field="tags">
+                <span class="tp-tag">Lie down</span><span class="tp-tag">Fully clothed</span><span class="tp-tag">60 or 90 min</span><span class="tp-tag">Nothing to do</span>
+              </div>
+              <p class="tp-card-note" data-field="note">People often come burned out, overwhelmed or unable to switch off, and leave grounded, clearer, and sleeping better.</p>
+              <p class="tp-card-quote" data-field="quote">"You don&rsquo;t have to become calmer. Your body already knows how."</p>
+              <div class="tp-card-footer">
+                <div class="tp-price-rows" data-field="priceRows">
+                  <span>60 min €60</span><span>90 min €85</span><span>3 sessions €165</span>
+                </div>
+                <a class="tp-pill-cta" data-field="cta" href="https://wa.me/491794343167" target="_blank" rel="noopener">Book Sound Massage</a>
+              </div>
+            </div>
+          </div>
+          <div class="tp-hint">Keep scrolling to switch, or tap a tab</div>
+        </div>
+
+        <div class="tp-sentinels">
+          <div data-sentinel="0"></div>
+          <div data-sentinel="1"></div>
+          <div data-sentinel="2"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Not sure where to start -->
+  <section class="tp-cta-mid">
+    <div class="tp-prose">
+      <h2>Not sure where to start?</h2>
+      <p>You don't have to choose alone. Tell me a little about where you are right now, and I'll help you find the session that feels most supportive.</p>
+      <a class="tp-link-arrow" href="https://wa.me/491794343167" target="_blank" rel="noopener">Message me on WhatsApp →</a>
+    </div>
+  </section>
+
+  <!-- Meet Adam -->
+  <section id="about" class="tp-section tp-about">
+    <div class="tp-wrap">
+      <div class="tp-about-photo"><div class="tp-placeholder">Photo — Adam</div></div>
+      <div>
+        <p class="tp-eyebrow">Meet Adam</p>
+        <h2 class="tp-h2">I found this work because I needed it myself.</h2>
+        <p>After years in the corporate world, I knew I wanted something that felt more human. Reiki was my first step. Soon after, I had a dream that I was giving someone a Sound Massage. At the time, I didn't even know such a practice existed. The next morning I searched for it. It was real.</p>
+        <p>I've now worked one-to-one with more than 350 people across Berlin, Tulum and Valencia. My work isn't about fixing people — it's about creating a space where your body can stop holding everything for a while.</p>
+        <a class="tp-link-arrow" href="https://wa.me/491794343167" target="_blank" rel="noopener">Book on WhatsApp →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kind words -->
+  <section id="reviews" class="tp-section tp-reviews">
+    <div class="tp-wrap">
+      <div class="tp-reviews-head">
+        <h2 class="tp-h2">Kind words from people who came before you.</h2>
+        <div class="tp-reviews-score">
+          <div class="v">★ 5.0</div>
+          <div class="k">Google Reviews</div>
+        </div>
+      </div>
+      <div class="tp-review-grid">
+        <figure class="tp-review-card"><blockquote>"I immediately felt comfortable and safe. Adam has a calm presence that makes it easy to let go."</blockquote></figure>
+        <figure class="tp-review-card"><blockquote>"I left feeling lighter, clearer and much more connected to myself."</blockquote></figure>
+        <figure class="tp-review-card is-yellow"><blockquote>"He creates a space where you don't feel judged or rushed. I felt genuinely cared for."</blockquote></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="tp-section tp-faq">
+    <div class="tp-prose">
+      <h2 class="tp-h2">Check out our FAQs.</h2>
+      <div class="tp-faq-list">
+        <details open>
+          <summary>I've never done anything like this.<span class="plus">+</span></summary>
+          <p>Perfect. Most people haven't. I'll guide you through everything before we begin.</p>
+        </details>
+        <details>
+          <summary>What should I wear?<span class="plus">+</span></summary>
+          <p>For Sound Massage, wear comfortable natural fabrics without metal (zips, belts or jewellery). For every session, avoid a heavy meal for around two hours beforehand, and drink plenty of water.</p>
+        </details>
+        <details>
+          <summary>Is it suitable for everyone?<span class="plus">+</span></summary>
+          <p>Please let me know before booking if you have a pacemaker, epilepsy, certain heart conditions, are in the first trimester of pregnancy, or experience psychosis or schizophrenia. None of this is medical treatment, and it doesn't replace it.</p>
+        </details>
+        <details>
+          <summary>Where are sessions held?<span class="plus">+</span></summary>
+          <p>In my studio in Valencia. I'll send you the address after booking.</p>
+        </details>
+        <details>
+          <summary>How do I book?<span class="plus">+</span></summary>
+          <p>Just send me a message on WhatsApp, and we'll find a time that works for both of us.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ready -->
+  <section class="tp-ready">
+    <div class="tp-prose">
+      <h2>Ready?</h2>
+      <p>If you've read this far, maybe part of you already knows why you're here. I'd love to welcome you.</p>
+      <a class="tp-link-arrow" href="https://wa.me/491794343167" target="_blank" rel="noopener">Book on WhatsApp →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="tp-footer">
+    <div class="tp-wrap">
+      <div class="tp-footer-grid">
+        <div class="tp-footer-col">
+          <img src="../assets/logo-face-white.png" alt="">
+          <div class="tp-footer-brand-name">Energencia</div>
+          <p>Sound, body and nervous-system work · Valencia</p>
+        </div>
+        <div class="tp-footer-col">
+          <span class="tp-footer-label">Sessions</span>
+          <a href="#sessions">Sessions</a>
+          <a href="#reviews">Reviews</a>
+          <a href="../index.html">Training for facilitators →</a>
+        </div>
+        <div class="tp-footer-col">
+          <span class="tp-footer-label">Contact</span>
+          <a href="mailto:energencia.es@gmail.com">energencia.es@gmail.com</a>
+          <a href="https://instagram.com/energencia.es">@energencia.es</a>
+          <span style="color: rgba(254,253,250,.75);">Valencia, Spain</span>
+        </div>
+      </div>
+      <div class="tp-footer-bottom">
+        <span>© 2026 Energencia</span>
+        <span>Made in Valencia</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/interactions.js"></script>
+</body>
+</html>

@@ -20,6 +20,13 @@
   --grey:   #8C8478;  /* Muted UI text, captions. */
   --line:   #E7E1D3;  /* Hairlines, borders. */
 
+  /* Extended set — introduced for the Treatments (1:1 sessions) page,
+     available site-wide since they're part of the same palette. */
+  --espresso:   #2A2118;  /* Dark section backgrounds, dark-on-dark footers. */
+  --clay:       #A8674B;  /* Small mono labels, durations, warm accents. */
+  --sand:       #F4F0E6;  /* Card backgrounds (was already used inline as #F4F0E6). */
+  --body-grey:  #514B41;  /* Long-form paragraph text on --sand or --white. */
+
   /* ---- Type families ---- */
   --font-display: 'Jost', sans-serif;      /* Wordmark + headlines. CAPS only for the wordmark. */
   --font-body:    'Outfit', sans-serif;    /* Headings, body, UI. */
