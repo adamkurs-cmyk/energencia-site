@@ -17,7 +17,12 @@
     html { scroll-behavior: smooth; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     ::selection { background: var(--yellow); color: var(--ink); }
-    body { overflow-x: clip; }
+    /* No overflow-x on body: it forces overflow-y non-visible too, which
+       breaks position:sticky for every sticky descendant on the page
+       (the pinned quote, the sessions-switcher card) — same reason
+       .tp-scene doesn't set overflow:hidden either. The training page
+       relies on structural fixes rather than a body-level clip, and
+       actual horizontal overflow here is already verified absent. */
 
     /* ---- Header (transparent-over-photo, matches the site's is-scrolled pattern) ---- */
     .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: transparent;
@@ -78,7 +83,12 @@
 
     /* ---- Pinned scene: reuses the site's scene-quote (word-light) mechanic exactly —
        same pin, same word-by-word opacity reveal, no sliding photo curtain. ---- */
-    .tp-scene { position: relative; background: var(--espresso); color: var(--white); overflow: hidden; }
+    /* No overflow:hidden here — it was only ever needed to clip the photo
+       curtain that has since been removed, and an overflow value other than
+       visible on a sticky element's ancestor is a well-known way to break
+       position:sticky (especially on Safari/iOS). The training page's
+       equivalent .pinwrap never sets it, for the same reason. */
+    .tp-scene { position: relative; background: var(--espresso); color: var(--white); }
     .tp-scene .pinwrap-inner { align-items: center; justify-content: center; padding: 0 clamp(1.25rem, 4vw, 4rem); }
     .tp-scene p[data-scene-words] { position: relative; z-index: 1; margin: 0; font-family: var(--font-display);
       font-weight: 600; text-transform: uppercase; font-size: clamp(1.9rem, 6vw, 4.4rem); line-height: 1.05;
