@@ -132,6 +132,10 @@ img { max-width: 100%; display: block; }
 .btn--signal  { background: var(--ink);    color: var(--yellow); }
 .btn--ghost   { background: transparent;   color: var(--ink); border-color: var(--ink); }
 .btn--spark   { background: var(--pink);   color: var(--white); }  /* use sparingly */
+/* Outlined pill — for a CTA sitting directly on a photo (e.g. a full-bleed hero). */
+.btn--outline-yellow { background: transparent; color: var(--yellow); border: 1.5px solid var(--yellow);
+  border-radius: 999px; }
+.btn--outline-yellow:hover { background: var(--yellow); color: var(--ink); }
 
 /* ==========================================================================
    READABILITY GUARDRAILS (do not break these)

@@ -49,63 +49,41 @@
     .progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: var(--klein);
       transform: scaleX(0); transform-origin: left; }
 
-    /* ---- Hero ---- */
-    .hero-v2 { position: sticky; top: var(--header-h, 60px); background: var(--white); overflow: hidden;
-      height: calc(100svh - var(--header-h, 60px)); display: flex; isolation: isolate; z-index: 1; }
-    .hero-row { display: flex; align-items: center; gap: clamp(2rem, 5vw, 4rem); width: 100%; }
-    .hero-inner { position: relative; z-index: 1; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column;
-      gap: clamp(1.2rem, 3svh, 2rem); padding-block: clamp(1.5rem, 3svh, 3rem) clamp(2rem, 5svh, 3.5rem); }
-    .hero-v2 h1 { font-family: var(--font-display); font-weight: 600; text-transform: uppercase;
-      font-size: clamp(2.2rem, min(9vw, 12svh), 6rem); line-height: 0.9; letter-spacing: -0.015em; margin: 0; max-width: 14ch; }
+    /* ---- Hero: full-bleed photo, dark scrim, centered display type ---- */
+    .hero-v2 { position: sticky; top: var(--header-h, 60px); background: var(--ink); overflow: hidden;
+      height: calc(100svh - var(--header-h, 60px)); display: flex; align-items: center; justify-content: center;
+      isolation: isolate; z-index: 1; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; display: block; object-position: center 30%; }
+    .hero-scrim { position: absolute; inset: 0; background: rgba(20, 17, 13, 0.46); }
+    .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+      text-align: center; gap: clamp(1.1rem, 3svh, 1.8rem); padding-block: clamp(1.5rem, 4svh, 3rem); }
+    .hero-kicker { margin: 0; font-family: var(--font-mono); font-size: clamp(0.68rem, 1.4vw, 0.82rem);
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--yellow); opacity: 0;
+      animation: heroline-in-media .9s cubic-bezier(.22,.61,.36,1) forwards; }
+    .hero-v2 h1 { font-family: 'Playfair Display', serif; font-weight: 600; color: var(--white);
+      font-size: clamp(2.6rem, 9vw, 5.6rem); line-height: 1.08; letter-spacing: -0.01em; margin: 0; max-width: 16ch; }
     .hero-v2 h1 .row { display: block; overflow: hidden; }
     .hero-v2 h1 .row > span { display: block; transform: translateY(110%); }
-    /* Hidden on desktop; shown only in the mobile media query below, where
-       it forces the headline to wrap as two grouped lines ("Learn to hold"
-       / "a sound bath.") instead of four. */
-    .hero-v2 h1 .row-break { display: none; }
     @keyframes heroline-in { to { transform: translateY(0); } }
     .hero-v2 h1 .row > span { animation: heroline-in 1s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: var(--d, 0s); }
-    @media (prefers-reduced-motion: reduce) { .hero-v2 h1 .row > span { animation: none; transform: none; } }
-    .hero-v2 h1 .klein { color: var(--klein); }
-    .hero-v2 h1 .yellow { color: var(--yellow); }
-    .hero-media { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(1.2rem, 3svh, 2rem);
-      max-width: 60ch; opacity: 0; transform: translateY(20px); animation: heroline-in 1.2s cubic-bezier(.22,.61,.36,1) forwards;
-      animation-delay: .85s; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-v2 h1 .row > span { animation: none; transform: none; }
+      .hero-kicker { animation: none; opacity: 1; }
+    }
+    .hero-v2 h1 .script { font-family: 'Yellowtail', cursive; font-weight: 400; color: var(--yellow);
+      font-size: 1.25em; line-height: 1; display: inline-block; padding-top: 0.15em; }
+    .hero-media { display: flex; flex-direction: column; align-items: center; gap: clamp(1.1rem, 3svh, 1.8rem);
+      max-width: 60ch; opacity: 0; transform: translateY(20px); animation: heroline-in-media 1.2s cubic-bezier(.22,.61,.36,1) forwards;
+      animation-delay: .6s; }
     @keyframes heroline-in-media { to { opacity: 1; transform: none; } }
-    .hero-media { animation-name: heroline-in-media; }
     @media (prefers-reduced-motion: reduce) { .hero-media { animation: none; opacity: 1; transform: none; } }
-    .hero-media p { margin: 0; max-width: 34ch; font-size: clamp(1.05rem, 2vw, 1.35rem); line-height: 1.5; font-weight: 400; }
-    /* Clean rounded-rectangle photo card (replaces the old irregular
-       silhouette clip-path for the hero specifically — other silhouette
-       photos on the page are untouched). Fixed-ish width on desktop so it
-       reads as a proper photo card beside the text, not an overlay. */
-    .hero-silhouette { position: relative; flex: 0 0 clamp(280px, 34vw, 460px); aspect-ratio: 4 / 5;
-      border-radius: 28px; overflow: hidden; background: #F4F0E6; }
-    .hero-silhouette img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    @media (max-width: 860px) {
-      /* Photo first, full-width, then the text stacked below — matching
-         the mobile design reference exactly. Height is capped by viewport
-         (not just width-driven aspect-ratio) so photo + headline + subline
-         + button always fit inside the sticky hero's fixed height budget.
-         The photo gets the bulk of that budget so it reads as a tall,
-         upright portrait rather than a shallow cropped strip; the text
-         block below is tightened up to make room for it. */
-      .hero-row { flex-direction: column; justify-content: center; gap: clamp(0.6rem, 2.2svh, 1rem); }
-      .hero-silhouette { order: -1; flex: none; width: 100%; aspect-ratio: auto; height: min(48svh, 460px); }
-      /* The photo's native ratio (4:5) is taller than this box, so cover
-         crops top/bottom. Default center-crop was cutting into the bowl
-         held up top-right; anchoring to the top keeps the face and that
-         bowl in frame and crops the (less important) bottom edge instead. */
-      .hero-silhouette img { object-position: center top; }
-      .hero-inner { flex: none; padding-block: 0; gap: clamp(0.5rem, 1.4svh, 0.9rem); }
-      .hero-v2 h1 { font-size: clamp(1.75rem, min(7.6vw, 8.5svh), 6rem); }
-      /* Two grouped lines instead of four: rows sit inline (with the
-         natural whitespace between them read as a word space) and the
-         row-break forces the wrap point between "to hold" and "a sound". */
-      .hero-v2 h1 .row { display: inline-block; }
-      .hero-v2 h1 .row > span { display: inline-block; }
-      .hero-v2 h1 .row-break { display: block; }
-      .hero-media { gap: clamp(0.5rem, 1.4svh, 0.9rem); }
+    .hero-media p { margin: 0; max-width: 42ch; font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.5;
+      font-weight: 400; color: rgba(254, 253, 250, 0.92); }
+    @media (max-width: 640px) {
+      .hero-v2 h1 { font-size: clamp(2.1rem, 11vw, 3.2rem); }
+      .hero-content { gap: clamp(0.9rem, 2.4svh, 1.4rem); padding-inline: 1rem; }
+      .hero-media { gap: clamp(0.9rem, 2.2svh, 1.4rem); }
     }
 
     /* ---- Every top-level section gets position:relative + isolation so its own
@@ -421,26 +399,20 @@
 
   <!-- Hero -->
   <section id="top" class="hero-v2">
-    <div class="wrap hero-row">
-      <div class="hero-inner">
-        <h1>
-          <span class="row"><span style="--d:0s">Learn</span></span>
-          <span class="row"><span style="--d:.16s">to hold</span></span>
-          <br class="row-break" aria-hidden="true">
-          <span class="row"><span class="klein" style="--d:.32s">a sound</span></span>
-          <span class="row"><span class="klein" style="--d:.48s">bath<span class="yellow">.</span></span></span>
-        </h1>
-        <div class="hero-media">
-          <p>A small, practical training in Valencia. Two days of practising, until you
-            can guide a complete sound bath of your own.</p>
-          <a class="btn btn--primary" href="https://forms.gle/iTy1PEj1dVYHadny7" target="_blank" rel="noopener">Apply</a>
-        </div>
-      </div>
-      <div class="hero-silhouette" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 860px)" srcset="assets/photos/hero-photo-mobile.jpg">
-          <img src="assets/photos/hero-photo.jpg" alt="" loading="eager">
-        </picture>
+    <div class="hero-bg" aria-hidden="true">
+      <img src="assets/photos/hero-full.jpg" alt="" loading="eager">
+    </div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="wrap hero-content">
+      <p class="hero-kicker">Valencia · 2–4 October 2026</p>
+      <h1>
+        <span class="row"><span style="--d:0s">Learn to hold</span></span>
+        <span class="row"><span class="script" style="--d:.2s">a sound bath</span></span>
+      </h1>
+      <div class="hero-media">
+        <p>A small, practical training in Valencia. Two days of practising, until you
+          can guide a complete sound bath of your own.</p>
+        <a class="btn btn--outline-yellow" href="https://forms.gle/iTy1PEj1dVYHadny7" target="_blank" rel="noopener">Apply</a>
       </div>
     </div>
   </section>
