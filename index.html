@@ -73,17 +73,30 @@
     }
     .hero-v2 h1 .script { font-family: 'Yellowtail', cursive; font-weight: 400; color: var(--yellow);
       font-size: 1.25em; line-height: 1; display: inline-block; padding-top: 0.15em; }
-    .hero-media { display: flex; flex-direction: column; align-items: center; gap: clamp(1.1rem, 3svh, 1.8rem);
-      max-width: 60ch; opacity: 0; transform: translateY(20px); animation: heroline-in-media 1.2s cubic-bezier(.22,.61,.36,1) forwards;
-      animation-delay: .6s; }
+    .hero-sub, .hero-cta { opacity: 0; transform: translateY(20px);
+      animation: heroline-in-media 1.2s cubic-bezier(.22,.61,.36,1) forwards; animation-delay: .6s; }
     @keyframes heroline-in-media { to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .hero-media { animation: none; opacity: 1; transform: none; } }
-    .hero-media p { margin: 0; max-width: 42ch; font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.5;
+    @media (prefers-reduced-motion: reduce) { .hero-sub, .hero-cta { animation: none; opacity: 1; transform: none; } }
+    .hero-sub { margin: 0; max-width: 42ch; font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.5;
       font-weight: 400; color: rgba(254, 253, 250, 0.92); }
     @media (max-width: 640px) {
-      .hero-v2 h1 { font-size: clamp(2.1rem, 11vw, 3.2rem); }
-      .hero-content { gap: clamp(0.9rem, 2.4svh, 1.4rem); padding-inline: 1rem; }
-      .hero-media { gap: clamp(0.9rem, 2.2svh, 1.4rem); }
+      /* Smartphone gets its own layout (per the client's smartphone-specific
+         mockup): the photo becomes a discrete rounded card near the top
+         instead of a full-bleed background, and the order below it is
+         headline, subtext, date, then Apply — different from desktop's
+         source order (date, headline, subtext, Apply), so this reorders
+         via flex `order` instead of duplicating any content. Desktop's
+         full-bleed overlay treatment above is untouched. */
+      .hero-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding-block: 1rem; gap: clamp(0.7rem, 1.8svh, 1.1rem); }
+      .hero-bg { position: relative; inset: auto; width: 100%; max-width: 360px;
+        height: min(42svh, 380px); border-radius: 24px; overflow: hidden; flex-shrink: 0; }
+      .hero-scrim { display: none; }
+      .hero-content { padding-block: 0; padding-inline: 1rem; gap: clamp(0.6rem, 1.6svh, 0.9rem); }
+      .hero-v2 h1 { font-size: clamp(2rem, 10vw, 3.2rem); order: 1; }
+      .hero-sub { order: 2; }
+      .hero-kicker { order: 3; }
+      .hero-cta { order: 4; }
     }
 
     /* ---- Every top-level section gets position:relative + isolation so its own
@@ -404,16 +417,13 @@
     </div>
     <div class="hero-scrim" aria-hidden="true"></div>
     <div class="wrap hero-content">
-      <p class="hero-kicker">Valencia · 2–4 October 2026</p>
+      <p class="hero-kicker">2–4 October 2026</p>
       <h1>
         <span class="row"><span style="--d:0s">Learn to hold</span></span>
         <span class="row"><span class="script" style="--d:.2s">a sound bath</span></span>
       </h1>
-      <div class="hero-media">
-        <p>A small, practical training in Valencia. Two days of practising, until you
-          can guide a complete sound bath of your own.</p>
-        <a class="btn btn--outline-yellow" href="https://forms.gle/iTy1PEj1dVYHadny7" target="_blank" rel="noopener">Apply</a>
-      </div>
+      <p class="hero-sub">Two days of practising in Valencia, until you can guide a complete sound bath of your own.</p>
+      <a class="btn btn--outline-yellow hero-cta" href="https://forms.gle/iTy1PEj1dVYHadny7" target="_blank" rel="noopener">Apply</a>
     </div>
   </section>
 
